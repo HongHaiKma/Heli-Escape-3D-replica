@@ -189,7 +189,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         m_EnemyState = EnemyState.Death;
         m_Anim.SetTrigger("Death");
-        m_AIPath.destination = tf_Owner.position;
+        // m_AIPath.destination = tf_Owner.position;
+        m_AIPath.canMove = false;
         // DoRagdoll(tf_Owner.position);
         if (m_Warning)
         {
@@ -217,7 +218,9 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         m_EnemyState = EnemyState.Kill;
         m_Anim.SetTrigger("Kill");
-        m_AIPath.destination = tf_Owner.position;
+        // m_AIPath.destination = tf_Owner.position;
+        m_AIPath.canMove = false;
+        // tf_Owner.position = tf_Owner.position + Vector3.up * 4;
         LevelController.Instance.m_Hostage.Death();
     }
 
