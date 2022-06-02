@@ -194,4 +194,9 @@ public class Helper
     {
         return Input.GetKeyDown(_key);
     }
+    
+    public static bool GetKey(KeyCode _key)
+    {
+        return Input.GetKey(_key);
+    }
 }

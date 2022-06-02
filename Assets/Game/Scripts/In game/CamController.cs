@@ -77,8 +77,8 @@ public class CamController : Singleton<CamController>
 
         await UniTask.WaitUntil(() => LevelController.Instance != null);
 
-        m_CMCam.Follow = LevelController.Instance.m_Hostage.tf_LookAtPoint;
-        m_CMCam.LookAt = LevelController.Instance.m_Hostage.tf_LookAtPoint;
+        m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
 
         m_CMCamOffset.m_Offset = new Vector3(0f, 5f, 0f);
         

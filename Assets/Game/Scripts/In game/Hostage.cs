@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Pathfinding;
 using SRF;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,15 +13,14 @@ public class Hostage : MonoBehaviour, IDamageable
 {
     public Transform tf_Onwer;
     public Animator m_Anim;
-    public DOTweenPath m_DotPath;
+
     public Transform tf_LookAtPoint;
 
-    public bool death;
-    
+    public AIPath m_AI;
+
 
     private void OnEnable()
     {
-        death = false;
         m_Anim.SetTrigger("Run");
         
         tf_LookAtPoint.DOKill();
@@ -28,19 +28,17 @@ public class Hostage : MonoBehaviour, IDamageable
         Vector3 end = new Vector3(0f, (tf_LookAtPoint.position.y + 60f) + 100f, 0f);
         // DOLocalRotateQuaternion(Quaternion.Euler(0f, m_YAxis, 0f), 1.5f)
         LevelController.Instance.m_Hostage.tf_LookAtPoint.DOLocalRotate(end, 5f, RotateMode.Fast).SetLoops(-1, LoopType.Yoyo).startValue = origin;
+
+        m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.A))
-    //     {
-    //         // m_DotPath.
-    //     }
-    // }
+    private void Update()
+    {
+        m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
+    }
 
     public async UniTask Death()
     {
-        death = true;
         m_Anim.SetTrigger("Death");
         gameObject.RemoveComponentIfExists<DOTweenPath>();
         EventManager.CallEvent(GameEvent.LEVEL_LOSE);
@@ -76,4 +74,68 @@ public class Hostage : MonoBehaviour, IDamageable
         
         PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
     }
+
+    #region States
+
+    public void OnRunEnter()
+    {
+        
+    }
+    
+    public void OnRunExecute()
+    {
+        
+    }
+    
+    public void OnRunExit()
+    {
+        
+    }
+    
+    public void OnJumpToHeliEnter()
+    {
+        
+    }
+    
+    public void OnJumpToHeliExecute()
+    {
+        
+    }
+    
+    public void OnJumpToHeliExit()
+    {
+        
+    }
+    
+    public void OnDeathEnter()
+    {
+        
+    }
+    
+    public void OnDeathExecute()
+    {
+        
+    }
+    
+    public void OnDeathExit()
+    {
+        
+    }
+    
+    public void OnWaitEnter()
+    {
+        
+    }
+    
+    public void OnWaitExecute()
+    {
+        
+    }
+    
+    public void OnWaitExit()
+    {
+        
+    }
+
+    #endregion
 }

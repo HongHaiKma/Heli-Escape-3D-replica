@@ -9,6 +9,8 @@ using UnityEngine;
 public class LevelController : Singleton<LevelController>
 {
     public Hostage m_Hostage;
+    public Transform tf_CamLookPoint;
+    public Transform tf_PivotFollower;
 
     public void OnEnable()
     {

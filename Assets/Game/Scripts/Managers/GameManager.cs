@@ -105,7 +105,7 @@ public class GameManager : Singleton2<GameManager>
 
         // CamController.Instance.CameraIntro(new Vector3(0f, 5f, 0f), 1.5f);
 
-        CamController.Instance.m_CMCam.Follow = LevelController.Instance.m_Hostage.tf_LookAtPoint;
-        CamController.Instance.m_CMCam.LookAt = LevelController.Instance.m_Hostage.tf_LookAtPoint;
+        CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
+        CamController.Instance.m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
     }
 }

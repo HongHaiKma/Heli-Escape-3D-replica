@@ -10,6 +10,12 @@ TagManager:
   - Node
   - Hostage
   - EnemyHead
+  - RunningAgent
+  - FX
+  - Effects
+  - FxTemporaire
+  - Interactable
+  - Waypoint
   layers:
   - Default
   - TransparentFX

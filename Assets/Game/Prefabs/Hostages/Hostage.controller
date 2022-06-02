@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 38e9df1b55374d54f99f814c15feeeaa, type: 3}
+  m_Motion: {fileID: 7400000, guid: 53d2294466f6bc44bb4361a7a188da6f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -94,7 +94,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: cf693318bff8a3d4c9139f2a44599e30, type: 3}
+  m_Motion: {fileID: 7400000, guid: 04b14d32563e4134bbf587f8c01280a3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -120,7 +120,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 87d6d74ae2cc8d841890f3e83064abdb, type: 3}
+  m_Motion: {fileID: 7400000, guid: 2125d6531a1417a42b2f2e88ff88ec1d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -173,6 +173,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: JumpHeli
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: Wait
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

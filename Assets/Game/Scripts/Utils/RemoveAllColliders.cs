@@ -11,5 +11,13 @@ public class RemoveAllColliders : MonoBehaviour
         var allColliders = GetComponentsInChildren<Collider>();
  
         foreach(var childCollider in allColliders) DestroyImmediate(childCollider);
+        
+        var allRigids = GetComponentsInChildren<Rigidbody>();
+ 
+        foreach(var childRigid in allRigids) DestroyImmediate(childRigid);
+        
+        var allJoints = GetComponentsInChildren<Joint>();
+ 
+        foreach(var childRigid in allJoints) DestroyImmediate(childRigid);
     }
 }
