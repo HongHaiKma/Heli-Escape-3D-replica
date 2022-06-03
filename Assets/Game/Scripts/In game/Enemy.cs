@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour, IDamageable
         
         m_StateMachine = new StateMachine<Enemy>(this);
         m_StateMachine.Init(IdleState.Instance);
-        m_EnemyState = EnemyState.Idle;
+        // m_EnemyState = EnemyState.Idle;
         // m_StateMachine.ChangeState(ChaseState.Instance);
 
         EventManager.AddListener(GameEvent.LEVEL_LOSE, OnEnemyKill);

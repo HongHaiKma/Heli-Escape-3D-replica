@@ -11,6 +11,9 @@ public class PrefabManager : Singleton2<PrefabManager>
     private Dictionary<string, GameObject> m_EnemyPrefabDict = new Dictionary<string, GameObject>();
     public GameObject[] m_EnemyPrefabs;
     
+    private Dictionary<string, GameObject> m_HostagePrefabDict = new Dictionary<string, GameObject>();
+    public GameObject[] m_HostagePrefabs;
+    
     private Dictionary<string, GameObject> m_BulletPrefabDict = new Dictionary<string, GameObject>();
     public GameObject[] m_BulletPrefabs;
 
@@ -63,6 +66,20 @@ public class PrefabManager : Singleton2<PrefabManager>
             try
             {
                 m_EnemyPrefabDict.Add(iName, iPrefab);
+            }
+            catch (System.Exception)
+            {
+                continue;
+            }
+        }
+        for (int i = 0; i < m_HostagePrefabs.Length; i++)
+        {
+            GameObject iPrefab = m_HostagePrefabs[i];
+            if (iPrefab == null) continue;
+            string iName = iPrefab.name;
+            try
+            {
+                m_HostagePrefabDict.Add(iName, iPrefab);
             }
             catch (System.Exception)
             {
@@ -215,6 +232,35 @@ public class PrefabManager : Singleton2<PrefabManager>
         else
         {
             GameObject prefab = GetEnemyPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name, pos);
+                return go;
+            }
+        }
+        return null;
+    }
+    
+    public GameObject GetHostagePrefabByName(string name)
+    {
+        if (m_HostagePrefabDict.ContainsKey(name))
+        {
+            return m_HostagePrefabDict[name];
+        }
+        return null;
+    }
+    
+    public GameObject SpawnHostagePool(string name, Vector3 pos)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name, pos, Quaternion.identity);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetHostagePrefabByName(name);
             if (prefab != null)
             {
                 SimplePool.Preload(prefab, 1, name);

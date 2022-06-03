@@ -12,6 +12,9 @@ public class LevelController : Singleton<LevelController>
     public Transform tf_CamLookPoint;
     public Transform tf_PivotFollower;
 
+    public List<Hostage> m_HostageRun;
+    public List<Hostage> m_HostageWait;
+
     public void OnEnable()
     {
         if (InGameManager.Instance.img_Flash.gameObject.activeInHierarchy) 

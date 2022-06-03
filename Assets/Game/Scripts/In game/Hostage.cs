@@ -8,6 +8,7 @@ using Pathfinding;
 using SRF;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Hostage : MonoBehaviour, IDamageable
 {
@@ -18,23 +19,34 @@ public class Hostage : MonoBehaviour, IDamageable
 
     public AIPath m_AI;
 
+    [Header("States")]
+    public StateMachine<Hostage> m_StateMachine;
+
+    public HostageStates m_HostageStates;
+
+    public bool isAwake = false;
+
+    private void Awake()
+    {
+        m_StateMachine = new StateMachine<Hostage>(this);
+        m_StateMachine.Init(P_WaitState.Instance);
+        
+        // isAwake = true;
+    }
 
     private void OnEnable()
     {
-        m_Anim.SetTrigger("Run");
-        
-        tf_LookAtPoint.DOKill();
-        Vector3 origin = new Vector3(0f, (tf_LookAtPoint.position.y - 60f) + 100f, 0f);
-        Vector3 end = new Vector3(0f, (tf_LookAtPoint.position.y + 60f) + 100f, 0f);
-        // DOLocalRotateQuaternion(Quaternion.Euler(0f, m_YAxis, 0f), 1.5f)
-        LevelController.Instance.m_Hostage.tf_LookAtPoint.DOLocalRotate(end, 5f, RotateMode.Fast).SetLoops(-1, LoopType.Yoyo).startValue = origin;
-
-        m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
+        isAwake = true;
     }
 
     private void Update()
     {
-        m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
+        m_StateMachine.ExecuteStateUpdate();
+
+        if (Helper.GetKeyDown(KeyCode.S))
+        {   
+            ChangeState(P_RunState.Instance);
+        }
     }
 
     public async UniTask Death()
@@ -76,15 +88,21 @@ public class Hostage : MonoBehaviour, IDamageable
     }
 
     #region States
+    
+    public void ChangeState(IState<Hostage> state)
+    {
+        m_StateMachine.ChangeState(state);
+    }
 
     public void OnRunEnter()
     {
-        
+        m_HostageStates = HostageStates.RUN;
+        m_Anim.SetTrigger("Run");
     }
     
     public void OnRunExecute()
     {
-        
+        m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
     }
     
     public void OnRunExit()
@@ -94,7 +112,8 @@ public class Hostage : MonoBehaviour, IDamageable
     
     public void OnJumpToHeliEnter()
     {
-        
+        m_HostageStates = HostageStates.JUMP_HELI;
+        m_Anim.SetTrigger("JumpHeli");
     }
     
     public void OnJumpToHeliExecute()
@@ -109,14 +128,17 @@ public class Hostage : MonoBehaviour, IDamageable
     
     public void OnDeathEnter()
     {
-        
+        m_HostageStates = HostageStates.DEATH;
+        m_Anim.SetTrigger("Death");
     }
     
-    public void OnDeathExecute()
+    public async UniTask OnDeathExecute()
     {
-        
+        await UniTask.Delay(1);
+        LevelController.Instance.m_HostageRun.Remove(this);
+        PrefabManager.Instance.DespawnPool(gameObject);
     }
-    
+
     public void OnDeathExit()
     {
         
@@ -124,7 +146,8 @@ public class Hostage : MonoBehaviour, IDamageable
     
     public void OnWaitEnter()
     {
-        
+        m_HostageStates = HostageStates.WAIT;
+        m_Anim.SetTrigger("Wait");
     }
     
     public void OnWaitExecute()
@@ -138,4 +161,26 @@ public class Hostage : MonoBehaviour, IDamageable
     }
 
     #endregion
+
+    #region Collision
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (m_HostageStates == HostageStates.RUN)
+        {
+            ITriggerble trigger = other.GetComponent<ITriggerble>();
+            if (trigger != null)
+                trigger.OnTrigger();  
+        }
+    }
+
+    #endregion
+}
+
+public enum HostageStates
+{
+    WAIT,
+    RUN,
+    DEATH,
+    JUMP_HELI,
 }
