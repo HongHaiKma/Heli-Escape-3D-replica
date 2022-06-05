@@ -11,6 +11,7 @@ public class InGameManager : Singleton2<InGameManager>
 {
     public Transform tf_LevelHolder;
     public Image img_Flash;
+    public Image img_Crosshair;
     
     [Header("Combo")]
     public Animator m_AnimUI;

@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Hostage : MonoBehaviour, IDamageable
+public class Hostage : MonoBehaviour
 {
     public Transform tf_Onwer;
     public Animator m_Anim;
@@ -78,13 +78,6 @@ public class Hostage : MonoBehaviour, IDamageable
         });
         await UniTask.Delay(2000);
         PopupCaller.OpenPopup(UIID.POPUP_WIN);
-    }
-
-    public void OnHit(Vector3 _pos)
-    {
-        Death();
-        
-        PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
     }
 
     #region States

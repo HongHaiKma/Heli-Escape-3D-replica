@@ -799,7 +799,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Android: ODIN_INSPECTOR;ODIN_INSPECTOR_3;DREAMTECK_SPLINES
+    Android: ODIN_INSPECTOR;ODIN_INSPECTOR_3;DREAMTECK_SPLINES;CF_FORCE_MOBILE_MODE
     CloudRendering: 
     EmbeddedLinux: 
     GameCoreScarlett: 
@@ -811,9 +811,9 @@ PlayerSettings:
     Stadia: 
     Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3
     WebGL: 
-    Windows Store Apps: 
+    Windows Store Apps: CF_FORCE_MOBILE_MODE
     XboxOne: 
-    iPhone: 
+    iPhone: CF_FORCE_MOBILE_MODE
     tvOS: 
   additionalCompilerArguments: {}
   platformArchitecture: {}

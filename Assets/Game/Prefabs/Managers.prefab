@@ -154,6 +154,8 @@ MonoBehaviour:
   - {fileID: 1310787322710076, guid: 7cdc6446cb378e240b9108f64c37d5d7, type: 3}
   - {fileID: 1855497614338780, guid: 42d9ee918924f2c4eab064301d4c601b, type: 3}
   - {fileID: 1778193839119415, guid: 04b3eb4c900d7d24c8d2565f6d08d454, type: 3}
+  - {fileID: 1522943249133023, guid: 929f79a8c0314f44c9e6d6f3139b1f44, type: 3}
+  - {fileID: 1129787803094789, guid: 53a51945b16f6d54fa8c2a3dc5fbd90b, type: 3}
   m_CharPrefabs: []
   m_CharStudios: []
   m_AOEDmgPrefabs: []
