@@ -29,13 +29,17 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
                 Hostage hos = PrefabManager.Instance.SpawnHostagePool(m_HostageSpawn.ToString(), randomPos.position)
                     .GetComponent<Hostage>();
                 m_Hostages.Add(hos);
+                LevelController.Instance.m_HostageRun.Add(hos);
                 await UniTask.WaitUntil(() => hos.isAwake == true);
                 hos.ChangeState(P_RunState.Instance);
             }
             else
             {
-                m_Hostages.Add(PrefabManager.Instance.SpawnHostagePool(m_HostageSpawn.ToString(), tf_RandomPoints[i].position)
-                    .GetComponent<Hostage>());
+                Hostage hos = PrefabManager.Instance
+                    .SpawnHostagePool(m_HostageSpawn.ToString(), tf_RandomPoints[i].position)
+                    .GetComponent<Hostage>();
+                m_Hostages.Add(hos);
+                LevelController.Instance.m_HostageWait.Add(hos);
             }
 
             // a.Add(PrefabManager.Instance.SpawnHostagePool(m_HostageSpawn.ToString(), randomPos.position)
@@ -53,6 +57,7 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
         m_Collider.enabled = false;
         for (int i = 0; i < m_Hostages.Count; i++)
         {
+            LevelController.Instance.m_HostageRun.Add(m_Hostages[i]);
             m_Hostages[i].ChangeState(P_RunState.Instance);
         }
     }

@@ -1532,9 +1532,9 @@ MonoBehaviour:
   desiredSimulationFPS: 60
   workerThreads: 2
   doubleBuffering: 0
-  symmetryBreakingBias: 0.1
+  symmetryBreakingBias: 0
   movementPlane: 0
-  drawObstacles: 0
+  drawObstacles: 1
 --- !u!4 &1440386592
 Transform:
   m_ObjectHideFlags: 0
@@ -7326,7 +7326,7 @@ MonoBehaviour:
   tf_LookAimIK: {fileID: 327021932}
   ignore:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 769
   m_CMCam: {fileID: 4487331228980395560}
   m_CMCam_Death: {fileID: 1861676652}
   m_CMCamOffset: {fileID: 7917008411375047805}
@@ -7335,6 +7335,8 @@ MonoBehaviour:
   tf_HeliHolderPoint: {fileID: 1104408314}
   tf_ShooterHolder: {fileID: 1495094412}
   m_Joystick: {fileID: 1020687270}
+  m_ShootTime: 0.4
+  m_IgnoreLayer: -514
 --- !u!114 &4487331228980395560
 MonoBehaviour:
   m_ObjectHideFlags: 0

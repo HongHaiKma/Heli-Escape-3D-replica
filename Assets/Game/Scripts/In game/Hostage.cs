@@ -71,7 +71,7 @@ public class Hostage : MonoBehaviour
         EventManager.CallEvent(GameEvent.LEVEL_WIN);
         await UniTask.Delay(500, true);
         Time.timeScale = 0.5f;
-        await UniTask.WhenAll(CamController.Instance.CameraOutro());
+        // await UniTask.WhenAll(CamController.Instance.CameraOutro());
         tf_Onwer.DOMove(CamController.Instance.tf_HeliHolderPoint.position, 1f).OnComplete(() =>
         {
             tf_Onwer.parent = CamController.Instance.tf_HeliHolderPoint;
@@ -119,17 +119,20 @@ public class Hostage : MonoBehaviour
         
     }
     
-    public void OnDeathEnter()
+    public async UniTask OnDeathEnter()
     {
         m_HostageStates = HostageStates.DEATH;
         m_Anim.SetTrigger("Death");
-    }
-    
-    public async UniTask OnDeathExecute()
-    {
-        await UniTask.Delay(1);
+        
+        await UniTask.Delay(1000);
+        
         LevelController.Instance.m_HostageRun.Remove(this);
         PrefabManager.Instance.DespawnPool(gameObject);
+    }
+    
+    public void OnDeathExecute()
+    {
+
     }
 
     public void OnDeathExit()

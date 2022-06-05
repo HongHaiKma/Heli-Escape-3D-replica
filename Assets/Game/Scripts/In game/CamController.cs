@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Threading.Tasks;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -24,76 +25,73 @@ public class CamController : Singleton<CamController>
     public Transform tf_ShooterHolder;
 
     public VariableJoystick m_Joystick;
-    private float tempMagnitude = 0;
+
+    public float m_ShootTime = 0.4f;
+
+    public int m_IgnoreLayer = ~(1 << 0 | 1 << 9);
+    
     void Update()
     {
-        // if (m_Joystick.Direction.magnitude > 0)
-        // {
-        //     if (Mathf.Abs(m_Joystick.Direction.magnitude - tempMagnitude) < .01f)
-        //         return;
-        //                 InGameManager.Instance.img_Crosshair.transform.position = new Vector3(InGameManager.Instance.img_Crosshair.transform.position.x + m_Joystick.Direction.x  * 50f, InGameManager.Instance.img_Crosshair.transform.position.y + m_Joystick.Direction.y * 50f, 0f);
-        //                 tempMagnitude = m_Joystick.Direction.magnitude;
-        // }
-        
-        Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
-
-        if (mouseInput.magnitude > 0.015f)
+        m_ShootTime += Time.deltaTime;
+        if (Input.GetMouseButton(0))
         {
-            Debug.Log("X: " + mouseInput.x);
-            Debug.Log("Y: " + mouseInput.y);
+            Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
+            RectTransform tfCrosshair = InGameManager.Instance.img_Crosshair.GetComponent<RectTransform>();
+            Vector2 apos = tfCrosshair.anchoredPosition;
+            float xPos = apos.x;
+            float yPos = apos.y;
+            xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.width) / 2, (Screen.width - tfCrosshair.sizeDelta.x) / 2);
+            yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.height) / 2,
+                (Screen.height - tfCrosshair.sizeDelta.y) / 2);
+            tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
+            
+            var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
+            
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
+            {
+                tf_LookAimIK.position = hitInfo.point;
+                if (m_ShootTime > 0.1f)
+                {
+                    Collider col = hitInfo.collider;
+                    GameObject go = hitInfo.transform.gameObject;
+                                            
+                    if (col != null)
+                    {
+                        Helper.DebugLog("Name: " + col.name);
+                        m_ShootTime = 0f;
+                        // if (go.tag.Equals("Enemy") || go.tag.Equals("EnemyHead") || go.tag.Equals("Hostage"))
+                        // {
+                        //     Transform trans = hitInfo.collider.GetComponent<Transform>();
+                        //     tf_LookAimIK.position = hitInfo.point;
+                        //     Shoot(hitInfo.point, trans);
+                        // }
+                        // else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
+                        // {
+                        //     tf_LookAimIK.position = hitInfo.point;
+                        //     Shoot(hitInfo.point, null);
+                        // }
+                                            
+                        if (col.tag.Equals("Ground"))
+                        {
+                            PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
+                            PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
+                        }
+
+                        if (col.gameObject.GetComponent<IDamageable>() != null)
+                        {
+                            col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
+                        }
+                    }
+                }
+            }
+
+            
         }
-        
-        
-        // Vector2 pos;
-        //
-        // RectTransformUtility.ScreenPointToLocalPointInRectangle(
-        //     parentCanvas.transform as RectTransform, Input.mousePosition,
-        //     parentCanvas.worldCamera,
-        //     out pos);
-        
-        // if (Input.GetMouseButton(0))
-        // {
-        //     // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //     // var ray = Camera.main.ScreenPointToRay(InGameManager.Instance.img_Crosshair.transform.position);
-        //     // InGameManager.Instance.img_Crosshair.transform.position = Input.mousePosition;
-        //
-        //     // Transform tf_Crosshair = InGameManager.Instance.img_Crosshair.transform.position;
-        //     
-        //      m_Joystick.Direction
-        //     
-        //     RaycastHit hitInfo;
-        //     // if (Physics.Raycast(ray, out  hitInfo))
-        //     // {
-        //     //     var col = hitInfo.collider.GetComponent<Collider>();
-        //     //     GameObject go = hitInfo.transform.gameObject;
-        //     //
-        //     //     if (go != null)
-        //     //     {
-        //     //         // if (go.tag.Equals("Enemy") || go.tag.Equals("EnemyHead") || go.tag.Equals("Hostage"))
-        //     //         // {
-        //     //         //     Transform trans = hitInfo.collider.GetComponent<Transform>();
-        //     //         //     tf_LookAimIK.position = hitInfo.point;
-        //     //         //     Shoot(hitInfo.point, trans);
-        //     //         // }
-        //     //         // else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
-        //     //         // {
-        //     //         //     tf_LookAimIK.position = hitInfo.point;
-        //     //         //     Shoot(hitInfo.point, null);
-        //     //         // }
-        //     //
-        //     //         // if (go.tag.Equals("Ground"))
-        //     //         // {
-        //     //         //     tf_LookAimIK.position = hitInfo.point;
-        //     //         //     PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
-        //     //         //     PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
-        //     //         // }
-        //     //     }
-        //     // }
-        // }
 
         if (Helper.GetKeyDown(KeyCode.A))
         {
-            CameraOutro();
+            SimplePool.Release();
         }
     }
 
@@ -194,17 +192,17 @@ public class CamController : Singleton<CamController>
         m_CMCamOffset.m_Offset = targetPosition;
     }
     
-    public async UniTask CameraOutro()
-    {
-        await UniTask.WaitForEndOfFrame();
-        tf_HeliHolder.parent = null;
-        tf_ShooterHolder.parent = null;
-        await UniTask.WaitForEndOfFrame();
-        // LevelController.Instance.m_Hostage.tf_LookAtPoint.LookAt(tf_HeliHolder.position);
-        LevelController.Instance.m_Hostage.tf_Onwer.LookAt(tf_HeliHolder.position, Vector3.up);
-        m_CMCam.LookAt = tf_HeliHolder;
-        m_CMCam.Follow = tf_HeliHolder;
-        m_CMCamOffset.m_Offset = new Vector3(-1.3f, 0.5f, 27f);
-        await UniTask.WaitForEndOfFrame();
-    }
+    // public async UniTask CameraOutro()
+    // {
+    //     await UniTask.WaitForEndOfFrame();
+    //     tf_HeliHolder.parent = null;
+    //     tf_ShooterHolder.parent = null;
+    //     await UniTask.WaitForEndOfFrame();
+    //     // LevelController.Instance.m_Hostage.tf_LookAtPoint.LookAt(tf_HeliHolder.position);
+    //     LevelController.Instance.m_Hostage.tf_Onwer.LookAt(tf_HeliHolder.position, Vector3.up);
+    //     m_CMCam.LookAt = tf_HeliHolder;
+    //     m_CMCam.Follow = tf_HeliHolder;
+    //     m_CMCamOffset.m_Offset = new Vector3(-1.3f, 0.5f, 27f);
+    //     await UniTask.WaitForEndOfFrame();
+    // }
 }

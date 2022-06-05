@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class LevelController : Singleton<LevelController>
 {
-    public Hostage m_Hostage;
     public Transform tf_CamLookPoint;
     public Transform tf_PivotFollower;
 
@@ -17,6 +16,9 @@ public class LevelController : Singleton<LevelController>
 
     public void OnEnable()
     {
+        m_HostageRun.Clear();
+        m_HostageWait.Clear();
+        
         if (InGameManager.Instance.img_Flash.gameObject.activeInHierarchy) 
             Trasition();
         else 

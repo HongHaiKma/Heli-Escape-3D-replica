@@ -14,7 +14,7 @@ public class Gas : MonoBehaviour, IDamageable
             
             if (enemy != null)
             {
-                enemy.DoRagdoll(explosionPos);
+                // enemy.DoRagdoll(explosionPos);
                 
                 enemy.m_StateMachine.ChangeState(DeathState.Instance);
 

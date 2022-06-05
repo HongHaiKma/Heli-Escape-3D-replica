@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,16 @@ using UnityEngine;
 public class EnemyHead : MonoBehaviour, IDamageable
 {
     public Enemy m_EnemyOwner;
-    
+    public Collider col_Owner;
+
+    private void OnEnable()
+    {
+        col_Owner.enabled = true;
+    }
+
     public void OnHit(Vector3 _pos)
     {
+        col_Owner.enabled = false;
         Debug.Log("Head shotttttttttttt");
         m_EnemyOwner.OnHit(_pos);
     }
