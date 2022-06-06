@@ -42,11 +42,6 @@ public class Hostage : MonoBehaviour
     private void Update()
     {
         m_StateMachine.ExecuteStateUpdate();
-
-        if (Helper.GetKeyDown(KeyCode.S))
-        {   
-            ChangeState(P_RunState.Instance);
-        }
     }
 
     public async UniTask Death()
@@ -128,6 +123,13 @@ public class Hostage : MonoBehaviour
         
         LevelController.Instance.m_HostageRun.Remove(this);
         PrefabManager.Instance.DespawnPool(gameObject);
+
+        if (LevelController.Instance.m_HostageRun.Count <= 0)
+        {
+            EventManager.CallEvent(GameEvent.LEVEL_LOSE);
+            await UniTask.Delay(1000);
+            PopupCaller.OpenPopup(UIID.POPUP_LOSE);
+        }
     }
     
     public void OnDeathExecute()

@@ -7,13 +7,13 @@ using Pathfinding;
 using Sirenix.OdinInspector;
 // using System.Threading;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using Random = System.Random;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     public bool m_Warning;
     public Transform tf_Owner;
-    public GameObject g_Warning;
     public Animator m_Anim;
     
     public StateMachine<Enemy> m_StateMachine;
@@ -48,7 +48,6 @@ public class Enemy : MonoBehaviour, IDamageable
         m_TimeChangeTarget = 0f;
         col_Owner.enabled = true;
         m_Warning = false;
-        g_Warning.SetActive(false);
 
         // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
         
@@ -57,27 +56,24 @@ public class Enemy : MonoBehaviour, IDamageable
         // m_StateMachine.Init(IdleState.Instance);
         m_StateMachine.ChangeState(ChaseState.Instance);
 
-        EventManager.AddListener(GameEvent.LEVEL_LOSE, OnEnemyKill);
-        EventManager.AddListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.AddListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
     }
 
     private void OnDisable()
     {
-        if (m_Warning)
-        {
-            m_Warning = false;
-            g_Warning.SetActive(false);
-            GameManager.Instance.SetSlowmotion(false);
-        }
+        // if (m_Warning)
+        // {
+        //     m_Warning = false;
+        //     g_Warning.SetActive(false);
+        //     GameManager.Instance.SetSlowmotion(false);
+        // }
         
-        EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyKill);
-        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
     }
 
     private void OnDestroy()
     {
-        EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyKill);
-        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
     }
 
     private void Update()
@@ -153,39 +149,69 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual async UniTask OnChaseExecute()
     {
         m_TimeChangeTarget += Time.deltaTime;
-        
 
-        if (m_TargetHostage == null)
+        if (LevelController.Instance.m_HostageRun.Count <= 0)
         {
-            m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-
-            while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) || !m_TargetHostage.gameObject.activeInHierarchy || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
-            {
-                m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                await UniTask.Yield();
-            }
+            ChangeState(WinState.Instance);
+            return;
         }
         else
         {
-            while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) || !m_TargetHostage.gameObject.activeInHierarchy || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+            if (m_TargetHostage == null)
             {
                 m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                await UniTask.Yield();
-            }
-        }
-        
-        if (m_TimeChangeTarget > 5f)
-        {
-            m_TimeChangeTarget = 0f;
-            
-            m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
 
-            while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) || !m_TargetHostage.gameObject.activeInHierarchy || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
-            {
-                m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                await UniTask.Yield();
+                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+                       || !m_TargetHostage.gameObject.activeInHierarchy 
+                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+                {
+                    if (LevelController.Instance.m_HostageRun.Count <= 0)
+                    {
+                        ChangeState(WinState.Instance);
+                        return;
+                    }
+                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                    await UniTask.Yield();
+                }
             }
+            else
+            {
+                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+                       || !m_TargetHostage.gameObject.activeInHierarchy 
+                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+                {
+                    if (LevelController.Instance.m_HostageRun.Count <= 0)
+                    {
+                        ChangeState(WinState.Instance);
+                        return;
+                    }
+                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                    await UniTask.Yield();
+                }
+            }
+        
+            if (m_TimeChangeTarget > 5f)
+            {
+                m_TimeChangeTarget = 0f;
+            
+                m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+
+                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+                       || !m_TargetHostage.gameObject.activeInHierarchy 
+                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+                {
+                    if (LevelController.Instance.m_HostageRun.Count <= 0)
+                    {
+                        ChangeState(WinState.Instance);
+                        return;
+                    }
+                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                    await UniTask.Yield();
+                }
+            } 
         }
+
+        
         
         m_AIPath.destination = m_TargetHostage.tf_Onwer.position;
 
@@ -198,7 +224,7 @@ public class Enemy : MonoBehaviour, IDamageable
         //     return;
         // }
 
-        if (Helper.CalDistance(tf_Owner.position, m_TargetHostage.tf_Onwer.position) < 3f)
+        if (Helper.CalDistance(tf_Owner.position, m_TargetHostage.tf_Onwer.position) < 0.5f)
         {
             m_StateMachine.ChangeState(KillState.Instance);
             // EventManager.CallEvent(GameEvent.LEVEL_LOSE);
@@ -229,8 +255,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public void SetSlowmotionOff()
     {
         m_Warning = false;
-        g_Warning.SetActive(false);
-        GameManager.Instance.SetSlowmotion(false);
+        // g_Warning.SetActive(false);
     }
     
     public virtual void OnChaseExit()
@@ -245,12 +270,12 @@ public class Enemy : MonoBehaviour, IDamageable
         // m_AIPath.destination = tf_Owner.position;
         m_AIPath.canMove = false;
         // DoRagdoll(tf_Owner.position);
-        if (m_Warning)
-        {
-            m_Warning = false;
-            g_Warning.SetActive(false);
-            GameManager.Instance.SetSlowmotion(false);  
-        }
+        // if (m_Warning)
+        // {
+        //     m_Warning = false;
+        //     g_Warning.SetActive(false);
+        //     GameManager.Instance.SetSlowmotion(false);  
+        // }
 
         await UniTask.Delay(2000);
         
@@ -278,9 +303,9 @@ public class Enemy : MonoBehaviour, IDamageable
         ChangeState(ChaseState.Instance);
     }
 
-    public void OnEnemyKill()
+    public void OnEnemyWin()
     {
-        ChangeState(KillState.Instance);
+        ChangeState(WinState.Instance);
         // SetSlowmotionOff();
     }
     
@@ -298,8 +323,6 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         
     }
-    
-    
 
     public virtual void OnClimbEnter()
     {
@@ -310,13 +333,29 @@ public class Enemy : MonoBehaviour, IDamageable
     
     public virtual void OnClimbExecute()
     {
-        tf_Owner.position += Vector3.up * 1f * Time.deltaTime;
+        tf_Owner.position += Vector3.up * 2f * Time.deltaTime;
     }
     
     public virtual void OnClimbExit()
     {
         m_AIPath.canMove = true;
         tf_Owner.position = tf_Owner.position + tf_Owner.forward * 2f;
+    }
+    
+    public virtual void OnWinEnter()
+    {
+        m_EnemyState = EnemyState.Win;
+        m_Anim.SetTrigger("Win");
+    }
+    
+    public virtual void OnWinExecute()
+    {
+        
+    }
+    
+    public virtual void OnWinExit()
+    {
+        
     }
 
     public void OnClimbStart()
@@ -351,6 +390,7 @@ public class Enemy : MonoBehaviour, IDamageable
         ChangeState(DeathState.Instance);
                 
         PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
+        PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos);
     }
 
     [Button]
@@ -377,4 +417,5 @@ public enum EnemyState
     Death = 2,
     Kill = 3,
     Climb = 4,
+    Win = 5,
 }

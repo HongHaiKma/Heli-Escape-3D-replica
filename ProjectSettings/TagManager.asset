@@ -29,8 +29,8 @@ TagManager:
   - Hostage
   - Enemy
   - EnemyBody
-  - 
-  - 
+  - TrapItem
+  - TrapSystem
   - 
   - 
   - 

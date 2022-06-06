@@ -38,13 +38,17 @@ public class GameManager : Singleton2<GameManager>
     }
     
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.A))
-    //     {
-    //         Debug.Log("Level: " + ProfileManager.GetLevel());
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Time.timeScale = 0f;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Time.timeScale = 1f;
+        }
+    }
 
     public void SetSlowmotion(bool _warning)
     {

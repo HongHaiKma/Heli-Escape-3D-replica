@@ -24,26 +24,42 @@ public class CamController : Singleton<CamController>
     public Transform tf_HeliHolderPoint;
     public Transform tf_ShooterHolder;
 
-    public VariableJoystick m_Joystick;
+    public RectTransform mainCanvas;
 
     public float m_ShootTime = 0.4f;
 
-    public int m_IgnoreLayer = ~(1 << 0 | 1 << 9);
+    public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12);
+
+    public TouchTrackPad m_TrackPad;
     
     void Update()
     {
         m_ShootTime += Time.deltaTime;
-        if (Input.GetMouseButton(0))
+        // if (Input.GetMouseButtonDown(0))
+        // if ( Input.simulateMouseWithTouches )
+        if (m_TrackPad.Pressed())
         {
             Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
             RectTransform tfCrosshair = InGameManager.Instance.img_Crosshair.GetComponent<RectTransform>();
             Vector2 apos = tfCrosshair.anchoredPosition;
             float xPos = apos.x;
             float yPos = apos.y;
-            xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.width) / 2, (Screen.width - tfCrosshair.sizeDelta.x) / 2);
-            yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.height) / 2,
-                (Screen.height - tfCrosshair.sizeDelta.y) / 2);
+            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.width) / 2, (Screen.width - tfCrosshair.sizeDelta.x) / 2);
+            // yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.height) / 2,
+            //     (Screen.height - tfCrosshair.sizeDelta.y) / 2);
+            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.width) / 2, (Screen.safeArea.width - tfCrosshair.sizeDelta.x) / 2);
+            // yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.safeArea.height) / 2,
+            //     (Screen.safeArea.height - tfCrosshair.sizeDelta.y) / 2);
+            // xPos = Mathf.Clamp(xPos, Screen.safeArea.xMin, Screen.safeArea.xMax * 2f);
+            // yPos = Mathf.Clamp(yPos, Screen.safeArea.yMin, Screen.safeArea.yMax * 2f);
+            xPos = Mathf.Clamp(xPos, 0f, mainCanvas.rect.width);
+            yPos = Mathf.Clamp(yPos, 0f, mainCanvas.rect.height);
+            // tfCrosshair
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
+            
+            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.xMin) / 2, (tfCrosshair.sizeDelta.x - Screen.safeArea.xMax) / 2);
+            // yPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.yMin) / 2, (tfCrosshair.sizeDelta.x - Screen.safeArea.yMax) / 2);
+            // tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
             
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
             
@@ -76,11 +92,18 @@ public class CamController : Singleton<CamController>
                         {
                             PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
                             PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
+                            PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
                         }
 
                         if (col.gameObject.GetComponent<IDamageable>() != null)
                         {
                             col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
+                            PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
+                        }
+                        
+                        if (col.gameObject.GetComponent<ITrap>() != null)
+                        {
+                            col.gameObject.GetComponent<ITrap>().OnTrigger();
                         }
                     }
                 }
@@ -153,6 +176,7 @@ public class CamController : Singleton<CamController>
     public async UniTask CameraIntro(Vector3 targetPosition, float duration)
     {
         await UniTask.WhenAll(ResetLevel());
+        m_CMCamOffset.enabled = true;
         m_CMCamOffset.m_Offset = new Vector3(-10f, 13f, -8f);
         
         tf_HeliHolder.parent = null;
@@ -191,18 +215,29 @@ public class CamController : Singleton<CamController>
 
         m_CMCamOffset.m_Offset = targetPosition;
     }
-    
-    // public async UniTask CameraOutro()
-    // {
-    //     await UniTask.WaitForEndOfFrame();
-    //     tf_HeliHolder.parent = null;
-    //     tf_ShooterHolder.parent = null;
-    //     await UniTask.WaitForEndOfFrame();
-    //     // LevelController.Instance.m_Hostage.tf_LookAtPoint.LookAt(tf_HeliHolder.position);
-    //     LevelController.Instance.m_Hostage.tf_Onwer.LookAt(tf_HeliHolder.position, Vector3.up);
-    //     m_CMCam.LookAt = tf_HeliHolder;
-    //     m_CMCam.Follow = tf_HeliHolder;
-    //     m_CMCamOffset.m_Offset = new Vector3(-1.3f, 0.5f, 27f);
-    //     await UniTask.WaitForEndOfFrame();
-    // }
+
+    public async UniTask CamMoveEndPos(float duration)
+    {
+        m_CMCamOffset.enabled = false;
+        m_CMCam.Follow = null;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamLook;
+        
+        float time = 0;
+        Vector3 startPosition = tf_Owner.position;
+        Vector3 targetPosition = LevelController.Instance.tf_CamPos.position;
+        
+        while (time < duration)
+        {
+            tf_Owner.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            await UniTask.Yield();
+        }
+
+        tf_Owner.position = targetPosition;
+    }
+
+    public void WaitForEndGame()
+    {
+        
+    }
 }
