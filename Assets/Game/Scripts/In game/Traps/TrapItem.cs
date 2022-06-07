@@ -24,19 +24,11 @@ public class TrapItem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Helper.DebugLog("Collide");
         if (m_CanCollide)
         {
-            Helper.DebugLog("Can Collide");
             if (collision.gameObject.GetComponent<IDamageable>() != null)
             {
-                Helper.DebugLog("Collide Enemy");
                 collision.gameObject.GetComponent<IDamageable>().OnHit(collision.gameObject.transform.position);
-            }
-
-            if (collision.gameObject.tag.Equals("Enemy") || collision.gameObject.tag.Equals("EnemyHead"))
-            {
-                Helper.DebugLog("Collide ENEMYEYYYY");
             }
         }
     }

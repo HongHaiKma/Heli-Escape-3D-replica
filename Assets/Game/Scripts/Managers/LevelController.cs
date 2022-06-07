@@ -14,9 +14,13 @@ public class LevelController : Singleton<LevelController>
     public List<Hostage> m_HostageRun;
     public List<Hostage> m_HostageWait;
 
+    public AstarPath m_APath;
+
     [Header("EndGame")] 
     public Transform tf_CamPos;
     public Transform tf_CamLook;
+    public Transform tf_CamFinish;
+    public Transform tf_JumpHeliPos;
 
     public void OnEnable()
     {
@@ -26,7 +30,7 @@ public class LevelController : Singleton<LevelController>
         if (InGameManager.Instance.img_Flash.gameObject.activeInHierarchy) 
             Trasition();
         else 
-            CamController.Instance.CameraIntro(new Vector3(10f, 10f, 0f), 1.5f);
+            CamController.Instance.CameraIntro(new Vector3(15f, 15f, 0f), 1.5f);
 
         GUIManager.Instance.g_Loading.SetActive(false);
         GameManager.Instance.m_LevelLoaded = true;
@@ -34,7 +38,7 @@ public class LevelController : Singleton<LevelController>
 
     async UniTask Trasition()
     {
-        CamController.Instance.CameraIntro(new Vector3(10f, 10f, 0f), 1.5f);
+        CamController.Instance.CameraIntro(new Vector3(15f, 15f, 0f), 1.5f);
         await UniTask.Delay(100);
         InGameManager.Instance.img_Flash.DOFade(0f, 1f);
         await UniTask.Delay(1000);

@@ -12,6 +12,7 @@ using UnityEngine.Serialization;
 
 public class Hostage : MonoBehaviour
 {
+    public Rigidbody rb_Owner;
     public Transform tf_Onwer;
     public Animator m_Anim;
 
@@ -24,24 +25,38 @@ public class Hostage : MonoBehaviour
 
     public HostageStates m_HostageStates;
 
-    public bool isAwake = false;
-
-    private void Awake()
+    private void OnEnable()
     {
+        m_AI.isStopped = false;
+        rb_Owner.useGravity = true;
         m_StateMachine = new StateMachine<Hostage>(this);
         m_StateMachine.Init(P_WaitState.Instance);
         
-        // isAwake = true;
+        EventManager.AddListener(GameEvent.LEVEL_WIN, OnHostageWin);
+        EventManager.AddListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
-        isAwake = true;
+        m_StateMachine.ChangeState(P_WaitState.Instance);
+        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnHostageWin);
+        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnHostageWin);
+        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void Update()
     {
         m_StateMachine.ExecuteStateUpdate();
+    }
+    
+    public void DestroyAllPool()
+    {
+        PrefabManager.Instance.DespawnPool(gameObject);
     }
 
     public async UniTask Death()
@@ -54,20 +69,23 @@ public class Hostage : MonoBehaviour
         PopupCaller.OpenPopup(UIID.POPUP_LOSE);
     }
 
-    public void Win()
+    public void OnHostageWin()
     {
         WinTask();
     }
 
     public async UniTask WinTask()
     {
-        ProfileManager.PassLevel();
-        m_Anim.SetTrigger("JumpHeli");
-        EventManager.CallEvent(GameEvent.LEVEL_WIN);
-        await UniTask.Delay(500, true);
-        Time.timeScale = 0.5f;
+        // ProfileManager.PassLevel();
+        // m_Anim.SetTrigger("JumpHeli");
+        // EventManager.CallEvent(GameEvent.LEVEL_WIN);
+        // await UniTask.Delay(500, true);
+        // Time.timeScale = 0.5f;
         // await UniTask.WhenAll(CamController.Instance.CameraOutro());
-        tf_Onwer.DOMove(CamController.Instance.tf_HeliHolderPoint.position, 1f).OnComplete(() =>
+        tf_Onwer.position = LevelController.Instance.tf_JumpHeliPos.position;
+        ChangeState(P_JumpToHeli.Instance);
+        await UniTask.Delay(200);
+        tf_Onwer.DOMove(CamController.Instance.tf_HeliHolderPoint.position, 1.5f).OnComplete(() =>
         {
             tf_Onwer.parent = CamController.Instance.tf_HeliHolderPoint;
         });
@@ -85,11 +103,17 @@ public class Hostage : MonoBehaviour
     public void OnRunEnter()
     {
         m_HostageStates = HostageStates.RUN;
+        m_AI.canMove = true;
+        m_AI.isStopped = false;
         m_Anim.SetTrigger("Run");
     }
     
     public void OnRunExecute()
     {
+        // if (m_Anim.tri)
+        // {
+        //     
+        // }
         m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
     }
     
@@ -101,6 +125,9 @@ public class Hostage : MonoBehaviour
     public void OnJumpToHeliEnter()
     {
         m_HostageStates = HostageStates.JUMP_HELI;
+        m_AI.canMove = false;
+        m_AI.isStopped = true;
+        rb_Owner.useGravity = false;
         m_Anim.SetTrigger("JumpHeli");
     }
     

@@ -112,9 +112,9 @@ public class CamController : Singleton<CamController>
             
         }
 
-        if (Helper.GetKeyDown(KeyCode.A))
+        if (Helper.GetKeyDown(KeyCode.D))
         {
-            SimplePool.Release();
+            CamMoveFinish(1f);
         }
     }
 
@@ -236,8 +236,25 @@ public class CamController : Singleton<CamController>
         tf_Owner.position = targetPosition;
     }
 
-    public void WaitForEndGame()
+    public async UniTask CamMoveFinish(float duration)
     {
+        m_CMCamOffset.enabled = false;
+        tf_HeliHolder.parent = null;
+        tf_ShooterHolder.parent = null;
+        m_CMCam.Follow = null;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamPos;
         
+        float time = 0;
+        Vector3 startPosition = tf_Owner.position;
+        Vector3 targetPosition = LevelController.Instance.tf_CamFinish.position;
+        
+        while (time < duration)
+        {
+            tf_Owner.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            await UniTask.Yield();
+        }
+
+        tf_Owner.position = targetPosition;
     }
 }

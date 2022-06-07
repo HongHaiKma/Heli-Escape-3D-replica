@@ -8,8 +8,10 @@ public class SlowMotionTrigger : MonoBehaviour, ITriggerble
     public Collider m_Collider;
     
     public void OnTrigger()
-        {
-            m_Collider.enabled = false;
-            CamController.Instance.CamMoveEndPos(3f);
-        }
+    {
+        Time.timeScale = 0.5f;
+        GameManager.Instance.m_GameLoop = GameLoop.WaitEndGame;
+        m_Collider.enabled = false;
+        CamController.Instance.CamMoveEndPos(3f);
+    }
 }

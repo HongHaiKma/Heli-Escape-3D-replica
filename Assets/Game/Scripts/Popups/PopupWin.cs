@@ -17,10 +17,15 @@ public class PopupWin : UICanvas
 
     public void OnNextLevel()
     {
-        InGameManager.Instance.ResetLevel();
-        GameManager.Instance.ResetLevel();
-        // GameManager.Instance.LoadLevel();
-        GameManager.Instance.LoadLevelTask();
-        OnClose();
+        // EventManager.CallEvent(GameEvent.DespawnAllPool);
+        // InGameManager.Instance.ResetLevel();
+        // GameManager.Instance.ResetLevel();
+        // // GameManager.Instance.LoadLevel();
+        // GameManager.Instance.LoadLevelTask();
+        // OnClose();
+
+        GameManager.Instance.m_GameLoop = GameLoop.Wait;
+        
+        GameManager.Instance.LoadSceneTest();
     }
 }

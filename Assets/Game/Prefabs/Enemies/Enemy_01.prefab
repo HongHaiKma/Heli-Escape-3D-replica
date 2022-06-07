@@ -81,10 +81,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 0.22
+  radius: 0.15
   height: 0.7
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 2
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -212,11 +212,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   col_Owner: {fileID: 3226633885786190444}
+  rb_Owner: {fileID: 7947742346016711833}
   m_EnemyState: 0
   m_AIPath: {fileID: 2453109988599596294}
   m_TargetHostage: {fileID: 0}
   m_TimeChangeTarget: 0
   isClimbing: 0
+  m_RaySensor: {fileID: 7324865867704525273}
+  go_RaySensor: {fileID: 5326485959827220325}
   m_TimeCatch: 0
   m_TimeCatchMax: 5
 --- !u!1 &5326485959827220325
@@ -244,7 +247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5326485959827220325}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.359, z: 0}
+  m_LocalPosition: {x: 0, y: 0.506, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -293,20 +296,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  Shape: 0
+  Shape: 2
   Sphere:
-    Radius: 1
-  Box:
-    HalfExtents: {x: 0.5, y: 0.5, z: 0.5}
-  Capsule:
     Radius: 0.5
+  Box:
+    HalfExtents: {x: 0.35, y: 0.01, z: 0.35}
+  Capsule:
+    Radius: 1
     Height: 1
   signalFilter:
     IgnoreList: []
-    EnableTagFilter: 0
-    AllowedTags: []
+    EnableTagFilter: 1
+    AllowedTags:
+    - Ground
     Sensor: {fileID: 7324865867704525273}
-  Length: 0.8
+  Length: 0
   Direction: {x: 0, y: 0, z: 1}
   WorldSpace: 0
   DetectsOnLayers:
@@ -316,7 +320,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   DetectionMode: 0
-  IgnoreTriggerColliders: 0
+  IgnoreTriggerColliders: 1
   MinimumSlopeAngle: 0
   SlopeUpDirection: {x: 0, y: 1, z: 0}
   pulseRoutine:

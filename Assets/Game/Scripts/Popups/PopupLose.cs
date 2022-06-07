@@ -17,10 +17,15 @@ public class PopupLose : UICanvas
 
     public void OnReplayLevel()
     {
-        // CamController.Instance.ResetLevel();
-        InGameManager.Instance.ResetLevel();
-        GameManager.Instance.ResetLevel();
-        GameManager.Instance.LoadLevelTask();
-        OnClose();
+        // EventManager.CallEvent(GameEvent.DespawnAllPool);
+        // // CamController.Instance.ResetLevel();
+        // InGameManager.Instance.ResetLevel();
+        // GameManager.Instance.ResetLevel();
+        // GameManager.Instance.LoadLevelTask();
+        // OnClose();
+        
+        GameManager.Instance.m_GameLoop = GameLoop.Wait;
+        
+        GameManager.Instance.LoadSceneTest();
     }
 }

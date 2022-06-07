@@ -157,6 +157,7 @@ MonoBehaviour:
   - {fileID: 1522943249133023, guid: 929f79a8c0314f44c9e6d6f3139b1f44, type: 3}
   - {fileID: 1129787803094789, guid: 53a51945b16f6d54fa8c2a3dc5fbd90b, type: 3}
   - {fileID: 5573679948565856986, guid: d79a6334be5278a48b766dfd024e32f1, type: 3}
+  - {fileID: 5573679948565856986, guid: c0db63750bc8faa4798e42f9cb88f5e2, type: 3}
   m_CharPrefabs: []
   m_CharStudios: []
   m_AOEDmgPrefabs: []
@@ -206,3 +207,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EnemyWarning: 0
   m_LevelLoaded: 0
+  m_GameLoop: 0

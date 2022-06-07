@@ -30,7 +30,9 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
                     .GetComponent<Hostage>();
                 m_Hostages.Add(hos);
                 LevelController.Instance.m_HostageRun.Add(hos);
-                await UniTask.WaitUntil(() => hos.isAwake == true);
+                // await UniTask.WaitUntil(() => hos.isAwake == true);
+                await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
+                await UniTask.WaitForEndOfFrame();
                 hos.ChangeState(P_RunState.Instance);
             }
             else
@@ -49,6 +51,14 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
         // for (int i = 0; i < m_HostageNumber; i++)
         // {
         //     if (!isWaiting) a[i].ChangeState(P_RunState.Instance);
+        // }
+
+        // if (!isWaiting)
+        // {
+        //     for (int i = 0; i < m_Hostages.Count; i++)
+        //     {
+        //         m_Hostages[i].ChangeState(P_RunState.Instance);
+        //     }
         // }
     }
 

@@ -7,8 +7,11 @@ using Pathfinding;
 using Sirenix.OdinInspector;
 // using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Micosmo.SensorToolkit;
 using Unity.VisualScripting;
 using Random = System.Random;
+using UnityEditor;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -22,6 +25,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public Collider MainCollider;
     public Rigidbody[] AllRigidbodies;
     public Collider col_Owner;
+    public Rigidbody rb_Owner;
 
     public EnemyState m_EnemyState;
 
@@ -30,33 +34,30 @@ public class Enemy : MonoBehaviour, IDamageable
     public Hostage m_TargetHostage;
     public float m_TimeChangeTarget;
     public bool isClimbing;
+    public RaySensor m_RaySensor;
+    public GameObject go_RaySensor;
 
     [Header("Time")] 
     public float m_TimeCatch;
     public float m_TimeCatchMax;
-
-    // private void Awake()
-    // {
-    //     AllColliders = GetComponentsInChildren<Collider>(true);
-    //     AllRigidbodies = GetComponentsInChildren<Rigidbody>(true);
-    // }
-
+    
     private void OnEnable()
     {
-        // m_AIPath.canMove = false;
+        m_AIPath.canMove = true;
+        m_AIPath.isStopped = false;
         isClimbing = false;
         m_TimeChangeTarget = 0f;
         col_Owner.enabled = true;
         m_Warning = false;
-
-        // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-        
+        go_RaySensor.SetActive(true);
         
         m_StateMachine = new StateMachine<Enemy>(this);
-        // m_StateMachine.Init(IdleState.Instance);
-        m_StateMachine.ChangeState(ChaseState.Instance);
-
+        m_StateMachine.Init(IdleState.Instance);
+        
         EventManager.AddListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
+        EventManager.AddListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.AddListener(GameEvent.DespawnAllPool, DestroyAllPool);
+        // m_RaySensor.OnDetected.AddListener(OnClimbStart());
     }
 
     private void OnDisable()
@@ -67,26 +68,27 @@ public class Enemy : MonoBehaviour, IDamageable
         //     g_Warning.SetActive(false);
         //     GameManager.Instance.SetSlowmotion(false);
         // }
-        
+        // m_StateMachine.ChangeState(IdleState.Instance);
         EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
+        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void OnDestroy()
     {
         EventManager.RemoveListener(GameEvent.LEVEL_LOSE, OnEnemyWin);
+        EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnEnemyLose);
+        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void Update()
     {
-        if (m_StateMachine == null)
-        {
-            Helper.DebugLog("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }
-        else
-        {
-            m_StateMachine.ExecuteStateUpdate();
-        }
-        // m_StateMachine.ExecuteStateUpdate();
+        m_StateMachine.ExecuteStateUpdate();
+    }
+
+    public void DestroyAllPool()
+    {
+        PrefabManager.Instance.DespawnPool(gameObject);
     }
 
     public void DoRagdoll(Vector3 explosionPos)
@@ -142,6 +144,9 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual async UniTask OnChaseEnter()
     {
         m_EnemyState = EnemyState.Chase;
+        m_RaySensor.enabled = true;
+        m_AIPath.canMove = true;
+        m_AIPath.isStopped = false;
         m_Anim.SetTrigger("Chase");
         m_TimeCatch = 0f;
     }
@@ -269,6 +274,7 @@ public class Enemy : MonoBehaviour, IDamageable
         m_Anim.SetTrigger("Death");
         // m_AIPath.destination = tf_Owner.position;
         m_AIPath.canMove = false;
+        go_RaySensor.SetActive(false);
         // DoRagdoll(tf_Owner.position);
         // if (m_Warning)
         // {
@@ -327,25 +333,34 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void OnClimbEnter()
     {
         m_EnemyState = EnemyState.Climb;
+        rb_Owner.useGravity = false;
+        rb_Owner.isKinematic = true;
         m_Anim.SetTrigger("Climb");
         m_AIPath.canMove = false;
+        m_AIPath.isStopped = true;
     }
     
     public virtual void OnClimbExecute()
     {
-        tf_Owner.position += Vector3.up * 2f * Time.deltaTime;
+        rb_Owner.position += Vector3.up * 2f * Time.deltaTime;
+        // Helper.DebugLog("CLIMBBBBBBBBBBBBBBB");
     }
     
     public virtual void OnClimbExit()
     {
+        // rb_Owner.position = rb_Owner.position + new Vector3(rb_Owner.transform.forward.normalized ) rb_Owner.transform.forward.normalized * 2f;
+        
+        rb_Owner.useGravity = true;
+        rb_Owner.isKinematic = false;
+        m_RaySensor.enabled = false;
         m_AIPath.canMove = true;
-        tf_Owner.position = tf_Owner.position + tf_Owner.forward * 2f;
+        m_AIPath.isStopped = false;
     }
     
     public virtual void OnWinEnter()
     {
         m_EnemyState = EnemyState.Win;
-        m_Anim.SetTrigger("Win");
+        m_Anim.SetTrigger("OnHostageWin");
     }
     
     public virtual void OnWinExecute()
@@ -371,9 +386,28 @@ public class Enemy : MonoBehaviour, IDamageable
     
     public void OnClimbEnd()
     {
-        Helper.DebugLog("Endddddddddddddddddddddddddddddddd");
+        // Helper.DebugLog("Endddddddddddddddddddddddddddddddd");
         isClimbing = false;
-        ChangeState(ChaseState.Instance);
+        go_RaySensor.SetActive(false);
+        
+        GraphNode nearestNode = AstarPath.active.GetNearest(tf_Owner.position, NNConstraint.Default).node;
+        if (nearestNode != null)
+        {
+            Vector3 aaa = nearestNode.ClosestPointOnNode(tf_Owner.position);
+            
+            tf_Owner.DOMove(aaa, 1.5f).OnComplete(
+                () =>
+                {
+                    ChangeState(ChaseState.Instance);
+                    tf_Owner.position = aaa;
+                });
+            // Helper.DebugLog("Closet point: " + aaa);
+            // Helper.DebugLog("STANDDDDDDDDDDDDDDDDDDDD");
+            // EditorApplication.isPaused = true;
+        }
+
+        // await UniTask.Delay(1000);
+        
     }
 
     public void ChangeState(IState<Enemy> state)
