@@ -22,7 +22,7 @@ public class PopupLose : UICanvas
         // InGameManager.Instance.ResetLevel();
         // GameManager.Instance.ResetLevel();
         // GameManager.Instance.LoadLevelTask();
-        // OnClose();
+        OnClose();
         
         GameManager.Instance.m_GameLoop = GameLoop.Wait;
         

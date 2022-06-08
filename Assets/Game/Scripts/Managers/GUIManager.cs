@@ -120,6 +120,8 @@ public class GUIManager : MonoBehaviour
     public IEnumerator LoadPlayScene()
     {
         // StartCoroutine(LoadPlayScreen());
+        
+        // EventManager.CallEvent(GameEvent.DespawnAllPool);
 
         g_Loading.SetActive(true);
         

@@ -20,7 +20,7 @@ public class EnemyHead : MonoBehaviour, IDamageable
             PrefabManager.Instance.SpawnVFXPool("UIHeadshot", Vector3.zero).GetComponent<UIDamage>().Fly(_pos);
         }
         col_Owner.enabled = false;
-        Debug.Log("Head shotttttttttttt");
+        // Debug.Log("Head shotttttttttttt");
         m_EnemyOwner.OnHit(_pos);
     }
 }

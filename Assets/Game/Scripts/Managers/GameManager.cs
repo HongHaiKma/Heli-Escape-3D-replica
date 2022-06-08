@@ -43,14 +43,14 @@ public class GameManager : Singleton2<GameManager>
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.A))
-        // {
-        //     Time.timeScale = 0f;
-        // }
-        // if (Input.GetKeyDown(KeyCode.S))
-        // {
-        //     Time.timeScale = 1f;
-        // }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Time.timeScale = 0f;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Time.timeScale = 1f;
+        }
         
         // GraphNode nearestNode = AstarPath.active.GetNearest(tf_Owner.position, NNConstraint.Default).node;
         // if (nearestNode != null)

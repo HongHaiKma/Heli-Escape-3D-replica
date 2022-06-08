@@ -23,11 +23,13 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
 
         for (int i = 0; i < m_HostageNumber; i++)
         {
-            var randomPos = tf_RandomPoints.Random();
+            Transform randomPos = tf_RandomPoints[i % tf_RandomPoints.Count];
             if (!isWaiting)
             {
+                
                 Hostage hos = PrefabManager.Instance.SpawnHostagePool(m_HostageSpawn.ToString(), randomPos.position)
                     .GetComponent<Hostage>();
+                hos.transform.parent = LevelController.Instance.transform;
                 m_Hostages.Add(hos);
                 LevelController.Instance.m_HostageRun.Add(hos);
                 // await UniTask.WaitUntil(() => hos.isAwake == true);
@@ -38,8 +40,9 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
             else
             {
                 Hostage hos = PrefabManager.Instance
-                    .SpawnHostagePool(m_HostageSpawn.ToString(), tf_RandomPoints[i].position)
+                    .SpawnHostagePool(m_HostageSpawn.ToString(), randomPos.position)
                     .GetComponent<Hostage>();
+                hos.transform.parent = LevelController.Instance.transform;
                 m_Hostages.Add(hos);
                 LevelController.Instance.m_HostageWait.Add(hos);
             }

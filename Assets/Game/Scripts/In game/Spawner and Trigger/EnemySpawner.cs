@@ -28,6 +28,7 @@ public class EnemySpawner : MonoBehaviour
                     Transform randomPos = tf_RandomPoints[i % tf_RandomPoints.Count];
                     Enemy hos = PrefabManager.Instance.SpawnEnemyPool(m_EnemyName.ToString(), randomPos.position)
                         .GetComponent<Enemy>();
+                    hos.transform.parent = LevelController.Instance.transform;
                     m_Enemies.Add(hos);
                 }
             }
@@ -40,6 +41,7 @@ public class EnemySpawner : MonoBehaviour
                     Transform randomPos = tf_RandomPoints[i % tf_RandomPoints.Count];
                     Enemy hos = PrefabManager.Instance.SpawnEnemyPool(m_EnemyName.ToString(), randomPos.position)
                         .GetComponent<Enemy>();
+                    hos.transform.parent = LevelController.Instance.transform;
                     m_Enemies.Add(hos);
                     await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
                     await UniTask.WaitForEndOfFrame();
@@ -72,6 +74,7 @@ public class EnemySpawner : MonoBehaviour
             Transform randomPos = tf_RandomPoints[i % tf_RandomPoints.Count];
             Enemy hos = PrefabManager.Instance.SpawnEnemyPool(m_EnemyName.ToString(), randomPos.position)
                 .GetComponent<Enemy>();
+            hos.transform.parent = LevelController.Instance.transform;
             m_Enemies.Add(hos);
             await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
             await UniTask.WaitForEndOfFrame();

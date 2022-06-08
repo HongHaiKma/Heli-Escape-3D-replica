@@ -28,15 +28,13 @@ public class CamController : Singleton<CamController>
 
     public float m_ShootTime = 0.4f;
 
-    public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12);
+    public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12 | 1 << 14);
 
     public TouchTrackPad m_TrackPad;
     
     void Update()
     {
         m_ShootTime += Time.deltaTime;
-        // if (Input.GetMouseButtonDown(0))
-        // if ( Input.simulateMouseWithTouches )
         if (m_TrackPad.Pressed())
         {
             Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
@@ -44,27 +42,19 @@ public class CamController : Singleton<CamController>
             Vector2 apos = tfCrosshair.anchoredPosition;
             float xPos = apos.x;
             float yPos = apos.y;
-            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.width) / 2, (Screen.width - tfCrosshair.sizeDelta.x) / 2);
-            // yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.height) / 2,
-            //     (Screen.height - tfCrosshair.sizeDelta.y) / 2);
-            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.width) / 2, (Screen.safeArea.width - tfCrosshair.sizeDelta.x) / 2);
-            // yPos = Mathf.Clamp(yPos, (tfCrosshair.sizeDelta.y - Screen.safeArea.height) / 2,
-            //     (Screen.safeArea.height - tfCrosshair.sizeDelta.y) / 2);
-            // xPos = Mathf.Clamp(xPos, Screen.safeArea.xMin, Screen.safeArea.xMax * 2f);
-            // yPos = Mathf.Clamp(yPos, Screen.safeArea.yMin, Screen.safeArea.yMax * 2f);
+
             xPos = Mathf.Clamp(xPos, 0f, mainCanvas.rect.width);
             yPos = Mathf.Clamp(yPos, 0f, mainCanvas.rect.height);
-            // tfCrosshair
+
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
-            
-            // xPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.xMin) / 2, (tfCrosshair.sizeDelta.x - Screen.safeArea.xMax) / 2);
-            // yPos = Mathf.Clamp(xPos, (tfCrosshair.sizeDelta.x - Screen.safeArea.yMin) / 2, (tfCrosshair.sizeDelta.x - Screen.safeArea.yMax) / 2);
-            // tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
-            
+
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
             
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
+            // if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
+            if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
+            // if (Physics.SphereCastAll(ray, 1f, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
+            // if (Physics.SphereCastAll(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
             {
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)
@@ -74,20 +64,8 @@ public class CamController : Singleton<CamController>
                                             
                     if (col != null)
                     {
-                        Helper.DebugLog("Name: " + col.name);
                         m_ShootTime = 0f;
-                        // if (go.tag.Equals("Enemy") || go.tag.Equals("EnemyHead") || go.tag.Equals("Hostage"))
-                        // {
-                        //     Transform trans = hitInfo.collider.GetComponent<Transform>();
-                        //     tf_LookAimIK.position = hitInfo.point;
-                        //     Shoot(hitInfo.point, trans);
-                        // }
-                        // else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
-                        // {
-                        //     tf_LookAimIK.position = hitInfo.point;
-                        //     Shoot(hitInfo.point, null);
-                        // }
-                                            
+
                         if (col.tag.Equals("Ground"))
                         {
                             PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
@@ -110,11 +88,6 @@ public class CamController : Singleton<CamController>
             }
 
             
-        }
-
-        if (Helper.GetKeyDown(KeyCode.D))
-        {
-            CamMoveFinish(1f);
         }
     }
 

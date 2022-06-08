@@ -9,6 +9,7 @@ using Sirenix.OdinInspector;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Micosmo.SensorToolkit;
+using MoreMountains.NiceVibrations;
 using Unity.VisualScripting;
 using Random = System.Random;
 using UnityEditor;
@@ -88,7 +89,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void DestroyAllPool()
     {
-        PrefabManager.Instance.DespawnPool(gameObject);
+        if(gameObject.activeInHierarchy == true)
+        {
+            PrefabManager.Instance.DespawnPool(gameObject);
+        }
     }
 
     public void DoRagdoll(Vector3 explosionPos)
@@ -151,7 +155,8 @@ public class Enemy : MonoBehaviour, IDamageable
         m_TimeCatch = 0f;
     }
     
-    public virtual async UniTask OnChaseExecute()
+    // public virtual async UniTask OnChaseExecute()
+    public void OnChaseExecute()
     {
         m_TimeChangeTarget += Time.deltaTime;
 
@@ -162,72 +167,83 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         else
         {
-            if (m_TargetHostage == null)
-            {
-                m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+            // if (m_TargetHostage == null)
+            // {
+            //     // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+            //     m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
+            //
+            //     while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+            //            || !m_TargetHostage.gameObject.activeInHierarchy 
+            //            || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+            //     {
+            //         if (LevelController.Instance.m_HostageRun.Count <= 0)
+            //         {
+            //             ChangeState(WinState.Instance);
+            //             return;
+            //         }
+            //         // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+            //         m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
+            //         await UniTask.Yield();
+            //     }
+            // }
+            // else
+            // {
+            //     while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+            //            || !m_TargetHostage.gameObject.activeInHierarchy 
+            //            || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+            //     {
+            //         if (LevelController.Instance.m_HostageRun.Count <= 0)
+            //         {
+            //             ChangeState(WinState.Instance);
+            //             return;
+            //         }
+            //         // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+            //         m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
+            //         await UniTask.Yield();
+            //     }
+            // }
+            m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
 
-                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
-                       || !m_TargetHostage.gameObject.activeInHierarchy 
-                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
-                {
-                    if (LevelController.Instance.m_HostageRun.Count <= 0)
-                    {
-                        ChangeState(WinState.Instance);
-                        return;
-                    }
-                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                    await UniTask.Yield();
-                }
-            }
-            else
+            while (m_TargetHostage == null || !LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+                                           || !m_TargetHostage.gameObject.activeInHierarchy 
+                                           || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
             {
-                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
-                       || !m_TargetHostage.gameObject.activeInHierarchy 
-                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+                if (LevelController.Instance.m_HostageRun.Count <= 0)
                 {
-                    if (LevelController.Instance.m_HostageRun.Count <= 0)
-                    {
-                        ChangeState(WinState.Instance);
-                        return;
-                    }
-                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                    await UniTask.Yield();
+                    ChangeState(WinState.Instance);
+                    return;
                 }
+                // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
+                // await UniTask.Yield();
+                return;
             }
         
-            if (m_TimeChangeTarget > 5f)
+            if (m_TimeChangeTarget > 3f)
             {
                 m_TimeChangeTarget = 0f;
             
-                m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
 
-                while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
-                       || !m_TargetHostage.gameObject.activeInHierarchy 
-                       || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
+                while (m_TargetHostage == null || !LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
+                                               || !m_TargetHostage.gameObject.activeInHierarchy 
+                                               || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
                 {
                     if (LevelController.Instance.m_HostageRun.Count <= 0)
                     {
                         ChangeState(WinState.Instance);
                         return;
                     }
-                    m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-                    await UniTask.Yield();
+                    // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
+                    m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
+                    // await UniTask.Yield();
+                    return;
                 }
             } 
         }
 
-        
-        
         m_AIPath.destination = m_TargetHostage.tf_Onwer.position;
-
-        // if(m_Warning) m_TimeCatch += Time.deltaTime;
-        
-        // if (m_TimeCatch > m_TimeCatchMax)
-        // {
-        //     ChangeState(KillState.Instance);
-        //     // EventManager.CallEvent(GameEvent.LEVEL_LOSE);
-        //     return;
-        // }
 
         if (Helper.CalDistance(tf_Owner.position, m_TargetHostage.tf_Onwer.position) < 0.5f)
         {
@@ -235,26 +251,6 @@ public class Enemy : MonoBehaviour, IDamageable
             // EventManager.CallEvent(GameEvent.LEVEL_LOSE);
             // return;
         }
-        
-        // if (Helper.CalDistance(tf_Owner.position, m_TargetHostage.tf_Onwer.position) < 6f)
-        //     // if (m_AIPath.remainingDistance < 3f)
-        // {
-        //     if (!m_Warning)
-        //     {
-        //         m_Warning = true;
-        //         g_Warning.SetActive(true);
-        //         GameManager.Instance.SetSlowmotion(true);
-        //     }
-        // }
-        // else
-        // {
-        //     if (m_Warning)
-        //     {
-        //         m_Warning = false;
-        //         g_Warning.SetActive(false);
-        //         GameManager.Instance.SetSlowmotion(false);
-        //     }
-        // }
     }
 
     public void SetSlowmotionOff()
@@ -268,7 +264,7 @@ public class Enemy : MonoBehaviour, IDamageable
         
     }
     
-    public virtual async UniTask OnDeathEnter()
+    public void OnDeathEnter()
     {
         m_EnemyState = EnemyState.Death;
         m_Anim.SetTrigger("Death");
@@ -283,9 +279,12 @@ public class Enemy : MonoBehaviour, IDamageable
         //     GameManager.Instance.SetSlowmotion(false);  
         // }
 
-        await UniTask.Delay(2000);
-        
-        PrefabManager.Instance.DespawnPool(gameObject);
+        // await UniTask.Delay(2000);
+
+        // if(gameObject.activeInHierarchy == true)
+        // {
+            PrefabManager.Instance.DespawnPool(gameObject);
+        // }
     }
     
     public virtual void OnDeathExecute()
@@ -360,7 +359,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void OnWinEnter()
     {
         m_EnemyState = EnemyState.Win;
-        m_Anim.SetTrigger("OnHostageWin");
+        m_Anim.SetTrigger("Win");
     }
     
     public virtual void OnWinExecute()
@@ -375,7 +374,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void OnClimbStart()
     {
-        Helper.DebugLog("OnClimbStartOnClimbStartOnClimbStartOnClimbStart");
+        // Helper.DebugLog("OnClimbStartOnClimbStartOnClimbStartOnClimbStart");
         
         if (!isClimbing)
         {
@@ -425,6 +424,7 @@ public class Enemy : MonoBehaviour, IDamageable
                 
         PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
         PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos);
+        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(HapticTypes.SoftImpact);
     }
 
     [Button]

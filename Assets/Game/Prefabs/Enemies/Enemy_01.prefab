@@ -84,7 +84,7 @@ MonoBehaviour:
   radius: 0.15
   height: 0.7
   canMove: 1
-  maxSpeed: 2
+  maxSpeed: 1.6
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -98,18 +98,18 @@ MonoBehaviour:
     mode: 2
     interval: 0.2
     sensitivity: 10
-    maximumInterval: 1
+    maximumInterval: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 540
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 1.5
-  endReachedDistance: 2
+  slowdownDistance: 0.1
+  pickNextWaypointDist: 0.7
+  endReachedDistance: 0.1
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  whenCloseToDestination: 1
+  constrainInsideGraph: 1
 --- !u!114 &2453109988599596926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,7 +641,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 751a8fa8ad4a72645bf1782cee2b57c6, type: 2}
+  - {fileID: 2100000, guid: 0cf2677e8567b3b42b13426b23b318b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

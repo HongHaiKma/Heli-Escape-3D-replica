@@ -33,20 +33,20 @@ public class Hostage : MonoBehaviour
         m_StateMachine.Init(P_WaitState.Instance);
         
         EventManager.AddListener(GameEvent.LEVEL_WIN, OnHostageWin);
-        EventManager.AddListener(GameEvent.DespawnAllPool, DestroyAllPool);
+        // EventManager.AddListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void OnDisable()
     {
         m_StateMachine.ChangeState(P_WaitState.Instance);
         EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnHostageWin);
-        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
+        // EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void OnDestroy()
     {
         EventManager.RemoveListener(GameEvent.LEVEL_WIN, OnHostageWin);
-        EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
+        // EventManager.RemoveListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
 
     private void Update()
@@ -56,7 +56,10 @@ public class Hostage : MonoBehaviour
     
     public void DestroyAllPool()
     {
-        PrefabManager.Instance.DespawnPool(gameObject);
+        if(gameObject.activeInHierarchy == true)
+        {
+            PrefabManager.Instance.DespawnPool(gameObject);
+        }
     }
 
     public async UniTask Death()
@@ -71,11 +74,15 @@ public class Hostage : MonoBehaviour
 
     public void OnHostageWin()
     {
-        WinTask();
+        // if (GameManager.Instance.m_GameLoop != GameLoop.EndGame)
+        // {
+            WinTask(); 
+        // }
     }
 
     public async UniTask WinTask()
     {
+        Helper.DebugLog("Win TASKKKKKKKKKKKKKKKKKK");
         // ProfileManager.PassLevel();
         // m_Anim.SetTrigger("JumpHeli");
         // EventManager.CallEvent(GameEvent.LEVEL_WIN);
@@ -89,8 +96,8 @@ public class Hostage : MonoBehaviour
         {
             tf_Onwer.parent = CamController.Instance.tf_HeliHolderPoint;
         });
-        await UniTask.Delay(2000);
-        PopupCaller.OpenPopup(UIID.POPUP_WIN);
+        // await UniTask.Delay(2000);
+        // PopupCaller.OpenPopup(UIID.POPUP_WIN);
     }
 
     #region States
@@ -145,11 +152,14 @@ public class Hostage : MonoBehaviour
     {
         m_HostageStates = HostageStates.DEATH;
         m_Anim.SetTrigger("Death");
+        LevelController.Instance.m_HostageRun.Remove(this);
         
         await UniTask.Delay(1000);
         
-        LevelController.Instance.m_HostageRun.Remove(this);
-        PrefabManager.Instance.DespawnPool(gameObject);
+        if(gameObject.activeInHierarchy == true)
+        {
+            PrefabManager.Instance.DespawnPool(gameObject);
+        }
 
         if (LevelController.Instance.m_HostageRun.Count <= 0)
         {

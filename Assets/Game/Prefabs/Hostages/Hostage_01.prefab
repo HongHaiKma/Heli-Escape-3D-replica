@@ -137,7 +137,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6826030117656582766}
-  - component: {fileID: 6868503135300645927}
   m_Layer: 9
   m_Name: AnimationCollider
   m_TagString: Untagged
@@ -160,20 +159,6 @@ Transform:
   m_Father: {fileID: 6819770202705456023}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6868503135300645927
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6823072733975030704}
-  m_Material: {fileID: 13400000, guid: b7d6aba3c9abd2540ad93f88eebe8c72, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.22
-  m_Height: 1.25
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.625, z: 0}
 --- !u!1 &6823092200030298903
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +341,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2b8fecda17248d49afc3f9fcb2a352e, type: 2}
+  - {fileID: 2100000, guid: cbd2325dd789998408b93a68bbe9cdcc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1570,7 +1555,7 @@ MonoBehaviour:
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  constrainInsideGraph: 1
 --- !u!114 &2589600300069116277
 MonoBehaviour:
   m_ObjectHideFlags: 0

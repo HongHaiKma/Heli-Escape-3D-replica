@@ -16,7 +16,7 @@ public class TrapItem : MonoBehaviour
             m_Time += Time.deltaTime;
         }
 
-        if (m_Time > 5f)
+        if (m_Time > 7f)
         {
             m_CanCollide = false;
         }

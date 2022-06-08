@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -30,7 +31,7 @@ public class LevelController : Singleton<LevelController>
         if (InGameManager.Instance.img_Flash.gameObject.activeInHierarchy) 
             Trasition();
         else 
-            CamController.Instance.CameraIntro(new Vector3(15f, 15f, 0f), 1.5f);
+            CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
 
         GUIManager.Instance.g_Loading.SetActive(false);
         GameManager.Instance.m_LevelLoaded = true;
@@ -38,7 +39,7 @@ public class LevelController : Singleton<LevelController>
 
     async UniTask Trasition()
     {
-        CamController.Instance.CameraIntro(new Vector3(15f, 15f, 0f), 1.5f);
+        CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
         await UniTask.Delay(100);
         InGameManager.Instance.img_Flash.DOFade(0f, 1f);
         await UniTask.Delay(1000);
@@ -48,5 +49,12 @@ public class LevelController : Singleton<LevelController>
     public void OnDestroy()
     {
         GameManager.Instance.m_LevelLoaded = false;
+    }
+
+    public Hostage FindNearestHostage(Vector3 _pos)
+    {
+        var target = m_HostageRun.OrderBy(x => (transform.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
+        
+        return target;
     }
 }
