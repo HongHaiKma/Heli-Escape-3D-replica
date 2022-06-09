@@ -104,5 +104,5 @@ public class EnemySpawner : MonoBehaviour
 
 public enum Enemyname
 {
-    Enemy_01,
+    Enemy_1,
 }

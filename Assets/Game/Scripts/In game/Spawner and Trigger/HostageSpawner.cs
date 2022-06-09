@@ -78,7 +78,7 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
 
 public enum HostageSpawn
 {
-    Hostage_01,
+    Hostage_1,
 }
 
 interface ITriggerble
