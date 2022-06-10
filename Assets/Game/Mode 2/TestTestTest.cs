@@ -6,26 +6,14 @@ using UnityEngine;
 
 public class TestTestTest : MonoBehaviour
 {
-    public List<int> a;
+    public Vector3 origin;
+    public bool a = false;
 
-    private void Update()
+    private void OnValidate()
     {
-        if (Helper.GetKeyDown(KeyCode.A))
+        if (a)
         {
-            if (a.All(CheckA))
-            {
-                Helper.DebugLog("AAAAAAAAAAA");
-            }
+            transform.rotation = new Quaternion(0f, -180f, 0f, 0f);
         }
-    }
-
-    public bool CheckA(int a)
-    {
-        if (a < 3)
-        {
-            return true;
-        }
-
-        return false;
     }
 }

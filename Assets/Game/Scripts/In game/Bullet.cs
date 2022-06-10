@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Vector2 = System.Numerics.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -51,6 +52,7 @@ public class Bullet : MonoBehaviour
         if (m_FlyingTime >= m_FlyingTimeMax)
         {
             PrefabManager.Instance.DespawnPool(gameObject);
+            // Helper.DebugLog("BBBBBBBBBBBB");
         }
     }
 
@@ -65,12 +67,12 @@ public class Bullet : MonoBehaviour
         m_FlyingTime = 0f;
     }
 
-    public void Fire(Vector3 _pos, Transform _tfTarget)
+    public void Fire(Vector3 _lookAt, Transform _tfTarget)
     {
         tf_Target = _tfTarget;
-        tf_Owner.LookAt(_pos);
+        tf_Owner.LookAt(_lookAt);
         // rb_Owner.AddRelativeForce(transform.forward * 2300f);
-        rb_Owner.AddForce(transform.forward * 3500f);
+        rb_Owner.AddForce(transform.forward * 6000f);
         // rb_Owner.velocity = tf_Owner.forward * 5f;
     }
 
@@ -80,6 +82,11 @@ public class Bullet : MonoBehaviour
         if (iDMG != null)
         {
             iDMG.OnHit(tf_Owner.position);
+        }
+        
+        if (collision.gameObject.tag.Equals("Shooter"))
+        {
+            SceneManager.LoadScene("PlaySceneMode2");
         }
 
         PrefabManager.Instance.DespawnPool(gameObject);

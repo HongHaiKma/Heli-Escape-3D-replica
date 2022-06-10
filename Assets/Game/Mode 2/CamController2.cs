@@ -8,10 +8,12 @@ public class CamController2 : Singleton<CamController2>
 {
     public List<Enemy2> m_Enemies;
     public bool slow = false;
+    public Transform tf_FirePivot;
+    public int m_IgnoreLayer = ~(1 << 15);
 
     private void OnEnable()
     {
-        ResetLevel();
+        // ResetLevel();
     }
 
     public void ResetLevel()
@@ -29,52 +31,49 @@ public class CamController2 : Singleton<CamController2>
 
     private void Update()
     {
-        // if (m_Enemies.Count > 0)
-        // {
-        //     if (Time.timeScale == 1)
-        //     {
-        //         // if (IsSlow())
-        //         // {
-        //         //     Time.timeScale = 0.4f;
-        //         // }
-        //         Time.timeScale = m_Enemies.Any(IsSlow2) ? Time.timeScale = 0.4f : Time.timeScale = 1f;
-        //         // m_Enemies.Any(IsSlow2);
-        //     }
-        //     else if(Time.timeScale == 0.4)
-        //     {
-        //         // if (!IsSlow())
-        //         // {
-        //         //     Time.timeScale = 1f;
-        //         // }
-        //     }
-        // }
-
         if (m_Enemies.Count > 0)
         {
-            Time.timeScale = m_Enemies.Any(IsSlow2) ? Time.timeScale = 0.4f : Time.timeScale = 1f;
+            Time.timeScale = m_Enemies.Any(IsSlow) ? Time.timeScale = 0.4f : Time.timeScale = 1f;
         }
-    }
-
-    public bool IsSlow()
-    {
-        for (int i = 0; i < m_Enemies.Count; i++)
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector3 targetDir = transform.position - m_Enemies[i].tf_Owner.position;
-            targetDir = targetDir.normalized;
-       
-            float dot = Vector3.Dot(targetDir, m_Enemies[i].tf_Owner.forward);
-            float angle = Mathf.Acos( dot ) * Mathf.Rad2Deg;
-
-            if (angle < 60f)
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out  hitInfo, Mathf.Infinity, m_IgnoreLayer))
             {
-                return true;
+                var col = hitInfo.collider.GetComponent<Collider>();
+                GameObject go = hitInfo.transform.gameObject;
+                // if (col != null)
+                if (go != null)
+                {
+                    // if (col.tag.Equals("Enemy") || col.tag.Equals("EnemyHead") )
+                    if (go.tag.Equals("Enemy") || go.tag.Equals("EnemyHead"))
+                    {
+                        Transform trans = hitInfo.collider.GetComponent<Transform>();
+                        // tf_LookAimIK.position = hitInfo.point;
+                        Shoot(hitInfo.point, trans);
+                    }
+                    // else if (col.tag.Equals("Ground") || col.tag.Equals("Gas") || col.tag.Equals("Untagged"))
+                    else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
+                    {
+                        // tf_LookAimIK.position = hitInfo.point;
+                        Shoot(hitInfo.point, null);
+                    }
+                }
             }
-        }
-
-        return false;
+        } 
+    }
+    
+    public void Shoot(Vector3 _lookAt, Transform _tfEnemy)
+    {
+        GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePivot.position);
+        go.transform.LookAt(_lookAt);
+        go.transform.parent = tf_FirePivot;
+        PrefabManager.Instance.SpawnBulletPool("Bullet1", tf_FirePivot.position).GetComponent<Bullet>().Fire(_lookAt, _tfEnemy);
     }
 
-    public bool IsSlow2(Enemy2 _enemy)
+    public bool IsSlow(Enemy2 _enemy)
     {
         Vector3 targetDir = transform.position - _enemy.tf_Owner.position;
         targetDir = targetDir.normalized;
@@ -84,9 +83,11 @@ public class CamController2 : Singleton<CamController2>
 
         if (angle < 60f)
         {
+            _enemy.SetInRange(true);
             return true;
         }
 
+        _enemy.SetInRange(false);
         return false;
     }
 }

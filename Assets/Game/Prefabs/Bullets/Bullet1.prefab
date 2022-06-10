@@ -10401,7 +10401,7 @@ MonoBehaviour:
   v3_CollisionPoint: {x: 0, y: 0, z: 0}
   m_MoveSpd: 30
   m_FlyingTime: 0
-  m_FlyingTimeMax: 1
+  m_FlyingTimeMax: 2
   m_Collided: 0
   tf_Target: {fileID: 0}
 --- !u!65 &7936403035773594420

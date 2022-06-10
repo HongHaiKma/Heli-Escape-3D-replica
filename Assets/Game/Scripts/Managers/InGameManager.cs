@@ -14,44 +14,44 @@ public class InGameManager : Singleton2<InGameManager>
     public Image img_Crosshair;
     public Transform tf_MainCanvas;
     
-    [Header("Combo")]
-    public Animator m_AnimUI;
-    public float m_ComboTime;
-    public int m_Combo;
-    public TextMeshProUGUI txt_Combo;
-    public GameObject go_Combo;
+    // [Header("Combo")]
+    // public Animator m_AnimUI;
+    // public float m_ComboTime;
+    // public int m_Combo;
+    // public TextMeshProUGUI txt_Combo;
+    // public GameObject go_Combo;
 
     public override void OnEnable()
     {
-        m_Combo = 0;
-        go_Combo.SetActive(false);
+        // m_Combo = 0;
+        // go_Combo.SetActive(false);
     }
 
     private void Update()
     {
-        if (m_ComboTime > 0)
-        {
-            m_ComboTime -= Time.deltaTime;
-        }
+        // if (m_ComboTime > 0)
+        // {
+        //     m_ComboTime -= Time.deltaTime;
+        // }
     }
 
     public void ResetLevel()
     {
-        m_Combo = 0;
-        go_Combo.SetActive(false);
+        // m_Combo = 0;
+        // go_Combo.SetActive(false);
     }
 
     public async UniTask Combo()
     {
-        if (m_ComboTime > 0) m_Combo++;
-        else m_Combo = 1;
-
-        m_ComboTime = 2f;
-
-        txt_Combo.text = "X" + m_Combo;
-        go_Combo.SetActive(false);
-        await UniTask.Delay(10);
-        m_AnimUI.SetTrigger("Combo");
+        // if (m_ComboTime > 0) m_Combo++;
+        // else m_Combo = 1;
+        //
+        // m_ComboTime = 2f;
+        //
+        // txt_Combo.text = "X" + m_Combo;
+        // go_Combo.SetActive(false);
+        // await UniTask.Delay(10);
+        // m_AnimUI.SetTrigger("Combo");
     }
     
     // private void Update()

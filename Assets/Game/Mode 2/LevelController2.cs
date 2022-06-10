@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController2 : Singleton<LevelController2>
 {
@@ -11,14 +12,34 @@ public class LevelController2 : Singleton<LevelController2>
     public int m_CurFloor;
     public float m_RotateSpeed;
     public List<Floor> m_Floors;
+    public Transform tf_Shooter;
 
     private void OnEnable()
     {
-        // m_Floors.
+        m_CurFloor = 0;
+        CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
         tf_PivotFollower.DOKill();
         tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        m_CurFloor = 0;
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
+    }
+
+    public void RemoveEnemy(Enemy2 _enemy)
+    {
+        m_Floors[m_CurFloor].RemoveEnemy(_enemy);
+        if (m_Floors[m_CurFloor].m_Enemies.Count <= 0)
+        {
+            m_CurFloor++;
+            if (m_CurFloor > m_Floors.Count - 1)
+            {
+                SceneManager.LoadScene("PlaySceneMode2");
+                return;
+            }
+            
+            tf_PivotFollower.DOLocalMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnComplete(() =>
+            {
+                CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
+            });
+        }
     }
 
     private void Update()

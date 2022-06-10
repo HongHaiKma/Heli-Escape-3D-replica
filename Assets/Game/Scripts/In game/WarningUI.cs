@@ -7,7 +7,7 @@ public class WarningUI : MonoBehaviour
 {
     private void LateUpdate()
     {
-        transform.LookAt(CamController.Instance.tf_Owner);
+        transform.LookAt(Camera.main.transform);
         transform.Rotate(0f, 180f, 0f);
     }
 }
