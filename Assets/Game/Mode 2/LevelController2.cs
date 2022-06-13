@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,7 +13,7 @@ public class LevelController2 : Singleton<LevelController2>
     public int m_CurFloor;
     public float m_RotateSpeed;
     public List<Floor> m_Floors;
-    public Transform tf_Shooter;
+    public Shooter2 m_Shooter;
 
     private void OnEnable()
     {
@@ -23,7 +24,7 @@ public class LevelController2 : Singleton<LevelController2>
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
     }
 
-    public void RemoveEnemy(Enemy2 _enemy)
+    public async UniTask RemoveEnemy(Enemy2 _enemy)
     {
         m_Floors[m_CurFloor].RemoveEnemy(_enemy);
         if (m_Floors[m_CurFloor].m_Enemies.Count <= 0)
@@ -31,7 +32,8 @@ public class LevelController2 : Singleton<LevelController2>
             m_CurFloor++;
             if (m_CurFloor > m_Floors.Count - 1)
             {
-                SceneManager.LoadScene("PlaySceneMode2");
+                await UniTask.Delay(1500);
+                InGameManager2.Instance.go_PopupWin.SetActive(true);
                 return;
             }
             

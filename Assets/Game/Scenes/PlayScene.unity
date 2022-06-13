@@ -171,11 +171,6 @@ MonoBehaviour:
   img_Flash: {fileID: 4280167898364166237}
   img_Crosshair: {fileID: 2083515483}
   tf_MainCanvas: {fileID: 489536360}
-  m_AnimUI: {fileID: 4280167898875083064}
-  m_ComboTime: 0
-  m_Combo: 0
-  txt_Combo: {fileID: 175895034}
-  go_Combo: {fileID: 175895032}
 --- !u!1 &32563994
 GameObject:
   m_ObjectHideFlags: 0

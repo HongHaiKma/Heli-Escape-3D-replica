@@ -84,10 +84,10 @@ public class Bullet : MonoBehaviour
             iDMG.OnHit(tf_Owner.position);
         }
         
-        if (collision.gameObject.tag.Equals("Shooter"))
-        {
-            SceneManager.LoadScene("PlaySceneMode2");
-        }
+        // if (collision.gameObject.tag.Equals("Shooter"))
+        // {
+        //     SceneManager.LoadScene("PlaySceneMode2");
+        // }
 
         PrefabManager.Instance.DespawnPool(gameObject);
     }

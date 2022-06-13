@@ -16,7 +16,10 @@ public class Gas : MonoBehaviour, IDamageable
             {
                 // enemy.DoRagdoll(explosionPos);
                 
-                enemy.m_StateMachine.ChangeState(DeathState.Instance);
+                // enemy.m_StateMachine.ChangeState(DeathState.Instance);
+                
+                enemy.OnHit(enemy.tf_Owner.position);
+                Helper.DebugLog("GGGGGGG");
 
                 // Rigidbody rb = GetComponent<Rigidbody>();
                 //

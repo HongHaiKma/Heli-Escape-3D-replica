@@ -1,15 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gas2 : MonoBehaviour, IDamageable
 {
+    public Vector3 aaa;
+    public Transform tf_ExploPivot;
+    public float m_ExplosionForce;
+    
     public void Explode()
     {
-        Vector3 explosionPos = transform.position;
-        Collider[] colliders = Physics.OverlapSphere(explosionPos, 6);
+        Vector3 explosionPos = tf_ExploPivot.position;
+        // Vector3 aaa = new Vector3(3f, 2f, 3f);
+        Collider[] colliders = Physics.OverlapBox(explosionPos, aaa);
         foreach (Collider hit in colliders)
         {
+            // Rigidbody rb = hit.gameObject.GetComponent<Rigidbody>();
+            //
+            // if (rb != null)
+            // {
+            //     Helper.DebugLog("Explode: " + rb.name);
+            //     rb.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
+            //     // rb.AddForce((transform.position - rb.position).normalized * 500f, ForceMode.Impulse);
+            // }
             Enemy2 enemy = hit.GetComponent<Enemy2>();
             
             if (enemy != null)
@@ -17,10 +31,20 @@ public class Gas2 : MonoBehaviour, IDamageable
                 // enemy.DoRagdoll(explosionPos);
                 
                 // enemy.m_StateMachine.ChangeState(DeathState.Instance);
-
-                // Rigidbody rb = GetComponent<Rigidbody>();
-                //
-                // if (rb != null) rb.AddExplosionForce(70f, explosionPos, 10f, 2f);
+                
+                enemy.OnHit(enemy.tf_Owner.position);
+                Helper.DebugLog("GGGGGGG");
+                enemy.rb_Owner.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
+            }
+            else
+            {
+                Rigidbody rb = hit.gameObject.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.constraints = RigidbodyConstraints.None;
+                    rb.useGravity = true;
+                    rb.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
+                }
             }
         }
     }
@@ -31,4 +55,13 @@ public class Gas2 : MonoBehaviour, IDamageable
         Destroy(gameObject);
         PrefabManager.Instance.SpawnVFXPool("VFX_5", _pos);
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(tf_ExploPivot.position, aaa);
+    }
+#endif
 }
