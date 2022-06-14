@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,7 +32,14 @@ public class CamController : Singleton<CamController>
     public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12 | 1 << 14);
 
     public TouchTrackPad m_TrackPad;
-    
+
+    private async UniTask OnEnable()
+    {
+        await UniTask.WaitUntil(() => LevelController.Instance != null);
+        m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
+    }
+
     void Update()
     {
         m_ShootTime += Time.deltaTime;

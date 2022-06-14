@@ -23,6 +23,8 @@ public class LevelController2 : Singleton<LevelController2>
         tf_PivotFollower.DOKill();
         tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
+        // await UniTask.WaitUntil(() => GUIManager.Instance != null);
+        GUIManager.Instance.g_Loading.SetActive(false);
     }
 
     public async UniTask RemoveEnemy(Enemy2 _enemy)

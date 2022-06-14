@@ -17,6 +17,7 @@ TagManager:
   - Interactable
   - Waypoint
   - Shooter
+  - Exploder
   layers:
   - Default
   - TransparentFX

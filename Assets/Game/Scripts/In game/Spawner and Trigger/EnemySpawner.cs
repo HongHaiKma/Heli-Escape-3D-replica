@@ -43,7 +43,8 @@ public class EnemySpawner : MonoBehaviour
                         .GetComponent<Enemy>();
                     hos.transform.parent = LevelController.Instance.transform;
                     m_Enemies.Add(hos);
-                    await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
+                    await UniTask.WaitUntil(() => hos != null && hos.isActiveAndEnabled == true);
+                    // await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
                     await UniTask.WaitForEndOfFrame();
                     // if (isGoup)
                     // {

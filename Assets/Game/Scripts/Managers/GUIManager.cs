@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -109,7 +111,8 @@ public class GUIManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(LoadPlayScene());
+        // StartCoroutine(LoadPlayScene());
+        GUIManager.Instance.LoadPlayScene();
     }
 
     public void ClearAllOpenedPopupList()
@@ -117,7 +120,7 @@ public class GUIManager : MonoBehaviour
         m_CurrentOpenedPopup.Clear();
     }
 
-    public IEnumerator LoadPlayScene()
+    public async UniTask LoadPlayScene()
     {
         // StartCoroutine(LoadPlayScreen());
         
@@ -134,7 +137,9 @@ public class GUIManager : MonoBehaviour
                 img_LoadingBar.fillAmount = _loadProgress;
                 int percent = (int)(_loadProgress * 100f);
                 if (percent > 100) percent = 100;
-                yield return new WaitForSeconds(Time.deltaTime);
+                // yield return new WaitForSeconds(Time.deltaTime);
+                int time = (int) (Time.deltaTime * 1000);
+                await UniTask.Delay(time);
             }
         }
 
@@ -150,7 +155,10 @@ public class GUIManager : MonoBehaviour
         // ObjectsManager.Instance.StartGame();
 
         // Addressables.LoadSceneAsync("PlayScene", LoadSceneMode.Additive).Completed += LoadPlaySceneCompleted;
-        Addressables.LoadSceneAsync(m_PlayScene, LoadSceneMode.Single).Completed += LoadPlaySceneCompleted;
+
+        string scene = "Level" + ProfileManager.GetLevel();
+        
+        Addressables.LoadSceneAsync(scene, LoadSceneMode.Single).Completed += LoadPlaySceneCompleted;
     }
 
     void LoadPlaySceneCompleted(AsyncOperationHandle<SceneInstance> _scene)
@@ -158,8 +166,18 @@ public class GUIManager : MonoBehaviour
         if (_scene.Status == AsyncOperationStatus.Succeeded)
         {
             // StartCoroutine(GameManager.Instance.IELoadLevel());
-            GameManager.Instance.LoadLevelTask();
+            // GameManager.Instance.LoadLevelTask();
+            
+            // SetupScene();
         }
+    }
+
+    async UniTask SetupScene()
+    {
+        Helper.DebugLog("AAAAAAAAAAAA");
+        await UniTask.WaitUntil(() => LevelController.Instance != null);
+        CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
+        CamController.Instance.m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
     }
 
     IEnumerator SetCamCharFirstTime()
@@ -533,35 +551,4 @@ public class GUIManager : MonoBehaviour
         }
         return null;
     }
-}
-
-public class PopupCaller
-{
-    public static void OpenWinPopup(bool _isClose = false, bool _isSetup = false)
-    {
-        PopupWin popup = GUIManager.Instance.GetUICanvasByID(UIID.POPUP_WIN) as PopupWin;
-
-        GUIManager.Instance.ShowUIPopup(popup, _isClose, _isSetup);
-    }
-
-    public static void OpenLosePopup(bool _isClose = false, bool _isSetup = false)
-    {
-        PopupLose popup = GUIManager.Instance.GetUICanvasByID(UIID.POPUP_WIN) as PopupLose;
-
-        GUIManager.Instance.ShowUIPopup(popup, _isClose, _isSetup);
-    }
-    
-    public static void OpenPopup(UIID _uiid, bool _isClose = false, bool _isSetup = false)
-    {
-        UICanvas popup = GUIManager.Instance.GetUICanvasByID(_uiid) as UICanvas;
-
-        GUIManager.Instance.ShowUIPopup(popup, _isClose, _isSetup);
-    }
-}
-
-public enum UIID
-{
-    POPUP_PAUSE = 0,
-    POPUP_WIN = 1,
-    POPUP_LOSE = 2,
 }

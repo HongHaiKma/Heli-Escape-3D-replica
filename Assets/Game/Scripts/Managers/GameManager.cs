@@ -47,9 +47,14 @@ public class GameManager : Singleton2<GameManager>
         {
             Time.timeScale = 0f;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             Time.timeScale = 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Helper.DebugLog("Time Scale: " + Time.timeScale);
         }
         
         // GraphNode nearestNode = AstarPath.active.GetNearest(tf_Owner.position, NNConstraint.Default).node;
@@ -66,24 +71,10 @@ public class GameManager : Singleton2<GameManager>
         // }
     }
 
-    public void SetSlowmotion(bool _warning)
-    {
-        if (_warning) m_EnemyWarning++;
-        else 
-        {
-            if (m_EnemyWarning > 0)
-                m_EnemyWarning--;
-        }
-            
-        
-        if (m_EnemyWarning > 0) Time.timeScale = 0.2f;
-        else Time.timeScale = 1f;
-    }
-
     public void LoadSceneTest()
     {
         // SceneManager.LoadSceneAsync("PlayScene", LoadSceneMode.Single);
-       StartCoroutine(GUIManager.Instance.LoadPlayScene());
+        GUIManager.Instance.LoadPlayScene();
     }
 
     public async UniTask LoadLevelTask()
@@ -95,7 +86,6 @@ public class GameManager : Singleton2<GameManager>
             await UniTask.Delay(System.TimeSpan.FromSeconds(0.4f));
             // CamController.Instance.ResetLevel();
             Destroy(LevelController.Instance.gameObject);
-            
             SimplePool.Release();
             Resources.UnloadUnusedAssets();
             System.GC.Collect();

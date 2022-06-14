@@ -22,10 +22,14 @@ public class PopupWin : UICanvas
         // GameManager.Instance.ResetLevel();
         // // GameManager.Instance.LoadLevel();
         // GameManager.Instance.LoadLevelTask();
+        ProfileManager.SetLevel(ProfileManager.GetLevel() + 1);
+        
         OnClose();
 
         GameManager.Instance.m_GameLoop = GameLoop.Wait;
-        
-        GameManager.Instance.LoadSceneTest();
+
+        // GameManager.Instance.LoadSceneTest();
+        // StartCoroutine(GUIManager.Instance.LoadPlayScene());
+        GUIManager.Instance.LoadPlayScene();
     }
 }

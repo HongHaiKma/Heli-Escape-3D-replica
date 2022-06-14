@@ -26,6 +26,8 @@ public class PopupLose : UICanvas
         
         GameManager.Instance.m_GameLoop = GameLoop.Wait;
         
-        GameManager.Instance.LoadSceneTest();
+        // GameManager.Instance.LoadSceneTest();
+        // StartCoroutine(GUIManager.Instance.LoadPlayScene());
+        GUIManager.Instance.LoadPlayScene();
     }
 }

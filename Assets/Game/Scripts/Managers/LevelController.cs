@@ -23,7 +23,7 @@ public class LevelController : Singleton<LevelController>
     public Transform tf_CamFinish;
     public Transform tf_JumpHeliPos;
 
-    public void OnEnable()
+    public async UniTask OnEnable()
     {
         m_HostageRun.Clear();
         m_HostageWait.Clear();
@@ -33,6 +33,7 @@ public class LevelController : Singleton<LevelController>
         else 
             CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
 
+        await UniTask.WaitUntil(() => GUIManager.Instance != null);
         GUIManager.Instance.g_Loading.SetActive(false);
         GameManager.Instance.m_LevelLoaded = true;
     }

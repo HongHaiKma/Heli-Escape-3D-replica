@@ -148,6 +148,7 @@ MonoBehaviour:
   - {fileID: 9152836602573967612, guid: fa86d49f5189c004ab6d6f114ae7322b, type: 3}
   m_BulletPrefabs:
   - {fileID: 7936403035773594423, guid: 40e5b92c87ca98d4f926e405e52508f3, type: 3}
+  - {fileID: 7936403035773594423, guid: 0681d9dc05ba86d4697db70efe6a997d, type: 3}
   m_VFXPrefabs:
   - {fileID: 1000012903210382, guid: 846fb583b71839a43bab72f85326ce85, type: 3}
   - {fileID: 1652179301854697, guid: 565d4d697d9250241a62e5bcff3a85b1, type: 3}
@@ -158,6 +159,7 @@ MonoBehaviour:
   - {fileID: 1129787803094789, guid: 53a51945b16f6d54fa8c2a3dc5fbd90b, type: 3}
   - {fileID: 5573679948565856986, guid: d79a6334be5278a48b766dfd024e32f1, type: 3}
   - {fileID: 5573679948565856986, guid: c0db63750bc8faa4798e42f9cb88f5e2, type: 3}
+  - {fileID: 5573679948565856986, guid: e8d15d49ebc6fd748a7cdc2fd48cb455, type: 3}
   m_CharPrefabs: []
   m_CharStudios: []
   m_AOEDmgPrefabs: []
