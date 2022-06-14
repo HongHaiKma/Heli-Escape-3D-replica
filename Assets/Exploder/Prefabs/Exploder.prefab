@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DontUseTag: 0
-  Radius: 4
+  Radius: 5
   CubeRadius: {x: 0, y: 0, z: 0}
   UseCubeRadius: 0
   ForceVector: {x: 0, y: 1, z: 0}
   UseForceVector: 0
-  Force: 3.5
+  Force: 5
   FrameBudget: 15
   TargetFragments: 10
   ThreadOption: 2

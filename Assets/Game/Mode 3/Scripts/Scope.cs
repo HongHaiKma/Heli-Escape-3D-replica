@@ -13,12 +13,7 @@ public class Scope : MonoBehaviour
 	[SerializeField] private float maxScopeFOV;
 	[SerializeField] private float scopeFOVChangeSpeed;
 
-	private Animator animator;
-
-	private void Awake()
-	{
-		animator = GetComponent<Animator>();
-	}
+	public Animator animator;
 
 	public void SetScopeFlag(bool isScopeOn)
 	{
@@ -27,7 +22,15 @@ public class Scope : MonoBehaviour
 
 	public void ChangeScopeFOV(float delta)
 	{
+		Helper.DebugLog("Delta: " + delta);
 		scopeCamera.fieldOfView += delta * Time.deltaTime * scopeFOVChangeSpeed;
+		scopeCamera.fieldOfView = Mathf.Clamp(scopeCamera.fieldOfView, minScopeFOV, maxScopeFOV);
+	}
+	
+	public void ChangeScopeFOV()
+	{
+		// scopeCamera.fieldOfView = (minScopeFOV + maxScopeFOV) / 2;
+		scopeCamera.fieldOfView = 10f;
 		scopeCamera.fieldOfView = Mathf.Clamp(scopeCamera.fieldOfView, minScopeFOV, maxScopeFOV);
 	}
 

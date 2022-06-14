@@ -82,7 +82,6 @@ public class Hostage : MonoBehaviour
 
     public async UniTask WinTask()
     {
-        Helper.DebugLog("Win TASKKKKKKKKKKKKKKKKKK");
         // ProfileManager.PassLevel();
         // m_Anim.SetTrigger("JumpHeli");
         // EventManager.CallEvent(GameEvent.LEVEL_WIN);

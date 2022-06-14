@@ -56,7 +56,8 @@ public class PlayerShootingController : MonoBehaviour
 
     private void HandleScope()
     {
-        scope.ChangeScopeFOV(-scrollInput);
+        // scope.ChangeScopeFOV(scrollInput);
+        scope.ChangeScopeFOV();
         if (!wasScopeOn)
             scope.ResetScopeFOV();
         scope.SetScopeFlag(isScopeEnabled);
