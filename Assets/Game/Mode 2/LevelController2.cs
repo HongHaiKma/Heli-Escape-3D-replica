@@ -14,6 +14,7 @@ public class LevelController2 : Singleton<LevelController2>
     public float m_RotateSpeed;
     public List<Floor> m_Floors;
     public Shooter2 m_Shooter;
+    private float TIMESCALE;
 
     private void OnEnable()
     {
@@ -52,5 +53,14 @@ public class LevelController2 : Singleton<LevelController2>
         //     m_CurFloor++;
         //     tf_PivotFollower.DOLocalMove(tf_Pivots[m_CurFloor].position, 2f);
         // }
+        if (Helper.GetKeyDown(KeyCode.A))
+        {
+            TIMESCALE = Time.timeScale;
+            Time.timeScale = 0;
+        }
+        if (Helper.GetKeyDown(KeyCode.D))
+        {
+            Time.timeScale = TIMESCALE;
+        }
     }
 }

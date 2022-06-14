@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Exploder.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,28 +13,14 @@ public class Gas2 : MonoBehaviour, IDamageable
     public void Explode()
     {
         Vector3 explosionPos = tf_ExploPivot.position;
-        // Vector3 aaa = new Vector3(3f, 2f, 3f);
         Collider[] colliders = Physics.OverlapBox(explosionPos, aaa);
         foreach (Collider hit in colliders)
         {
-            // Rigidbody rb = hit.gameObject.GetComponent<Rigidbody>();
-            //
-            // if (rb != null)
-            // {
-            //     Helper.DebugLog("Explode: " + rb.name);
-            //     rb.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
-            //     // rb.AddForce((transform.position - rb.position).normalized * 500f, ForceMode.Impulse);
-            // }
             Enemy2 enemy = hit.GetComponent<Enemy2>();
             
             if (enemy != null)
             {
-                // enemy.DoRagdoll(explosionPos);
-                
-                // enemy.m_StateMachine.ChangeState(DeathState.Instance);
-                
                 enemy.OnHit(enemy.tf_Owner.position);
-                Helper.DebugLog("GGGGGGG");
                 enemy.rb_Owner.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
             }
             else
@@ -43,7 +30,8 @@ public class Gas2 : MonoBehaviour, IDamageable
                 {
                     rb.constraints = RigidbodyConstraints.None;
                     rb.useGravity = true;
-                    rb.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
+                    ExploderSingleton.Instance.ExplodeObject(hit.gameObject);
+                    // rb.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
                 }
             }
         }

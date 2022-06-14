@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
         tf_Target = _tfTarget;
         tf_Owner.LookAt(_lookAt);
         // rb_Owner.AddRelativeForce(transform.forward * 2300f);
-        rb_Owner.AddForce(transform.forward * 6000f);
+        rb_Owner.AddForce(transform.forward * 5000f);
         // rb_Owner.velocity = tf_Owner.forward * 5f;
     }
 
