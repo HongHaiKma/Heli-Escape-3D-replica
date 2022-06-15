@@ -197,22 +197,10 @@ MonoBehaviour:
   m_Warning: 0
   tf_Owner: {fileID: 2453109988599596470}
   m_Anim: {fileID: 2569402639049873742}
-  AllColliders: []
   MainCollider: {fileID: 0}
-  AllRigidbodies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   col_Owner: {fileID: 3226633885786190444}
   rb_Owner: {fileID: 7947742346016711833}
+  skin_Owner: {fileID: 6564339413915642379}
   m_EnemyState: 0
   m_AIPath: {fileID: 2453109988599596294}
   m_TargetHostage: {fileID: 0}
@@ -222,6 +210,7 @@ MonoBehaviour:
   go_RaySensor: {fileID: 5326485959827220325}
   m_TimeCatch: 0
   m_TimeCatchMax: 5
+  f_TimeDeath: 0
 --- !u!1 &5326485959827220325
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
@@ -10,14 +11,14 @@ using SRF.UI.Layout;
 using Unity.VisualScripting;
 using UnityEngine;
 using ControlFreak2;
+using Sirenix.Utilities;
 
 public class CamController : Singleton<CamController>
 {
     public Transform tf_Owner;
     public Transform tf_FirePoint;
     public Transform tf_LookAimIK;
-    public LayerMask ignore;
-    public CinemachineVirtualCamera m_CMCam, m_CMCam_Death;
+    public CinemachineVirtualCamera m_CMCam;
     public CinemachineCameraOffset m_CMCamOffset;
 
     public Transform tf_MainCamHolder;
@@ -29,6 +30,7 @@ public class CamController : Singleton<CamController>
 
     public float m_ShootTime = 0.4f;
 
+    // public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12 | 1 << 14);
     public int m_IgnoreLayer = ~(1 << 0 | 1 << 9 | 1 << 12 | 1 << 14);
 
     public TouchTrackPad m_TrackPad;
@@ -59,9 +61,9 @@ public class CamController : Singleton<CamController>
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
             
             RaycastHit hitInfo;
-            // if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
             if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
             {
+                Helper.DebugLog("Name: " + hitInfo.collider.name);
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)
                 {
@@ -71,14 +73,14 @@ public class CamController : Singleton<CamController>
                     if (col != null)
                     {
                         m_ShootTime = 0f;
-
+            
                         if (col.tag.Equals("Ground"))
                         {
                             PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
                             PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
                             PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
                         }
-
+            
                         if (col.gameObject.GetComponent<IDamageable>() != null)
                         {
                             col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
@@ -92,6 +94,50 @@ public class CamController : Singleton<CamController>
                     }
                 }
             }
+            
+            // RaycastHit[] hitInfo2;
+            // hitInfo2 = Physics.SphereCastAll(ray, 0.3f, Mathf.Infinity, m_IgnoreLayer);
+            // if (hitInfo2.Length > 0)
+            // {
+            //     RaycastHit[] a = hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position))
+            //         .ToArray();
+            //     for (int i = 0; i < a.Length; i++)
+            //     {
+            //         Helper.DebugLog(hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position)).ToArray()[i].collider.name);
+            //     }
+            //     RaycastHit hitInfo22 = hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position)).ToArray()[0];
+            //
+            //     Helper.DebugLog("Name: " + hitInfo22.collider.name);
+            //     tf_LookAimIK.position = hitInfo22.point;
+            //     if (m_ShootTime > 0.1f)
+            //     {
+            //         Collider col = hitInfo22.collider;
+            //         GameObject go = hitInfo22.transform.gameObject;
+            //                                 
+            //         if (col != null)
+            //         {
+            //             m_ShootTime = 0f;
+            //
+            //             if (col.tag.Equals("Ground"))
+            //             {
+            //                 PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo22.point);
+            //                 PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo22.point);
+            //                 PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
+            //             }
+            //
+            //             if (col.gameObject.GetComponent<IDamageable>() != null)
+            //             {
+            //                 col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo22.point);
+            //                 PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
+            //             }
+            //             
+            //             if (col.gameObject.GetComponent<ITrap>() != null)
+            //             {
+            //                 col.gameObject.GetComponent<ITrap>().OnTrigger();
+            //             }
+            //         }
+            //     }
+            // }
 
             
         }
@@ -109,8 +155,8 @@ public class CamController : Singleton<CamController>
             
         if (tf_ShooterHolder.parent == null)
         {
-            tf_ShooterHolder.parent = tf_MainCamHolder;
-            tf_ShooterHolder.localPosition = new Vector3(-0.213f, -0.838f, 0.54f);
+            tf_ShooterHolder.parent = tf_HeliHolder;
+            tf_ShooterHolder.localPosition = new Vector3(-0.4129976f, 0.762f, -0.4599994f);
             tf_ShooterHolder.localRotation = Quaternion.Euler(0f, 0f, 0f);
             Debug.Log("BBBBBBBBBBBB");
         }
@@ -120,7 +166,7 @@ public class CamController : Singleton<CamController>
         m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
         m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
 
-        m_CMCamOffset.m_Offset = new Vector3(0f, 5f, 0f);
+        // m_CMCamOffset.m_Offset = new Vector3(5f, 5f, 5f);
         
         await UniTask.Delay(100);
     }
@@ -133,25 +179,6 @@ public class CamController : Singleton<CamController>
         PrefabManager.Instance.SpawnBulletPool("Bullet1", tf_FirePoint.position).GetComponent<Bullet>().Fire(_pos, _tfEnemy);
     }
 
-    public async UniTask CameraDeath(Vector3 targetPosition, float duration)
-    {
-        tf_HeliHolder.parent = null;
-        tf_ShooterHolder.parent = null;
-        
-        float time = 0;
-        Vector3 startPosition = m_CMCamOffset.m_Offset;
-        while (time < duration)
-        {
-            m_CMCamOffset.m_Offset = Vector3.Lerp(startPosition, targetPosition, time / duration);
-            time += Time.deltaTime;
-            await UniTask.Yield();
-        }
-
-        m_CMCamOffset.m_Offset = targetPosition;
-
-        // await UniTask.Delay(2000);
-    }
-    
     public async UniTask CameraIntro(Vector3 targetPosition, float duration)
     {
         await UniTask.WhenAll(ResetLevel());
@@ -176,8 +203,8 @@ public class CamController : Singleton<CamController>
         tf_HeliHolder.localPosition = new Vector3(0.2f, -1.6f, 1f);
         tf_HeliHolder.localRotation = Quaternion.Euler(0f, 0f, 0f);
             
-        tf_ShooterHolder.parent = tf_MainCamHolder;
-        tf_ShooterHolder.localPosition = new Vector3(-0.213f, -0.838f, 0.54f);
+        tf_ShooterHolder.parent = tf_HeliHolder;
+        tf_ShooterHolder.localPosition = new Vector3(-0.4129976f, 0.762f, -0.4599994f);
         tf_ShooterHolder.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
     

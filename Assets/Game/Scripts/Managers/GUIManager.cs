@@ -41,6 +41,8 @@ public class GUIManager : MonoBehaviour
 
     private bool IsHoldBackkey = false;
 
+    public bool m_LoadImmediately;
+
     public List<UICanvas> m_CurrentOpenedPopup = new List<UICanvas>();
     public List<UICanvas> m_CurrentOpenedPanel = new List<UICanvas>();
 
@@ -112,7 +114,10 @@ public class GUIManager : MonoBehaviour
     void Start()
     {
         // StartCoroutine(LoadPlayScene());
-        GUIManager.Instance.LoadPlayScene();
+        if (m_LoadImmediately == true)
+        {
+            GUIManager.Instance.LoadPlayScene();  
+        }
     }
 
     public void ClearAllOpenedPopupList()

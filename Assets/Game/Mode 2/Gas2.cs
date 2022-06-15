@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using Exploder.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Gas2 : MonoBehaviour, IDamageable
 {
-    public Vector3 aaa;
+    public Vector3 m_ExplosionRadius;
     public Transform tf_ExploPivot;
     public float m_ExplosionForce;
     
     public void Explode()
     {
         Vector3 explosionPos = tf_ExploPivot.position;
-        Collider[] colliders = Physics.OverlapBox(explosionPos, aaa);
+        Collider[] colliders = Physics.OverlapBox(explosionPos, m_ExplosionRadius);
         foreach (Collider hit in colliders)
         {
             Enemy2 enemy = hit.GetComponent<Enemy2>();
@@ -49,7 +50,7 @@ public class Gas2 : MonoBehaviour, IDamageable
     {
         // Display the explosion radius when selected
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(tf_ExploPivot.position, aaa);
+        Gizmos.DrawWireCube(tf_ExploPivot.position, m_ExplosionRadius);
     }
 #endif
 }

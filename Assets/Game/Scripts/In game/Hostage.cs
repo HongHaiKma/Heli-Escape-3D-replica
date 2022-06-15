@@ -62,19 +62,9 @@ public class Hostage : MonoBehaviour
         }
     }
 
-    public async UniTask Death()
-    {
-        m_Anim.SetTrigger("Death");
-        gameObject.RemoveComponentIfExists<DOTweenPath>();
-        EventManager.CallEvent(GameEvent.LEVEL_LOSE);
-        await UniTask.WhenAll(CamController.Instance.CameraDeath(new Vector3(2.9f, -0.2f, 3.47f), 1f));
-        await UniTask.Delay(2000);
-        PopupCaller.OpenPopup(UIID.POPUP_LOSE);
-    }
-
     public void OnHostageWin()
     {
-        // if (GameManager.Instance.m_GameLoop != GameLoop.EndGame)
+        // if (GameManager.Instance.m_GameLoop != GameLoop.GameWin)
         // {
             WinTask(); 
         // }
@@ -160,8 +150,10 @@ public class Hostage : MonoBehaviour
             PrefabManager.Instance.DespawnPool(gameObject);
         }
 
-        if (LevelController.Instance.m_HostageRun.Count <= 0)
+        if (LevelController.Instance.m_HostageRun.Count <= 0 
+            && GameManager.Instance.m_GameLoop != GameLoop.GameLose)
         {
+            GameManager.Instance.m_GameLoop = GameLoop.GameLose;
             EventManager.CallEvent(GameEvent.LEVEL_LOSE);
             await UniTask.Delay(1000);
             PopupCaller.OpenPopup(UIID.POPUP_LOSE);

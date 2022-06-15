@@ -33,7 +33,7 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
                 m_Hostages.Add(hos);
                 LevelController.Instance.m_HostageRun.Add(hos);
                 // await UniTask.WaitUntil(() => hos.isAwake == true);
-                await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
+                await UniTask.WaitUntil(() => hos != null && hos.isActiveAndEnabled == true);
                 await UniTask.WaitForEndOfFrame();
                 hos.ChangeState(P_RunState.Instance);
             }

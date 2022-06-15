@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Gas : MonoBehaviour, IDamageable
 {
+    public Vector3 m_ExplosionRadius;
+    public Transform tf_ExploPivot;
+    public float m_ExplosionForce;
+    
     public void Explode()
     {
-        Vector3 explosionPos = transform.position;
+        Vector3 explosionPos = tf_ExploPivot.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPos, 6);
         foreach (Collider hit in colliders)
         {
@@ -14,16 +18,8 @@ public class Gas : MonoBehaviour, IDamageable
             
             if (enemy != null)
             {
-                // enemy.DoRagdoll(explosionPos);
-                
-                // enemy.m_StateMachine.ChangeState(DeathState.Instance);
-                
                 enemy.OnHit(enemy.tf_Owner.position);
-                Helper.DebugLog("GGGGGGG");
-
-                // Rigidbody rb = GetComponent<Rigidbody>();
-                //
-                // if (rb != null) rb.AddExplosionForce(70f, explosionPos, 10f, 2f);
+                enemy.rb_Owner.AddExplosionForce(m_ExplosionForce, explosionPos, 5f, 5f);
             }
         }
     }
@@ -34,4 +30,13 @@ public class Gas : MonoBehaviour, IDamageable
         Destroy(gameObject);
         PrefabManager.Instance.SpawnVFXPool("VFX_5", _pos);
     }
+    
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(tf_ExploPivot.position, m_ExplosionRadius);
+    }
+#endif
 }

@@ -13,12 +13,12 @@ PhysicsManager:
   m_DefaultSolverIterations: 6
   m_DefaultSolverVelocityIterations: 1
   m_QueriesHitBackfaces: 0
-  m_QueriesHitTriggers: 1
+  m_QueriesHitTriggers: 0
   m_EnableAdaptiveForce: 0
   m_ClothInterCollisionDistance: 0
   m_ClothInterCollisionStiffness: 0
   m_ContactsGeneration: 1
-  m_LayerCollisionMatrix: ff16faff3f00f8ff3f01f8ffffffffff3f00f8ff3f00f8ff890efaffc91efaff0c02f8ffc953fcffc918feffc814f8ff893ef8ff0810f8ff0802f8ff0800f9ff0880f8ffc904f8ff0806f8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_LayerCollisionMatrix: ff16f2ff3f00f0ff3f01f0ffffffffff3f00f0ff3f00f0ff890ef2ffc91ef2ff0c02f0ffc953f4ffc918f6ffc814f0ff893ef0ff0830f0ff0802f0ff0800f1ff0880f0ffc904f0ff0806f0ff0800f0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   m_AutoSimulation: 1
   m_AutoSyncTransforms: 0
   m_ReuseCollisionCallbacks: 1

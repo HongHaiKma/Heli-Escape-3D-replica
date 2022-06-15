@@ -455,6 +455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsLongDevice: 0
   m_MainCanvas: {fileID: 0}
+  m_LoadImmediately: 1
   m_CurrentOpenedPopup: []
   m_CurrentOpenedPanel: []
   g_SubCanvas: {fileID: 0}

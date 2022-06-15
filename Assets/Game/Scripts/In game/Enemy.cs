@@ -19,14 +19,13 @@ public class Enemy : MonoBehaviour, IDamageable
     public bool m_Warning;
     public Transform tf_Owner;
     public Animator m_Anim;
-    
-    public StateMachine<Enemy> m_StateMachine;
 
-    public Collider[] AllColliders;
+    public StateMachine<Enemy> m_StateMachine;
+    
     public Collider MainCollider;
-    public Rigidbody[] AllRigidbodies;
     public Collider col_Owner;
     public Rigidbody rb_Owner;
+    public SkinnedMeshRenderer skin_Owner;
 
     public EnemyState m_EnemyState;
 
@@ -41,9 +40,11 @@ public class Enemy : MonoBehaviour, IDamageable
     [Header("Time")] 
     public float m_TimeCatch;
     public float m_TimeCatchMax;
+    public float f_TimeDeath;
     
     private void OnEnable()
     {
+        skin_Owner.material.SetColor("Color", new Color(209f, 38f, 49f, 255f));
         m_AIPath.canMove = true;
         m_AIPath.isStopped = false;
         isClimbing = false;
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour, IDamageable
         col_Owner.enabled = true;
         m_Warning = false;
         go_RaySensor.SetActive(true);
+        f_TimeDeath = 0f;
         
         m_StateMachine = new StateMachine<Enemy>(this);
         m_StateMachine.Init(IdleState.Instance);
@@ -93,37 +95,6 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             PrefabManager.Instance.DespawnPool(gameObject);
         }
-    }
-
-    public void DoRagdoll(Vector3 explosionPos)
-    {
-        foreach (var col in AllColliders)
-        {
-            col.enabled = true;
-        }
-
-        m_Anim.enabled = false;
-        GetComponent<CharacterController>().enabled = false;
-        m_AIPath.enabled = false;
-
-        if (GetComponent<Rigidbody>() == null)
-        {
-            gameObject.AddComponent<Rigidbody>();
-        }
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-
-        rb.useGravity = true;
-        foreach (var mrb in AllRigidbodies)
-        {
-            // mrb.useGravity = false;
-            mrb.isKinematic = false;
-        }
-        
-        // MainCollider.enabled = false;
-        rb.AddExplosionForce(2000f, explosionPos, 10f, 2f);
-        // rb.AddForce((explosionPos - tf_Owner.position).normalized * 10f);
-        
     }
 
     public virtual void OnIdleEnter()
@@ -267,29 +238,22 @@ public class Enemy : MonoBehaviour, IDamageable
     public void OnDeathEnter()
     {
         m_EnemyState = EnemyState.Death;
+        // skin_Owner.material.DOColor(new Color(10f, 10f, 10f, 255f), "_Color", 1f);
+        skin_Owner.material.DOColor(Color.black, "_Color", 1f);
         m_Anim.SetTrigger("Death");
-        // m_AIPath.destination = tf_Owner.position;
         m_AIPath.canMove = false;
         go_RaySensor.SetActive(false);
-        // DoRagdoll(tf_Owner.position);
-        // if (m_Warning)
-        // {
-        //     m_Warning = false;
-        //     g_Warning.SetActive(false);
-        //     GameManager.Instance.SetSlowmotion(false);  
-        // }
-
-        // await UniTask.Delay(2000);
-
-        // if(gameObject.activeInHierarchy == true)
-        // {
-            PrefabManager.Instance.DespawnPool(gameObject);
-        // }
+        // PrefabManager.Instance.DespawnPool(gameObject);
     }
     
     public virtual void OnDeathExecute()
     {
-        
+        f_TimeDeath += Time.deltaTime;
+        if (f_TimeDeath > 2f)
+        {
+            // skin_Owner.material.SetColor("Color", new Color(209f, 38f, 49f, 255f));
+            PrefabManager.Instance.DespawnPool(gameObject);
+        }
     }
     
     public virtual void OnDeathExit()
@@ -400,7 +364,7 @@ public class Enemy : MonoBehaviour, IDamageable
                     ChangeState(ChaseState.Instance);
                     tf_Owner.position = aaa;
                 });
-            // Helper.DebugLog("Closet point: " + aaa);
+            // Helper.DebugLog("Closet point: " + m_ExplosionRadius);
             // Helper.DebugLog("STANDDDDDDDDDDDDDDDDDDDD");
             // EditorApplication.isPaused = true;
         }
@@ -413,18 +377,22 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         m_StateMachine.ChangeState(state);
     }
+    
+    public bool IsState(IState<Enemy> state)
+    {
+        return m_StateMachine.curState == state;
+    }
 
     public void OnHit(Vector3 _pos)
     {
-        col_Owner.enabled = false;
-        
-        UIIngame.Instance.Combo();
-        
-        ChangeState(DeathState.Instance);
-                
-        PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
-        PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
-        MoreMountains.NiceVibrations.MMVibrationManager.Haptic(HapticTypes.SoftImpact);
+        // col_Owner.enabled = false;
+        if (!IsState(DeathState.Instance))
+        {
+            ChangeState(DeathState.Instance);
+            PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
+            PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
+            MoreMountains.NiceVibrations.MMVibrationManager.Haptic(HapticTypes.SoftImpact);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -433,22 +401,6 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             ChangeState(DeathState.Instance);
             Helper.DebugLog("ENEMYYYYYYYYYYYYYY DIEEEEEEEEEEEE");
-        }
-    }
-
-    [Button]
-    public void SetupRagdoll()
-    {
-        AllRigidbodies = GetComponentsInChildren<Rigidbody>(true);
-        foreach (var mrb in AllRigidbodies)
-        {
-            mrb.useGravity = true;
-            mrb.mass = 1f;
-            mrb.angularDrag = 0f;
-            mrb.drag = 0f;
-            
-            mrb.constraints = RigidbodyConstraints.None;
-            // mrb.constraints = RigidbodyConstraints.FreezeRotation;
         }
     }
 }

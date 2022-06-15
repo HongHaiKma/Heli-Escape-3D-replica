@@ -18,7 +18,7 @@ public class WinTrigger : MonoBehaviour, ITriggerble
         col_Owner.enabled = false;
         CamController.Instance.CamMoveFinish(0.3f);
         EventManager.CallEvent(GameEvent.LEVEL_WIN);
-        GameManager.Instance.m_GameLoop = GameLoop.EndGame;
+        GameManager.Instance.m_GameLoop = GameLoop.GameWin;
         
         EventManager.CallEvent(GameEvent.DespawnAllPool);
         SimplePool.Release();

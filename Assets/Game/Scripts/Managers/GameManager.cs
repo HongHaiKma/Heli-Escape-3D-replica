@@ -126,5 +126,6 @@ public enum GameLoop
     Wait,
     Play,
     WaitEndGame,
-    EndGame,
+    GameWin,
+    GameLose,
 }

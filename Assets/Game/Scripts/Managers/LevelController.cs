@@ -15,9 +15,7 @@ public class LevelController : Singleton<LevelController>
     public List<Hostage> m_HostageRun;
     public List<Hostage> m_HostageWait;
 
-    public AstarPath m_APath;
-
-    [Header("EndGame")] 
+    [Header("GameWin")] 
     public Transform tf_CamPos;
     public Transform tf_CamLook;
     public Transform tf_CamFinish;
