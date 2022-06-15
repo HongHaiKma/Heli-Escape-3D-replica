@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Exploder.Utils;
 using UnityEngine;
 
 public class Bullet3 : MonoBehaviour
@@ -12,14 +13,16 @@ public class Bullet3 : MonoBehaviour
     private float shootingForce;
     private Vector3 direction;
     private Vector3 hitPoint;
+    private RaycastHit rayHit;
 
-    public void Launch(float shootingForce, Transform hitTransform, Vector3 hitPoint)
+    public void Launch(float shootingForce, Transform hitTransform, Vector3 hitPoint, RaycastHit hit)
     {
         direction = (hitPoint - transform.position).normalized;
         isEnemyShot = false;
         this.hitTransform = hitTransform;
         this.shootingForce = shootingForce;
         this.hitPoint = hitPoint;
+        this.rayHit = hit;
     }
 
     private void Update()
@@ -57,6 +60,8 @@ public class Bullet3 : MonoBehaviour
         isEnemyShot = true;
         Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
         enemy.OnEnemyShot(transform.forward, shotRB);
+        Helper.DebugLog("Name:" + rayHit.collider.name);
+        ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
     }
 
     public float GetBulletSpeed()

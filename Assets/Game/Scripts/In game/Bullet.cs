@@ -92,8 +92,3 @@ public class Bullet : MonoBehaviour
         PrefabManager.Instance.DespawnPool(gameObject);
     }
 }
-
-public interface IDamageable
-{
-    void OnHit(Vector3 _pos);
-}

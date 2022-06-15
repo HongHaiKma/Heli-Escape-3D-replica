@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Exploder.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,7 +15,7 @@ public class PlayerShootingController : MonoBehaviour
     [SerializeField] private float minDistanceToPlayAnimation;
     private bool isScopeEnabled = false;
     private float scrollInput = 0f;
-    private bool isShooting = false;
+    public bool isShooting = false;
     private bool wasScopeOn;
 
     private void Update()
@@ -26,7 +27,6 @@ public class PlayerShootingController : MonoBehaviour
 
     private void HandleShooting()
     {
-       
         if (isShooting)
             Shoot();
     }
@@ -39,16 +39,20 @@ public class PlayerShootingController : MonoBehaviour
             Vector3 direction = hit.point - bulletSpawnTransform.position;
             if (controller)
             {
-                if (direction.magnitude >= minDistanceToPlayAnimation) //LOGIC TRIGGER BULLET TIME
+                if (direction.magnitude >=  minDistanceToPlayAnimation) //LOGIC TRIGGER BULLET TIME
                 {
-                    controller.StopAnimation();
+                    // controller.StopAnimation();
                     Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
-                    bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point);
+                    bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
                     bulletTimeController.StartSequence(bullet3Instance, hit.point);
+                    ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
+                    Helper.DebugLog("AAAAAAAAAAA");
                 }
                 else
                 {
                     controller.OnEnemyShot(direction, hit.collider.GetComponent<Rigidbody>());
+                    ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
+                    Helper.DebugLog("BBBBBBBBBBB");
                 }
             }       
         }

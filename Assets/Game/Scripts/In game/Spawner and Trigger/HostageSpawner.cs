@@ -80,8 +80,3 @@ public enum HostageSpawn
 {
     Hostage_1,
 }
-
-interface ITriggerble
-{
-    void OnTrigger();
-}

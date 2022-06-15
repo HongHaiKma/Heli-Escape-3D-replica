@@ -26,9 +26,10 @@ public class TrapItem : MonoBehaviour
     {
         if (m_CanCollide)
         {
-            if (collision.gameObject.GetComponent<IDamageable>() != null)
+            IDamageable iDmg = collision.gameObject.GetComponent<IDamageable>();
+            if (iDmg != null)
             {
-                collision.gameObject.GetComponent<IDamageable>().OnHit(collision.gameObject.transform.position);
+                iDmg.OnHit(collision.gameObject.transform.position);
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Exploder.Utils;
 using Pathfinding;
 using UnityEngine;
 
@@ -21,22 +22,7 @@ public class TestFollow : Singleton<TestFollow>
     {
         if (Helper.GetKeyDown(KeyCode.A))
         {
-            GraphNode nearestNode = AstarPath.active.GetNearest(transform.position, NNConstraint.Default).node;
-            if (nearestNode != null)
-            {
-              // if (nearestNode.Walkable)
-              //         {
-              //             Int3 a = new Int3();
-              //             Vector3 b = (Vector3)a;
-              //                            
-              //             // m_AIPath.destination = b;
-              //             // transform.position = (Vector3)nearestNode.position;
-              //             
-              //             
-              //         }  
-
-              Helper.DebugLog("Node: " + nearestNode.ClosestPointOnNode(transform.position));
-            }
+            ExploderSingleton.Instance.ExplodeObject(gameObject);
         }
     }
 

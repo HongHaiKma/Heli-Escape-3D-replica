@@ -23,8 +23,3 @@ public class TrapSystem : MonoBehaviour, ITrap
         }
     }
 }
-
-interface ITrap
-{
-    void OnTrigger();
-}
