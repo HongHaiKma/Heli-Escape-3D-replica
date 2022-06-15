@@ -16,13 +16,19 @@ public class TESTEST : MonoBehaviour
     private void Start()
     {
         Test();
+
+        for (int i = 0; i < 7; i++)
+        {
+            Debug.Log("I: " + i);
+            int a = i;
+        }
     }
 
     private void Update()
     {
         if (Helper.GetKeyDown(KeyCode.A))
         {
-            track_Test.Play(); 
+            track_Test.Play();
         }
     }
 
@@ -31,14 +37,15 @@ public class TESTEST : MonoBehaviour
         await UniTask.WhenAll(Test1(), Test2());
         await UniTask.Delay(2000);
         Debug.Log("Test");
+        Start();
     }
-    
+
     async UniTask Test1()
     {
         await UniTask.Delay(2000);
         Debug.Log("Test1");
     }
-    
+
     async UniTask Test2()
     {
         await UniTask.Delay(3000);

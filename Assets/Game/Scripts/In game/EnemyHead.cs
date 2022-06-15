@@ -17,7 +17,7 @@ public class EnemyHead : MonoBehaviour, IDamageable
     {
         if (GameManager.Instance.m_GameLoop == GameLoop.WaitEndGame)
         {
-            PrefabManager.Instance.SpawnVFXPool("UIHeadshot", Vector3.zero).GetComponent<UIDamage>().Fly(_pos);
+            PrefabManager.Instance.SpawnVFXPool("UIHeadshot", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
         }
         col_Owner.enabled = false;
         // Debug.Log("Head shotttttttttttt");

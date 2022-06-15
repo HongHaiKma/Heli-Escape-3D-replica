@@ -36,7 +36,7 @@ public class LevelController2 : Singleton<LevelController2>
             if (m_CurFloor > m_Floors.Count - 1)
             {
                 await UniTask.Delay(1500);
-                InGameManager2.Instance.go_PopupWin.SetActive(true);
+                UIIngame2.Instance.go_PopupWin.SetActive(true);
                 return;
             }
             

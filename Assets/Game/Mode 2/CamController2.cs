@@ -60,7 +60,7 @@ public class CamController2 : Singleton<CamController2>
             //     }
             // }
         }
-        
+
         if (Input.GetMouseButtonDown(0) && !LevelController2.Instance.m_Shooter.IsState(P_DeathState2.Instance))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -105,7 +105,7 @@ public class CamController2 : Singleton<CamController2>
         }
 
         m_CMCamOffset.m_Offset = targetPosition;
-        InGameManager2.Instance.go_PopupLose.SetActive(true);
+        UIIngame2.Instance.go_PopupLose.SetActive(true);
     }
     
     public async UniTask CameraZoomInAnimation(float fov, float duration)

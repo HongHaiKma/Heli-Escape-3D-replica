@@ -418,13 +418,22 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         col_Owner.enabled = false;
         
-        InGameManager.Instance.Combo();
+        UIIngame.Instance.Combo();
         
         ChangeState(DeathState.Instance);
                 
         PrefabManager.Instance.SpawnVFXPool("VFX_4", _pos);
-        PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos);
+        PrefabManager.Instance.SpawnVFXPool("UIDamage", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
         MoreMountains.NiceVibrations.MMVibrationManager.Haptic(HapticTypes.SoftImpact);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("DeadZone"))
+        {
+            ChangeState(DeathState.Instance);
+            Helper.DebugLog("ENEMYYYYYYYYYYYYYY DIEEEEEEEEEEEE");
+        }
     }
 
     [Button]

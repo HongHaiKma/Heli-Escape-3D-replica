@@ -28,7 +28,7 @@ public class LevelController : Singleton<LevelController>
         m_HostageRun.Clear();
         m_HostageWait.Clear();
         
-        if (InGameManager.Instance.img_Flash.gameObject.activeInHierarchy) 
+        if (UIIngame.Instance.img_Flash.gameObject.activeInHierarchy) 
             Trasition();
         else 
             CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
@@ -42,9 +42,9 @@ public class LevelController : Singleton<LevelController>
     {
         CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
         await UniTask.Delay(100);
-        InGameManager.Instance.img_Flash.DOFade(0f, 1f);
+        UIIngame.Instance.img_Flash.DOFade(0f, 1f);
         await UniTask.Delay(1000);
-        InGameManager.Instance.img_Flash.gameObject.SetActive(false);
+        UIIngame.Instance.img_Flash.gameObject.SetActive(false);
     }
 
     public void OnDestroy()

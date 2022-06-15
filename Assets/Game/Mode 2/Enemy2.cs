@@ -81,7 +81,7 @@ public class Enemy2 : MonoBehaviour, IDamageable
         }
 
         tf_Owner.rotation = lookat;
-        // InGameManager2.Instance.go_PopupLose.SetActive(true);
+        // UIIngame2.Instance.go_PopupLose.SetActive(true);
     }
     
     public virtual void OnAimExecute()

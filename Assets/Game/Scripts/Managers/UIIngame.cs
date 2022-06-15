@@ -7,9 +7,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameManager : Singleton2<InGameManager>
+public class UIIngame : Singleton2<UIIngame>
 {
-    public Transform tf_LevelHolder;
+    // public Transform tf_LevelHolder;
     public Image img_Flash;
     public Image img_Crosshair;
     public Transform tf_MainCanvas;

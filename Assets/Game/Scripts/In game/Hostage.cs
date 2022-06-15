@@ -197,6 +197,15 @@ public class Hostage : MonoBehaviour
     #endregion
 
     #region Collision
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("DeadZone"))
+        {
+            ChangeState(P_DeathState.Instance);
+            Helper.DebugLog("HOSTAGE DIEEEEEEEEEEEE");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

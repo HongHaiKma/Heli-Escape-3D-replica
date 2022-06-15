@@ -18,6 +18,7 @@ TagManager:
   - Waypoint
   - Shooter
   - Exploder
+  - DeadZone
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - Shooter
   - BulletEnemy
   - Stuffs
-  - 
+  - DeadZone
   - 
   - 
   - 

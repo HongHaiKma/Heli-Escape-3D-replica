@@ -18,7 +18,7 @@ public class PopupWin : UICanvas
     public void OnNextLevel()
     {
         // EventManager.CallEvent(GameEvent.DespawnAllPool);
-        // InGameManager.Instance.ResetLevel();
+        // UIIngame.Instance.ResetLevel();
         // GameManager.Instance.ResetLevel();
         // // GameManager.Instance.LoadLevel();
         // GameManager.Instance.LoadLevelTask();
