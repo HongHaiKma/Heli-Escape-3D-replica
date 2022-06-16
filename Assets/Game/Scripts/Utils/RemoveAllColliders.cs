@@ -22,7 +22,7 @@ public class RemoveAllColliders : MonoBehaviour
         foreach (var childRigid in allRigids) DestroyImmediate(childRigid);
 
         var go = GetComponentsInChildren<Component>();
- 
+        
         foreach(var g in go) GameObjectUtility.RemoveMonoBehavioursWithMissingScript(g.gameObject);
     }
 }

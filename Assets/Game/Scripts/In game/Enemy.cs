@@ -44,7 +44,10 @@ public class Enemy : MonoBehaviour, IDamageable
     
     private void OnEnable()
     {
-        skin_Owner.material.SetColor("Color", new Color(209f, 38f, 49f, 255f));
+        // skin_Owner.material.DOKill();
+        skin_Owner.material.SetColor("_Color", Helper.ConvertColor(209f, 38f, 49f));
+        // skin_Owner.material.DOColor(new Color(209f, 38f, 49f), "_Color", 0.1f);
+        
         m_AIPath.canMove = true;
         m_AIPath.isStopped = false;
         isClimbing = false;
@@ -238,12 +241,13 @@ public class Enemy : MonoBehaviour, IDamageable
     public void OnDeathEnter()
     {
         m_EnemyState = EnemyState.Death;
-        // skin_Owner.material.DOColor(new Color(10f, 10f, 10f, 255f), "_Color", 1f);
-        skin_Owner.material.DOColor(Color.black, "_Color", 1f);
+
+        skin_Owner.material.DOKill();
+        skin_Owner.material.DOColor(Color.black, "_Color", 1.5f);
+
         m_Anim.SetTrigger("Death");
         m_AIPath.canMove = false;
         go_RaySensor.SetActive(false);
-        // PrefabManager.Instance.DespawnPool(gameObject);
     }
     
     public virtual void OnDeathExecute()

@@ -190,6 +190,15 @@ public class Helper
         return result;
     }
 
+    #region Color
+
+    public static Color ConvertColor(float r, float g, float b, float a = 255)
+    {
+        return new Color(r/255f, g/255f, b/255f, a/255f);
+    }
+
+    #endregion
+
     public static bool GetKeyDown(KeyCode _key)
     {
         return Input.GetKeyDown(_key);
