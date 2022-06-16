@@ -15,6 +15,12 @@ public class Scope : MonoBehaviour
 
 	public Animator animator;
 
+	private void OnEnable()
+	{
+		animator.SetTrigger("Scope Off");
+		SetScopeFlag(false);
+	}
+
 	public void SetScopeFlag(bool isScopeOn)
 	{
 		animator.SetBool(SCOPE, isScopeOn);
@@ -29,7 +35,6 @@ public class Scope : MonoBehaviour
 	
 	public void ChangeScopeFOV()
 	{
-		// scopeCamera.fieldOfView = (minScopeFOV + maxScopeFOV) / 2;
 		scopeCamera.fieldOfView = 10f;
 		scopeCamera.fieldOfView = Mathf.Clamp(scopeCamera.fieldOfView, minScopeFOV, maxScopeFOV);
 	}

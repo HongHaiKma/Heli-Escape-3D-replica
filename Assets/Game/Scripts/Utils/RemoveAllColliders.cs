@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 public class RemoveAllColliders : MonoBehaviour
@@ -17,7 +18,11 @@ public class RemoveAllColliders : MonoBehaviour
         foreach(var childRigid in allJoints) DestroyImmediate(childRigid);
         
         var allRigids = GetComponentsInChildren<Rigidbody>();
+
+        foreach (var childRigid in allRigids) DestroyImmediate(childRigid);
+
+        var go = GetComponentsInChildren<Component>();
  
-        foreach(var childRigid in allRigids) DestroyImmediate(childRigid);
+        foreach(var g in go) GameObjectUtility.RemoveMonoBehavioursWithMissingScript(g.gameObject);
     }
 }

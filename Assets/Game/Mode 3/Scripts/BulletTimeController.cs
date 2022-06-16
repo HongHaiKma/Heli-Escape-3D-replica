@@ -163,6 +163,7 @@ public class BulletTimeController : MonoBehaviour
 		timeScaleController.SpeedUpTime();
 		DestroyCinemachineSetup();
 		Destroy(activeBullet3.gameObject);
+		Helper.DebugLog("AAAAAAAAAAAAAAAAAA");
 		ResetVariables();
 	}
 

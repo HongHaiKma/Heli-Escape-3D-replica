@@ -61,7 +61,8 @@ public class Bullet3 : MonoBehaviour
         Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
         enemy.OnEnemyShot(transform.forward, shotRB);
         Helper.DebugLog("Name:" + rayHit.collider.name);
-        ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
+        
+        // ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
     }
 
     public float GetBulletSpeed()

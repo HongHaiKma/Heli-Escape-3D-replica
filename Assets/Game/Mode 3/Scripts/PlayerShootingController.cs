@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using ControlFreak2;
 using Exploder.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,16 +14,16 @@ public class PlayerShootingController : MonoBehaviour
     [SerializeField] Scope scope;
     [SerializeField] private float shootingForce;
     [SerializeField] private float minDistanceToPlayAnimation;
-    private bool isScopeEnabled = false;
-    private float scrollInput = 0f;
+    public bool isScopeEnabled = false;
     public bool isShooting = false;
+    private float scrollInput = 0f;
     private bool wasScopeOn;
+
+    public TouchTrackPad m_TrackPad;
 
     private void Update()
     {
         GetInput();
-        HandleScope();
-        HandleShooting();
     }
 
     private void HandleShooting()
@@ -32,7 +33,7 @@ public class PlayerShootingController : MonoBehaviour
     }
 
     private void Shoot()
-    {              
+    {
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
         {
             Enemy3 controller = hit.collider.GetComponentInParent<Enemy3>();
@@ -46,13 +47,11 @@ public class PlayerShootingController : MonoBehaviour
                     bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
                     bulletTimeController.StartSequence(bullet3Instance, hit.point);
                     ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
-                    Helper.DebugLog("AAAAAAAAAAA");
                 }
                 else
                 {
                     controller.OnEnemyShot(direction, hit.collider.GetComponent<Rigidbody>());
                     ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
-                    Helper.DebugLog("BBBBBBBBBBB");
                 }
             }       
         }
@@ -60,7 +59,6 @@ public class PlayerShootingController : MonoBehaviour
 
     private void HandleScope()
     {
-        // scope.ChangeScopeFOV(scrollInput);
         scope.ChangeScopeFOV();
         if (!wasScopeOn)
             scope.ResetScopeFOV();
@@ -70,9 +68,16 @@ public class PlayerShootingController : MonoBehaviour
 
     private void GetInput()
     {
-        if (Input.GetMouseButtonDown(1))
-            isScopeEnabled = !isScopeEnabled;
-        isShooting = Input.GetMouseButtonDown(0) && isScopeEnabled;
-        scrollInput = Input.mouseScrollDelta.y;
+        if (m_TrackPad.JustPressed())
+        {
+            scope.ChangeScopeFOV();
+            scope.SetScopeFlag(true);
+        }
+
+        if (m_TrackPad.JustReleased())
+        {
+            scope.SetScopeFlag(false);
+            Shoot();
+        }
     }
 }

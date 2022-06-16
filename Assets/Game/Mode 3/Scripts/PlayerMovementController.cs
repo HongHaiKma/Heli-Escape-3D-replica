@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ControlFreak2;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementController : MonoBehaviour
@@ -39,7 +40,6 @@ public class PlayerMovementController : MonoBehaviour
 		mouseSensivity = maxMouseSensivity;
 		currentRotationY = transform.eulerAngles.y;
 		currentRotationX = transform.eulerAngles.x;
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 
@@ -62,8 +62,14 @@ public class PlayerMovementController : MonoBehaviour
 	{
 		horizontalInput = Input.GetAxisRaw(HORIZONTAL);
 		verticalInput = Input.GetAxisRaw(VERTICAL);
-		mouseInputX = Input.GetAxis(MOUSE_X);
-		mouseInputY = Input.GetAxis(MOUSE_Y);
+		
+		Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
+		mouseInputX = mouseInput.x;
+		mouseInputY = mouseInput.y;
+		
+		// mouseInputX = Input.GetAxis(MOUSE_X);
+		// mouseInputY = Input.GetAxis(MOUSE_Y);
+		
 		mouseSensivity = minMouseSensivity + scope.GetZoomPrc() * Mathf.Abs(minMouseSensivity - maxMouseSensivity);
 	}
 
