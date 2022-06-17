@@ -16,3 +16,8 @@ interface ITriggerble
 {
     void OnTrigger();
 }
+
+interface IDamageable3
+{
+    void OnHit(Vector3 shootDirection, Rigidbody shotRB, bool isDie);
+}

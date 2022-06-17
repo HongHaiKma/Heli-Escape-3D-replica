@@ -21,8 +21,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public Animator m_Anim;
 
     public StateMachine<Enemy> m_StateMachine;
-    
-    public Collider MainCollider;
+
     public Collider col_Owner;
     public Rigidbody rb_Owner;
     public SkinnedMeshRenderer skin_Owner;

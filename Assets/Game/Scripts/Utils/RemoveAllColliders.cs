@@ -6,23 +6,34 @@ using UnityEngine;
 
 public class RemoveAllColliders : MonoBehaviour
 {
+    public bool col, rigid, joint; 
+    
     [Button]
     public void RemoveAllColliderss()
     {
-        var allColliders = GetComponentsInChildren<Collider>();
+        if (col)
+        {
+            var allColliders = GetComponentsInChildren<Collider>();
  
-        foreach(var childCollider in allColliders) DestroyImmediate(childCollider);
-        
-        var allJoints = GetComponentsInChildren<Joint>();
+            foreach(var childCollider in allColliders) DestroyImmediate(childCollider); 
+        }
+
+        if (rigid)
+        {
+            var allJoints = GetComponentsInChildren<Joint>();
  
-        foreach(var childRigid in allJoints) DestroyImmediate(childRigid);
-        
-        var allRigids = GetComponentsInChildren<Rigidbody>();
+            foreach(var childRigid in allJoints) DestroyImmediate(childRigid);  
+        }
 
-        foreach (var childRigid in allRigids) DestroyImmediate(childRigid);
+        if (joint)
+        {
+            var allRigids = GetComponentsInChildren<Rigidbody>();
 
-        var go = GetComponentsInChildren<Component>();
-        
-        foreach(var g in go) GameObjectUtility.RemoveMonoBehavioursWithMissingScript(g.gameObject);
+            foreach (var childRigid in allRigids) DestroyImmediate(childRigid);
+        }
+
+        // var go = GetComponentsInChildren<Component>();
+        //
+        // foreach(var g in go) GameObjectUtility.RemoveMonoBehavioursWithMissingScript(g.gameObject);
     }
 }

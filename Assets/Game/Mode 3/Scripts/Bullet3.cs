@@ -59,9 +59,8 @@ public class Bullet3 : MonoBehaviour
     {
         isEnemyShot = true;
         Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
-        enemy.OnEnemyShot(transform.forward, shotRB);
-        Helper.DebugLog("Name:" + rayHit.collider.name);
-        
+        enemy.OnHit(true);
+
         // ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
     }
 
