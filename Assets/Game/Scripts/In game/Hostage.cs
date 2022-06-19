@@ -15,6 +15,8 @@ public class Hostage : MonoBehaviour
     public Rigidbody rb_Owner;
     public Transform tf_Onwer;
     public Animator m_Anim;
+    public Collider col_Owner;
+    public SkinnedMeshRenderer skin_Owner;
 
     public Transform tf_LookAtPoint;
 
@@ -27,8 +29,11 @@ public class Hostage : MonoBehaviour
 
     private void OnEnable()
     {
+        col_Owner.enabled = true;
         m_AI.isStopped = false;
         rb_Owner.useGravity = true;
+        // skin_Owner.material.SetColor("_Color", Helper.ConvertColor(Color.white));
+        skin_Owner.material.SetColor("_Color", Color.white);
         m_StateMachine = new StateMachine<Hostage>(this);
         m_StateMachine.Init(P_WaitState.Instance);
         
@@ -141,7 +146,10 @@ public class Hostage : MonoBehaviour
     {
         m_HostageStates = HostageStates.DEATH;
         m_Anim.SetTrigger("Death");
+        skin_Owner.material.DOKill();
+        skin_Owner.material.DOColor(Color.black, "_Color", 1.5f);
         LevelController.Instance.m_HostageRun.Remove(this);
+        Helper.DebugLog("Hostage Die");
         
         await UniTask.Delay(1000);
         
@@ -194,8 +202,8 @@ public class Hostage : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("DeadZone"))
         {
+            col_Owner.enabled = false;
             ChangeState(P_DeathState.Instance);
-            Helper.DebugLog("HOSTAGE DIEEEEEEEEEEEE");
         }
     }
 

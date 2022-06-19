@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  unwrap: 1
+  unwrap: 0
   splitAtEveryPortal: 0
 --- !u!136 &3226633885786190444
 CapsuleCollider:

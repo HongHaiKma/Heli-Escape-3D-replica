@@ -1978,6 +1978,8 @@ MonoBehaviour:
   rb_Owner: {fileID: 2543472159074517850}
   tf_Onwer: {fileID: 9152836602573967584}
   m_Anim: {fileID: 2962305861131369220}
+  col_Owner: {fileID: 9152836602573967591}
+  skin_Owner: {fileID: 2159042517477101570}
   tf_LookAtPoint: {fileID: 9152836601991486690}
   m_AI: {fileID: 6252298329435698839}
   m_HostageStates: 0

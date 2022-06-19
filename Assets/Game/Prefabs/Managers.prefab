@@ -160,6 +160,7 @@ MonoBehaviour:
   - {fileID: 5573679948565856986, guid: d79a6334be5278a48b766dfd024e32f1, type: 3}
   - {fileID: 5573679948565856986, guid: c0db63750bc8faa4798e42f9cb88f5e2, type: 3}
   - {fileID: 5573679948565856986, guid: e8d15d49ebc6fd748a7cdc2fd48cb455, type: 3}
+  - {fileID: 5573679948565856986, guid: e6c0aaef7610d3444b98f769fc1f98d8, type: 3}
   m_CharPrefabs: []
   m_CharStudios: []
   m_AOEDmgPrefabs: []

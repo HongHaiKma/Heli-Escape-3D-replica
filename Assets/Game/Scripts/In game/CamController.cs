@@ -63,7 +63,6 @@ public class CamController : Singleton<CamController>
             RaycastHit hitInfo;
             if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             {
-                Helper.DebugLog("Name: " + hitInfo.collider.name);
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)
                 {

@@ -17,6 +17,8 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
 
     private async UniTask OnEnable()
     {
+        await UniTask.WaitUntil(() => GameManager.Instance.m_LevelLoaded == true);
+        
         m_Collider.enabled = isWaiting;
         
         List<Hostage> a = new List<Hostage>();
@@ -26,7 +28,6 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
             Transform randomPos = tf_RandomPoints[i % tf_RandomPoints.Count];
             if (!isWaiting)
             {
-                
                 Hostage hos = PrefabManager.Instance.SpawnHostagePool(m_HostageSpawn.ToString(), randomPos.position)
                     .GetComponent<Hostage>();
                 hos.transform.parent = LevelController.Instance.transform;
@@ -36,6 +37,7 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
                 await UniTask.WaitUntil(() => hos != null && hos.isActiveAndEnabled == true);
                 await UniTask.WaitForEndOfFrame();
                 hos.ChangeState(P_RunState.Instance);
+                Helper.DebugLog("Hostage spawn");
             }
             else
             {
@@ -72,6 +74,8 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
         {
             LevelController.Instance.m_HostageRun.Add(m_Hostages[i]);
             m_Hostages[i].ChangeState(P_RunState.Instance);
+            Vector3 hosTf = m_Hostages[i].tf_Onwer.position;
+            PrefabManager.Instance.SpawnVFXPool("UISaveHostage", Vector3.zero).GetComponent<UIDamage>().Fly(hosTf + Vector3.up * 0.7f, UIIngame.Instance.tf_MainCanvas);
         }
     }
 }

@@ -196,6 +196,11 @@ public class Helper
     {
         return new Color(r/255f, g/255f, b/255f, a/255f);
     }
+    
+    public static Color ConvertColor(Color _color)
+    {
+        return new Color(_color.r/255f, _color.g/255f, _color.b/255f, _color.a/255f);
+    }
 
     #endregion
 
@@ -207,5 +212,10 @@ public class Helper
     public static bool GetKey(KeyCode _key)
     {
         return Input.GetKey(_key);
+    }
+
+    public IList<T> ForSort<T>(IList<T> a)
+    {
+        return a;
     }
 }

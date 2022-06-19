@@ -50,11 +50,13 @@ public class Enemy : MonoBehaviour, IDamageable
         m_AIPath.canMove = true;
         m_AIPath.isStopped = false;
         isClimbing = false;
-        m_TimeChangeTarget = 0f;
+        
         col_Owner.enabled = true;
-        m_Warning = false;
+
         go_RaySensor.SetActive(true);
+        
         f_TimeDeath = 0f;
+        m_TimeChangeTarget = 0f;
         
         m_StateMachine = new StateMachine<Enemy>(this);
         m_StateMachine.Init(IdleState.Instance);
@@ -89,6 +91,13 @@ public class Enemy : MonoBehaviour, IDamageable
     private void Update()
     {
         m_StateMachine.ExecuteStateUpdate();
+
+        if (Helper.GetKeyDown(KeyCode.S))
+        {
+            RandomPath path = RandomPath.Construct(transform.position, 5000);
+            path.spread = 5000;
+            GetComponent<Seeker>().StartPath(path);
+        }
     }
 
     public void DestroyAllPool()
@@ -131,6 +140,8 @@ public class Enemy : MonoBehaviour, IDamageable
     // public virtual async UniTask OnChaseExecute()
     public void OnChaseExecute()
     {
+        m_AIPath.maxSpeed = UnityEngine.Random.Range(1.6f, 2.3f);
+        
         m_TimeChangeTarget += Time.deltaTime;
 
         if (LevelController.Instance.m_HostageRun.Count <= 0)
@@ -226,12 +237,6 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    public void SetSlowmotionOff()
-    {
-        m_Warning = false;
-        // g_Warning.SetActive(false);
-    }
-    
     public virtual void OnChaseExit()
     {
         
@@ -277,8 +282,10 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void OnEnemyWin()
     {
-        ChangeState(WinState.Instance);
-        // SetSlowmotionOff();
+        if (!IsState(DeathState.Instance))
+        {
+            ChangeState(WinState.Instance);  
+        }
     }
     
     public void OnEnemyLose()
@@ -327,6 +334,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         m_EnemyState = EnemyState.Win;
         m_Anim.SetTrigger("Win");
+        m_AIPath.canMove = false;
+        m_AIPath.isStopped = true;
     }
     
     public virtual void OnWinExecute()
@@ -403,7 +412,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (collision.gameObject.tag.Equals("DeadZone"))
         {
             ChangeState(DeathState.Instance);
-            Helper.DebugLog("ENEMYYYYYYYYYYYYYY DIEEEEEEEEEEEE");
+            col_Owner.enabled = false;
         }
     }
 }

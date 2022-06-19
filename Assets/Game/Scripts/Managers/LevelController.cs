@@ -52,7 +52,7 @@ public class LevelController : Singleton<LevelController>
 
     public Hostage FindNearestHostage(Vector3 _pos)
     {
-        var target = m_HostageRun.OrderBy(x => (transform.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
+        var target = m_HostageRun.OrderBy(x => (x.tf_Onwer.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
         
         return target;
     }

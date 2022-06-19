@@ -29,9 +29,9 @@ public class GameManager : Singleton2<GameManager>
     public override void OnEnable()
     {
         base.OnEnable();
+        m_LevelLoaded = false;
         m_GameLoop = GameLoop.Wait;
         m_EnemyWarning = 0;
-        m_LevelLoaded = false;
     }
 
     public void ResetLevel()
