@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class LevelController3 : Singleton<LevelController3>
 {
+    public List<Hostage3> m_Hostages;
+
+
     public float m_TimeScale;
     
     private void Update()

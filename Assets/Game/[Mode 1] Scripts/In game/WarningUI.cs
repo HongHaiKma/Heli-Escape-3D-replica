@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WarningUI : MonoBehaviour
 {
-    private void LateUpdate()
+    public void LateUpdate()
     {
         transform.LookAt(Camera.main.transform);
         transform.Rotate(0f, 180f, 0f);

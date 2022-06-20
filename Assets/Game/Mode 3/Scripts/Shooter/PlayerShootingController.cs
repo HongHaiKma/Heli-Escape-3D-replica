@@ -37,11 +37,11 @@ public class PlayerShootingController : MonoBehaviour
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
         {
             // Enemy3 controller = hit.collider.GetComponentInParent<Enemy3>();
-            Enemy3 IDamage = hit.collider.GetComponentInParent<Enemy3>();
+            IBodyPart IBodyPart = hit.collider.GetComponent<IBodyPart>();
             Vector3 direction = hit.point - bulletSpawnTransform.position;
-            if (IDamage != null)
+            if (IBodyPart != null)
             {
-                if (IDamage.m_Health - 1 <= 0) //LOGIC TRIGGER BULLET TIME
+                if (IBodyPart.OnCanSlowmotion()) //LOGIC TRIGGER BULLET TIME
                 {
                     // controller.StopAnimation();
                     Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
@@ -51,7 +51,7 @@ public class PlayerShootingController : MonoBehaviour
                 else
                 {
                     // controller.OnEnemyShot(direction, hit.collider.GetComponent<Rigidbody>());
-                    IDamage.OnHit(false);
+                    IBodyPart.OnHit();
                 }
             }       
         }

@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,11 +53,11 @@ MonoBehaviour:
     width: 0.2
   m_Looped: 0
   m_Waypoints:
-  - position: {x: 2.4644399, y: 0.12928176, z: -1.8662423}
+  - position: {x: 3.7173555, y: 0.12928176, z: -18.213463}
     roll: 0
-  - position: {x: 2.557993, y: 0.30947208, z: 0.6824962}
+  - position: {x: 2.3206944, y: 0.30947208, z: -19.1162}
     roll: 0
-  - position: {x: 1.6351403, y: 0.16664839, z: 2.7124429}
+  - position: {x: -0.4246298, y: 0.16664839, z: -16.942986}
     roll: 0
 --- !u!65 &3281215222204458462
 BoxCollider:

@@ -151,41 +151,6 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         else
         {
-            // if (m_TargetHostage == null)
-            // {
-            //     // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-            //     m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
-            //
-            //     while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
-            //            || !m_TargetHostage.gameObject.activeInHierarchy 
-            //            || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
-            //     {
-            //         if (LevelController.Instance.m_HostageRun.Count <= 0)
-            //         {
-            //             ChangeState(WinState.Instance);
-            //             return;
-            //         }
-            //         // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-            //         m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
-            //         await UniTask.Yield();
-            //     }
-            // }
-            // else
-            // {
-            //     while (!LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 
-            //            || !m_TargetHostage.gameObject.activeInHierarchy 
-            //            || m_TargetHostage.m_HostageStates == HostageStates.DEATH)
-            //     {
-            //         if (LevelController.Instance.m_HostageRun.Count <= 0)
-            //         {
-            //             ChangeState(WinState.Instance);
-            //             return;
-            //         }
-            //         // m_TargetHostage = LevelController.Instance.m_HostageRun[UnityEngine.Random.Range(0, LevelController.Instance.m_HostageRun.Count - 1)];
-            //         m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
-            //         await UniTask.Yield();
-            //     }
-            // }
             m_TargetHostage = LevelController.Instance.FindNearestHostage(tf_Owner.position);
 
             while (m_TargetHostage == null || !LevelController.Instance.m_HostageRun.Contains(m_TargetHostage) 

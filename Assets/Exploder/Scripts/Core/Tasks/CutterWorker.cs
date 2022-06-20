@@ -185,7 +185,7 @@ namespace Exploder
                     }
                 }
 
-                meshSet.ExceptWith(meshToRemove);
+                // meshSet.ExceptWith(meshToRemove);
                 meshSet.UnionWith(newFragments);
             }
         }

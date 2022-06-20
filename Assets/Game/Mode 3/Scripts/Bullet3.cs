@@ -8,12 +8,12 @@ public class Bullet3 : MonoBehaviour
 {
     [SerializeField] private Transform visualTransform;
 
-    private Transform hitTransform;
-    private bool isEnemyShot;
-    private float shootingForce;
-    private Vector3 direction;
-    private Vector3 hitPoint;
-    private RaycastHit rayHit;
+    public Transform hitTransform;
+    public bool isEnemyShot;
+    public float shootingForce;
+    public Vector3 direction;
+    public Vector3 hitPoint;
+    public RaycastHit rayHit;
 
     public void Launch(float shootingForce, Transform hitTransform, Vector3 hitPoint, RaycastHit hit)
     {
@@ -34,16 +34,17 @@ public class Bullet3 : MonoBehaviour
 
     private void Move()
     {
+        transform.LookAt(hitPoint);
         transform.Translate(direction * shootingForce * Time.deltaTime, Space.World);
     }
 
     private void CheckDistanceToEnemy()
     {
         float distance = Vector3.Distance(transform.position, hitPoint);
-        if(distance <= 0.1 && !isEnemyShot)
+        if(distance <= 0.25f && !isEnemyShot)
         {
-            Enemy3 enemy = hitTransform.GetComponentInParent<Enemy3>();
-            if (enemy)
+            IBodyPart enemy = hitTransform.GetComponent<IBodyPart>();
+            if (enemy != null)
             {
                 ShootEnemy(hitTransform, enemy);
             }
@@ -55,12 +56,13 @@ public class Bullet3 : MonoBehaviour
         visualTransform.Rotate(Vector3.forward, 1200 * Time.deltaTime, Space.Self);
     }
 
-    private void ShootEnemy(Transform hitTransform, Enemy3 enemy)
+    private void ShootEnemy(Transform hitTransform, IBodyPart enemy)
     {
         isEnemyShot = true;
         Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
-        enemy.OnHit(true);
-
+        PrefabManager.Instance.SpawnVFXPool("VFX_4", transform.position);
+        enemy.OnHit();
+ 
         // ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
     }
 

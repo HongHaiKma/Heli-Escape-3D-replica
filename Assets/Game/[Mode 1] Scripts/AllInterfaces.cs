@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Exploder.Demo;
 using UnityEngine;
 
 public interface IDamageable
@@ -23,6 +24,12 @@ interface IDamageable3
 }
 
 interface IBodyPart
+{
+    void OnHit();
+    bool OnCanSlowmotion();
+}
+
+interface IHostage3
 {
     void OnHit();
 }
