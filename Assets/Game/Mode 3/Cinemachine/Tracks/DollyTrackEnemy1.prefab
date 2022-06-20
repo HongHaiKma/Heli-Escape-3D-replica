@@ -86,8 +86,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: {fileID: 6338229774482970691}
   boxCollider: {fileID: 3281215222204458462}
-  excludedMasks:
-  - serializedVersion: 2
-    m_Bits: 2048
-  - serializedVersion: 2
-    m_Bits: 4096
+  excludedMasks: []

@@ -16,10 +16,10 @@ namespace DynamicMeshCutter
                 {
                     continue;
                 }
-                else
-                {
-                    Helper.DebugLog("Name Root: " + root.name);
-                }
+                // else
+                // {
+                //     Helper.DebugLog("Name Root: " + root.name);
+                // }
                     
                 // var targets = root.GetComponentsInChildren<MeshTarget>();
                 // foreach (var target in targets)

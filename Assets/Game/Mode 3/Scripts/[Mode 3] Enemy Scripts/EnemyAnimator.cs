@@ -8,21 +8,30 @@ public class EnemyAnimator : MonoBehaviour
 
     public void EnemyAttack()
     {
-        ChangeState(AttackState3.Instance);
+        // ChangeState(AttackState3.Instance);
+        m_EnemyOwner.Attack();
     }
     
     public void ChangeStateChase()
     {
-        Helper.DebugLog("Change Chase State");
+        // Helper.DebugLog("Change Chase State");
         // m_EnemyOwner.ChangeState(ChaseState3.Instance);
         
-        if (LevelController3.Instance.m_Hostages.Count <= 0)
+        if (m_EnemyOwner.m_Health <= 0f)
         {
-            ChangeState(IdleState3.Instance);
+            PopupCaller.OpenPopup(UIID.POPUP_WIN);
         }
         else
         {
-            ChangeState(ChaseState3.Instance);
+            if (LevelController3.Instance.m_Hostages.Count <= 0)
+                {
+                    ChangeState(IdleState3.Instance);
+                }
+                else
+                {
+                    ChangeState(ChaseState3.Instance);
+                    // Helper.DebugLog("Change Chase State");
+                }
         }
     }
 

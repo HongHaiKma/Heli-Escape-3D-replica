@@ -55,9 +55,9 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: 0, y: 0, z: -1.3005465}
     roll: -31.99
-  - position: {x: -0.037534356, y: 0.06021115, z: -1.593493}
+  - position: {x: 0, y: 0.06021115, z: -1.593493}
     roll: -24.03
-  - position: {x: -0.2504747, y: 0.2351609, z: -1.9966297}
+  - position: {x: 0, y: 0.2351609, z: -1.9966297}
     roll: 0
 --- !u!65 &5280148879514374203
 BoxCollider:

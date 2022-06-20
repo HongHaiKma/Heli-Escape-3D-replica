@@ -25,6 +25,7 @@ public class Enemy3 : MonoBehaviour
     public Animator m_Anim;
     private RagdollController ragdollController;
     public UIEnemy3Bar m_UIHealth;
+    public float m_AnimSpd;
 
     [Title("States")]
     public LegCut m_LegCut;
@@ -50,6 +51,7 @@ public class Enemy3 : MonoBehaviour
     private void OnEnable()
     {
         // m_Health = 3f;
+        m_Anim.speed = m_AnimSpd;
         m_StateMachine = new StateMachine<Enemy3>(this);
         m_StateMachine.Init(ChaseState3.Instance);
 
@@ -93,6 +95,7 @@ public class Enemy3 : MonoBehaviour
     public virtual void OnChaseEnter()
     {
         m_EnemyState = EnemyState3.Chase;
+        Helper.DebugLog("Chaseeeeeeeeeeeeeeee");
         // m_AIPath.canMove = false;
         if (m_LegCut == LegCut.NONE)
         {
@@ -134,9 +137,10 @@ public class Enemy3 : MonoBehaviour
 
         m_AI.destination = m_HostageTarget.tf_Owner.position;
 
-        if ((transform.position - m_HostageTarget.tf_Owner.position).sqrMagnitude < 0.1f)
+        if ((transform.position - m_HostageTarget.tf_Owner.position).sqrMagnitude < 0.5f)
         {
             ChangeState(AttackState3.Instance);
+            Helper.DebugLog("Chase to Attack");
         }
     }
     
@@ -148,15 +152,20 @@ public class Enemy3 : MonoBehaviour
     public virtual void OnAttackEnter()
     {
         m_EnemyState = EnemyState3.Attack;
+        
         // m_AIPath.canMove = false;
         if (m_LegCut == LegCut.RIGHT)
         {
+            m_Anim.ResetTrigger(animAttack2);
             m_Anim.SetTrigger(animAttack2);
+            
             Helper.DebugLog("Attack Left");
         }
         else
         {
+            m_Anim.ResetTrigger(animAttack);
             m_Anim.SetTrigger(animAttack);
+           
             Helper.DebugLog("Attack Right");
         }
 
@@ -170,6 +179,26 @@ public class Enemy3 : MonoBehaviour
         // m_Anim.SetTrigger(animAttack);
         ChangeState(AttackState3.Instance);
     }
+    
+    [Button]
+    public void TestOverLap()
+    {
+        Collider[] colliders = Physics.OverlapBox(tf_ExploPivot.position, m_ExplosionRadius);
+        
+        Helper.DebugLog("Count: " + colliders.Length);
+        
+        foreach (Collider hit in colliders)
+        {
+            Helper.DebugLog(hit.name);
+            // Hostage3 hos = hit.GetComponent<Hostage3>();
+            //
+            // if (hos != null)
+            // {
+            //     hos.OnHit(Vector3.up);
+            //     Helper.DebugLog("Enemy on Hit");
+            // }
+        }
+    }
 
     public void Attack()
     {
@@ -182,6 +211,7 @@ public class Enemy3 : MonoBehaviour
             if (hos != null)
             {
                 hos.OnHit(Vector3.up);
+                Helper.DebugLog("Enemy on Hit");
             }
         }
     }

@@ -28,20 +28,21 @@ public class Bullet3 : MonoBehaviour
     private void Update()
     {
         Move();
-        Rotate();
+        // Rotate();
         CheckDistanceToEnemy();
     }
 
     private void Move()
     {
-        transform.LookAt(hitPoint);
+        // transform.LookAt(hitPoint);
+        direction = (hitPoint - transform.position).normalized;
         transform.Translate(direction * shootingForce * Time.deltaTime, Space.World);
     }
 
     private void CheckDistanceToEnemy()
     {
         float distance = Vector3.Distance(transform.position, hitPoint);
-        if(distance <= 0.25f && !isEnemyShot)
+        if(distance <= 1f && !isEnemyShot)
         {
             IBodyPart enemy = hitTransform.GetComponent<IBodyPart>();
             if (enemy != null)
