@@ -47,13 +47,11 @@ public class PlayerShootingController : MonoBehaviour
                     Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
                     bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
                     bulletTimeController.StartSequence(bullet3Instance, hit.point);
-                    // ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
                 }
                 else
                 {
                     // controller.OnEnemyShot(direction, hit.collider.GetComponent<Rigidbody>());
                     IDamage.OnHit(false);
-                    // ExploderSingleton.Instance.ExplodeObject(hit.collider.gameObject);
                 }
             }       
         }
