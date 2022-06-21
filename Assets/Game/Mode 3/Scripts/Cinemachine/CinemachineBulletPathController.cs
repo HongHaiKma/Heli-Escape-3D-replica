@@ -12,7 +12,7 @@ public class CinemachineBulletPathController : CinemachinePathController {
             boxCollider.size / 2f, target.forward, out RaycastHit hit,
            orientation, distance, ~mask))
         {
-            Debug.LogError(hit.collider.gameObject.name);
+            // Debug.LogError(hit.collider.gameObject.name);
             return false;
         }
 

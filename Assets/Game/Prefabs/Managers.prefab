@@ -149,6 +149,7 @@ MonoBehaviour:
   m_BulletPrefabs:
   - {fileID: 7936403035773594423, guid: 40e5b92c87ca98d4f926e405e52508f3, type: 3}
   - {fileID: 7936403035773594423, guid: 0681d9dc05ba86d4697db70efe6a997d, type: 3}
+  - {fileID: 3873591501865538396, guid: e3db0549170f6954aa3b8842d34202c9, type: 3}
   m_VFXPrefabs:
   - {fileID: 1000012903210382, guid: 846fb583b71839a43bab72f85326ce85, type: 3}
   - {fileID: 1652179301854697, guid: 565d4d697d9250241a62e5bcff3a85b1, type: 3}

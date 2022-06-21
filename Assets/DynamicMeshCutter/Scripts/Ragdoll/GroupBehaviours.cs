@@ -6,7 +6,8 @@ namespace DynamicMeshCutter
     {
         Stone,
         Ragdoll,
-        Animation
+        Animation,
+        Explode,
     }
 
     public enum RagdollPhysics

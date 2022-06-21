@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using ControlFreak2;
+using Cysharp.Threading.Tasks;
 using Exploder.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class PlayerShootingController : MonoBehaviour
 {
-    [SerializeField] BulletTimeController bulletTimeController;
-    [FormerlySerializedAs("bulletPrefab")] [SerializeField] Bullet3 bullet3Prefab;
-    [SerializeField] Transform bulletSpawnTransform;
-    [SerializeField] Scope scope;
-    [SerializeField] private float shootingForce;
-    [SerializeField] private float minDistanceToPlayAnimation;
+    public BulletTimeController bulletTimeController;
+    public Transform bulletSpawnTransform;
+    public Scope scope;
+    public float shootingForce;
+    public float minDistanceToPlayAnimation;
     public bool isScopeEnabled = false;
     public bool isShooting = false;
     private float scrollInput = 0f;
@@ -26,13 +26,7 @@ public class PlayerShootingController : MonoBehaviour
         GetInput();
     }
 
-    private void HandleShooting()
-    {
-        if (isShooting)
-            Shoot();
-    }
-
-    private void Shoot()
+    private async UniTask Shoot()
     {
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
         {
@@ -44,8 +38,14 @@ public class PlayerShootingController : MonoBehaviour
                 if (IBodyPart.OnCanSlowmotion()) //LOGIC TRIGGER BULLET TIME
                 {
                     // controller.StopAnimation();
-                    Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
+                    // Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
+                    Bullet3 bullet3Instance = PrefabManager.Instance.SpawnBulletPool("Bullet", bulletSpawnTransform.position, bulletSpawnTransform.rotation).GetComponent<Bullet3>();
+                    await UniTask.WaitUntil(() => bullet3Instance.isActiveAndEnabled == true);
                     bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
+                    if (bullet3Instance == null)
+                    {
+                        Helper.DebugLog("NULLLLLLLLLLLLLLLLLLLL");
+                    }
                     bulletTimeController.StartSequence(bullet3Instance, hit.point);
                 }
                 else

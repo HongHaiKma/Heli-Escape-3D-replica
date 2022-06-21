@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DynamicMeshCutter;
+using Exploder;
+using Exploder.Utils;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BodyPart3 : MonoBehaviour, IBodyPart
@@ -21,6 +24,12 @@ public class BodyPart3 : MonoBehaviour, IBodyPart
     public void OnHit()
     {
         m_EnemyOwner.m_Health -= 1f;
+
+        if (m_EnemyOwner.m_Health <= 0f)
+        {
+            LevelController3.Instance.go_TrackPad.SetActive(false);
+        }
+        
         m_EnemyOwner.m_UIHealth.UpdateHealth();
         
         if (m_BodyPart == BodyParts3.HEAD)
@@ -110,6 +119,17 @@ public class BodyPart3 : MonoBehaviour, IBodyPart
     public void ChangeState(IState<Enemy3> state)
     {
         m_EnemyOwner.ChangeState(state);
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.tag.Equals("Construct"))
+        {
+            ExploderObject expld = col.GetComponent<ExploderObject>();
+            if(expld != null) expld.ExplodeObject(gameObject);
+            
+            // ExploderSingleton.Instance.ExplodeObject(col.gameObject);
+        }
     }
 }
 

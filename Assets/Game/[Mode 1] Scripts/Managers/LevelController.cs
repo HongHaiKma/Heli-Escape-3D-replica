@@ -23,6 +23,8 @@ public class LevelController : Singleton<LevelController>
 
     public async UniTask OnEnable()
     {
+        Time.timeScale = 1;
+        
         m_HostageRun.Clear();
         m_HostageWait.Clear();
         

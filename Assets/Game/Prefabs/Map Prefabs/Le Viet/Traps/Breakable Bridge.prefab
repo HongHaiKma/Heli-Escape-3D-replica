@@ -44,7 +44,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.8, y: 0.7890557, z: 11.42}
+  m_Size: {x: 4.2, y: 0.7890557, z: 3.37}
   m_Center: {x: 0, y: -0.54, z: 0.36927605}
 --- !u!114 &1669874472969141163
 MonoBehaviour:
@@ -1631,7 +1631,7 @@ GameObject:
   - component: {fileID: 3239207439035456857}
   - component: {fileID: 3212607218370086036}
   - component: {fileID: 3222118263594201580}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plank1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 3237064837043891891}
   - component: {fileID: 3212193348959619106}
   - component: {fileID: 3221904455217667894}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plank4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2602,7 +2602,7 @@ GameObject:
   - component: {fileID: 3237255441245552714}
   - component: {fileID: 3324433973437844056}
   - component: {fileID: 3325650080843877628}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Aura bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4926,7 +4926,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3237133427515207186}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Planks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4964,7 +4964,7 @@ GameObject:
   - component: {fileID: 3237488726967730536}
   - component: {fileID: 3213002585124969667}
   - component: {fileID: 3220588498915648850}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plank3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5556,7 +5556,7 @@ GameObject:
   - component: {fileID: 3237237319905669014}
   - component: {fileID: 3212872566117467496}
   - component: {fileID: 3220155941699391626}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Plank2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

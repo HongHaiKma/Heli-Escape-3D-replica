@@ -214,6 +214,11 @@ public class Enemy3 : MonoBehaviour
                 Helper.DebugLog("Enemy on Hit");
             }
         }
+
+        if (LevelController3.Instance.m_Hostages.Count <= 0)
+        {
+            LevelController3.Instance.go_TrackPad.SetActive(false);
+        }
     }
 
     public virtual void OnAttackExecute()
@@ -298,27 +303,8 @@ public class Enemy3 : MonoBehaviour
 #endif
     
     // public void OnHit(Vector3 shootDirection, Rigidbody shotRB, bool isDie)
-    public void OnHit(bool isDie)
-    {
-        // OnEnemyShot(shootDirection, shotRB, isDie);
-        OnEnemyShot(isDie);
-    }
-    
+
     // public void OnEnemyShot(Vector3 shootDirection, Rigidbody shotRB, bool isDie)
-    public void OnEnemyShot(bool isDie)
-    {
-        // StopAnimation();
-        // ragdollController.EnableRagdoll();
-        if (isDie)
-        {
-            // shotRB.AddForce(shootDirection.normalized * 100f, ForceMode.Impulse);
-            m_Anim.SetTrigger("Death");
-        }
-        else
-        {
-            m_Health -= 1f;
-        }
-    }
 }
 
 public enum EnemyState3

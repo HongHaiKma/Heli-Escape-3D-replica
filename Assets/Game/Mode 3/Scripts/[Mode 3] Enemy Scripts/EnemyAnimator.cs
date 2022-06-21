@@ -25,6 +25,7 @@ public class EnemyAnimator : MonoBehaviour
         {
             if (LevelController3.Instance.m_Hostages.Count <= 0)
                 {
+                    PopupCaller.OpenPopup(UIID.POPUP_LOSE);
                     ChangeState(IdleState3.Instance);
                 }
                 else

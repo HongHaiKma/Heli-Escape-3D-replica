@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -13,6 +15,40 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 [DefaultExecutionOrder(-91)]
 public class GUIManager : MonoBehaviour
 {
+    #region Cheat
+
+    [Title("Cheat Game")]
+    public InputField txt_Level;
+    public GameObject go_CheatPanel;
+
+    public void OpenCheatGame()
+    {
+        go_CheatPanel.SetActive(!go_CheatPanel.activeInHierarchy);
+        if (go_CheatPanel.activeInHierarchy)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+    public void JumpLevel()
+    {
+        // Time.timeScale = 1;
+        int.TryParse(txt_Level.text, out int level);
+        if (level >= 1 && level <= 3)
+        {
+            ProfileManager.SetLevel(level);
+            LoadPlayScene();  
+        }
+    }
+
+    #endregion
+    
+    #region Variables
+
     internal class GUIMap : Dictionary<int, UICanvas>
     {
         public static int m_NextID = 0;
@@ -69,6 +105,9 @@ public class GUIManager : MonoBehaviour
             return m_Instance;
         }
     }
+
+    #endregion
+    
 
     private void Awake()
     {
@@ -130,7 +169,8 @@ public class GUIManager : MonoBehaviour
         // StartCoroutine(LoadPlayScreen());
         
         // EventManager.CallEvent(GameEvent.DespawnAllPool);
-
+        // Time.timeScale = 1;
+        go_CheatPanel.SetActive(false);
         g_Loading.SetActive(true);
         
         if (img_LoadingBar != null)

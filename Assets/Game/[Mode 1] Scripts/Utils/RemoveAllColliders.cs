@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class RemoveAllColliders : MonoBehaviour
 {
-    public bool col, rigid, joint; 
+    public bool col, rigid, joint, setLayerByScript; 
     
     [Button]
     public void RemoveAllColliderss()
@@ -30,6 +30,19 @@ public class RemoveAllColliders : MonoBehaviour
             var allRigids = GetComponentsInChildren<Rigidbody>();
 
             foreach (var childRigid in allRigids) DestroyImmediate(childRigid);
+        }
+
+        if (setLayerByScript)
+        {
+            var bodyParts = GetComponentsInChildren<BodyPart3>();
+            
+            foreach (var bodyPart in bodyParts)
+            {
+                if (bodyPart != null)
+                {
+                    bodyPart.gameObject.layer = LayerMask.NameToLayer("EnemyBody");
+                }
+            }
         }
 
         // var go = GetComponentsInChildren<Component>();

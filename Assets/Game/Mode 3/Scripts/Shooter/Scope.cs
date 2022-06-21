@@ -46,12 +46,12 @@ public class Scope : MonoBehaviour
 
 	public void EnablePostProcessing()
 	{
-		postProcessingVolume.gameObject.SetActive(true);
+		// postProcessingVolume.gameObject.SetActive(true);
 	}
 
 	public void DisablePostProcessing()
 	{
-		postProcessingVolume.gameObject.SetActive(false);
+		// postProcessingVolume.gameObject.SetActive(false);
 	}
 
 	public float GetZoomPrc()

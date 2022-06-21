@@ -17,6 +17,7 @@ public class Gas2 : MonoBehaviour, IDamageable
         Collider[] colliders = Physics.OverlapBox(explosionPos, m_ExplosionRadius);
         foreach (Collider hit in colliders)
         {
+            Helper.DebugLog("Name: " + hit.name);
             Enemy2 enemy = hit.GetComponent<Enemy2>();
             
             if (enemy != null)

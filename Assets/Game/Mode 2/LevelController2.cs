@@ -18,6 +18,7 @@ public class LevelController2 : Singleton<LevelController2>
 
     private void OnEnable()
     {
+        Time.timeScale = 1;
         m_CurFloor = 0;
         CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
         tf_PivotFollower.DOKill();
@@ -36,11 +37,12 @@ public class LevelController2 : Singleton<LevelController2>
             if (m_CurFloor > m_Floors.Count - 1)
             {
                 await UniTask.Delay(1500);
-                UIIngame2.Instance.go_PopupWin.SetActive(true);
+                // UIIngame2.Instance.go_PopupWin.SetActive(true);
+                PopupCaller.OpenPopup(UIID.POPUP_WIN);
                 return;
             }
             
-            tf_PivotFollower.DOLocalMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnComplete(() =>
+            tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnComplete(() =>
             {
                 CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
             });

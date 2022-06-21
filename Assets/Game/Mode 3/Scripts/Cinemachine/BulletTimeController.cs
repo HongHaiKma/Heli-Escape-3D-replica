@@ -3,9 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(TimeScaleController))]
 public class BulletTimeController : MonoBehaviour
 {
 	[Serializable]
@@ -30,20 +30,15 @@ public class BulletTimeController : MonoBehaviour
 	[SerializeField] private float distanceToChangeCamera;
 	[SerializeField] private float finishingCameraDuration;
 
-	private TimeScaleController timeScaleController;
-	private CinemachineSmoothPath trackInstance;
-	private CameraCartController dollyInstance;
+	public TimeScaleController timeScaleController;
+	public CinemachineSmoothPath trackInstance;
+	public CameraCartController dollyInstance;
 	private Bullet3 activeBullet3;
 	private Vector3 targetPosition;
 	private List<TargetTrackingSetup> clearTracks = new List<TargetTrackingSetup>();
 	private bool isLastCameraActive = false;
 
-	private void Awake()
-	{
-		timeScaleController = GetComponent<TimeScaleController>();
-	}
-
-	internal void StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
+	public void StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
 	{
 		ResetVariables();
 		float distanceToTarget = Vector3.Distance(activeBullet3.transform.position, targetPosition);
@@ -53,6 +48,16 @@ public class BulletTimeController : MonoBehaviour
 			return;
 		this.activeBullet3 = activeBullet3;
 		this.targetPosition = targetPosition;
+
+		if (activeBullet3 == null)
+		{
+			Helper.DebugLog("Bullet NULLLLLLLLLLLL");
+		}
+		
+		if (selectedTrackingSetup == null)
+		{
+			Helper.DebugLog("TRACK SETUPPPP NULLLLLLLLLLLL");
+		}
 
 		CreateBulletPath(activeBullet3.transform, selectedTrackingSetup.avaliableTrack);
 		CreateDolly(selectedTrackingSetup);
@@ -69,11 +74,24 @@ public class BulletTimeController : MonoBehaviour
 		dollyInstance = Instantiate(selectedDolly);
 	}
 
+	// private void CreateBulletPath(Transform bulletTransform, CinemachinePathController selectedPath)
+	// {
+	// 	trackInstance = Instantiate(selectedPath.path, bulletTransform).GetComponent<CinemachineSmoothPath>();
+	// 	trackInstance.transform.localPosition = selectedPath.transform.position;
+	// 	trackInstance.transform.localRotation = selectedPath.transform.rotation;
+	// }
+	
 	private void CreateBulletPath(Transform bulletTransform, CinemachinePathController selectedPath)
 	{
-		trackInstance = Instantiate(selectedPath.path, bulletTransform);
+		trackInstance = Instantiate(selectedPath.path, bulletTransform).GetComponent<CinemachineSmoothPath>();
+		// await UniTask.WaitUntil(() => trackInstance.isActiveAndEnabled == true);
 		trackInstance.transform.localPosition = selectedPath.transform.position;
 		trackInstance.transform.localRotation = selectedPath.transform.rotation;
+
+		if (trackInstance == null)
+		{
+			Helper.DebugLog("NULLLLLLLLLLLLLLLLLLL");
+		}
 	}
 
 	private float CalculateDollySpeed()
@@ -109,7 +127,8 @@ public class BulletTimeController : MonoBehaviour
 
 	private bool CheckIfPathIsClear(CinemachinePathController path, Transform trans, Quaternion orientation)
 	{
-		return path.CheckIfPathISClear(trans, Vector3.Distance(trans.position, targetPosition), orientation);
+		// return path.CheckIfPathISClear(trans, Vector3.Distance(trans.position, targetPosition), orientation);
+		return true;
 	}
 
 	private void Update()
@@ -150,8 +169,23 @@ public class BulletTimeController : MonoBehaviour
 
 	private void DestroyCinemachineSetup()
 	{
-		Destroy(trackInstance.gameObject);
-		Destroy(dollyInstance.gameObject);
+		if (trackInstance != null)
+		{
+			if (trackInstance.gameObject.activeInHierarchy == true)
+			{
+				Destroy(trackInstance.gameObject);
+			}
+		}
+		
+		if (dollyInstance != null)
+		{
+			if (dollyInstance.gameObject.activeInHierarchy == true)
+			{
+				Destroy(dollyInstance.gameObject);
+			}
+		}
+		
+		// Destroy(dollyInstance.gameObject);
 	}
 
 	private IEnumerator FinishSequence()

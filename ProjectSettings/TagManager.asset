@@ -19,6 +19,8 @@ TagManager:
   - Shooter
   - Exploder
   - DeadZone
+  - Bullet
+  - Construct
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - UI
   - Bullet
   - Ground
-  - 
+  - Construct
   - Hostage
   - Enemy
   - EnemyBody

@@ -213,6 +213,26 @@ public class PrefabManager : Singleton2<PrefabManager>
         return null;
     }
     
+    public GameObject SpawnBulletPool(string name, Vector3 pos, Quaternion _quaternion)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name, pos, _quaternion);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetBulletPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name, pos);
+                return go;
+            }
+        }
+        return null;
+    }
+    
     public GameObject GetEnemyPrefabByName(string name)
     {
         if (m_EnemyPrefabDict.ContainsKey(name))

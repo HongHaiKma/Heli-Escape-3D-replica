@@ -44,3 +44,36 @@ namespace DynamicMeshCutter
 
     }
 }
+
+
+// namespace DynamicMeshCutter
+// {
+//     public class PlaneBehaviour : CutterBehaviour
+//     {
+//         public float DebugPlaneLength = 2;
+//         public MeshTarget m_MeshTarget;
+//         public void Cut()
+//         {
+//             // var roots = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+//             // foreach (var root in roots)
+//             // {
+//             //     if (!root.activeInHierarchy)
+//             //         continue;
+//             //     var targets = root.GetComponentsInChildren<MeshTarget>();
+//             //     foreach (var target in targets)
+//             //     {
+//             //         Cut(target, transform.position, transform.forward, null, OnCreated);
+//             //     }
+//             // }
+//             
+//             Cut(m_MeshTarget, transform.position, transform.forward, null, OnCreated);
+//             // ExploderSingleton.Instance.ExplodeObject(m_MeshTarget.gameObject);
+//         }
+//
+//         void OnCreated(Info info, MeshCreationData cData)
+//         {
+//             MeshCreation.TranslateCreatedObjects(info, cData.CreatedObjects, cData.CreatedTargets, Separation);
+//         }
+//
+//     }
+// }
