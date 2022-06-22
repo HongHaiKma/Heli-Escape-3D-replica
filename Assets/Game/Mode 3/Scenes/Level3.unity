@@ -10522,7 +10522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351624039}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0308, z: 0.4074}
+  m_LocalPosition: {x: 0, y: 0.0308, z: 0.624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21343,7 +21343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletTimeController: {fileID: 2034419962}
-  bullet3Prefab: {fileID: 4611346767914794529, guid: e3db0549170f6954aa3b8842d34202c9, type: 3}
   bulletSpawnTransform: {fileID: 351624040}
   scope: {fileID: 1937654900}
   shootingForce: 40
@@ -53058,6 +53057,12 @@ MonoBehaviour:
   distanceToChangeCamera: 0.8
   finishingCameraDuration: 4.5
   timeScaleController: {fileID: 2034419964}
+  trackInstance: {fileID: 0}
+  dollyInstance: {fileID: 0}
+  activeBullet3: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  clearTracks: []
+  isLastCameraActive: 0
 --- !u!4 &2034419963
 Transform:
   m_ObjectHideFlags: 0

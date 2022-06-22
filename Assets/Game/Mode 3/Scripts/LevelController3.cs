@@ -25,7 +25,7 @@ public class LevelController3 : Singleton<LevelController3>
         }
         if (Helper.GetKeyDown(KeyCode.D))
         {
-            Time.timeScale = m_TimeScale;
+            Time.timeScale = 1;
         }
     }
 }

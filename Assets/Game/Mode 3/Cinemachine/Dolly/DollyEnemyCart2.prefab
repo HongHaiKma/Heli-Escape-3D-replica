@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0.302808, y: 0.087903485, z: -0.028071875, w: -0.9485738}
   m_LocalPosition: {x: 4.7628484, y: -4.6979575, z: 3.561324}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8527613667117681550}
   m_RootOrder: 0
@@ -71,6 +72,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.7020001, y: 2.95, z: 3.7827008}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8527613667117681550}
   m_Father: {fileID: 0}
@@ -105,7 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87583408892e69942a5eec75b5a93788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followTarget: 0
+  followTarget: 1
+  cart: {fileID: 8527613666560117585}
+  virtualCamera: {fileID: 8527613667117681549}
 --- !u!1 &8527613667117681551
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +137,7 @@ Transform:
   m_LocalRotation: {x: 0.0021588793, y: -0.65394557, z: -0.00017560914, w: 0.7565385}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8527613666216557350}
   m_Father: {fileID: 8527613666560117584}
@@ -164,7 +169,10 @@ MonoBehaviour:
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
+    ModeOverride: 0
     LensShift: {x: 0, y: 0}
+    GateFit: 2
+    m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

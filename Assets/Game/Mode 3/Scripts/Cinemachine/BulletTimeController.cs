@@ -6,7 +6,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class BulletTimeController : MonoBehaviour
+public class BulletTimeController : Singleton<BulletTimeController>
 {
 	[Serializable]
 	public class TargetTrackingSetup
@@ -33,12 +33,14 @@ public class BulletTimeController : MonoBehaviour
 	public TimeScaleController timeScaleController;
 	public CinemachineSmoothPath trackInstance;
 	public CameraCartController dollyInstance;
-	private Bullet3 activeBullet3;
-	private Vector3 targetPosition;
-	private List<TargetTrackingSetup> clearTracks = new List<TargetTrackingSetup>();
-	private bool isLastCameraActive = false;
+	public Bullet3 activeBullet3;
+	public Vector3 targetPosition;
+	public List<TargetTrackingSetup> clearTracks = new List<TargetTrackingSetup>();
+	public bool isLastCameraActive = false;
 
-	public void StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
+	// public void StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
+	public async UniTask StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
+	// public void StartSequence(Bullet3 activeBullet3, Vector3 targetPosition)
 	{
 		ResetVariables();
 		float distanceToTarget = Vector3.Distance(activeBullet3.transform.position, targetPosition);
@@ -59,8 +61,10 @@ public class BulletTimeController : MonoBehaviour
 			Helper.DebugLog("TRACK SETUPPPP NULLLLLLLLLLLL");
 		}
 
-		CreateBulletPath(activeBullet3.transform, selectedTrackingSetup.avaliableTrack);
-		CreateDolly(selectedTrackingSetup);
+		CreateBulletPath(activeBullet3.transform);
+		CreateDolly(true);
+		await UniTask.WaitUntil(() =>
+			dollyInstance.isActiveAndEnabled == true && trackInstance.isActiveAndEnabled == true);
 		cameraBrain.gameObject.SetActive(true);
 		shootingController.gameObject.SetActive(false);
 		canvas.gameObject.SetActive(false);
@@ -68,10 +72,21 @@ public class BulletTimeController : MonoBehaviour
 		dollyInstance.InitDolly(trackInstance, activeBullet3.transform, speed);
 	}
 
-	private void CreateDolly(TargetTrackingSetup setup)
+	private void CreateDolly(bool _bulletDolly)
+	// private void CreateDolly(bool _bulletDolly)
 	{
-		var selectedDolly = setup.avaliableDolly;
-		dollyInstance = Instantiate(selectedDolly);
+		// var selectedDolly = setup.avaliableDolly;
+		// dollyInstance = Instantiate(selectedDolly);
+		if (_bulletDolly)
+		{
+			GameObject gDolly = PrefabManager.Instance.SpawnDollyPathPool("DollyBulletCart2");
+			dollyInstance = gDolly.GetComponent<CameraCartController>();
+		}
+		else
+		{
+			GameObject gDolly = PrefabManager.Instance.SpawnDollyPathPool("DollyEnemyCart2");
+			dollyInstance = gDolly.GetComponent<CameraCartController>();
+		}
 	}
 
 	// private void CreateBulletPath(Transform bulletTransform, CinemachinePathController selectedPath)
@@ -81,17 +96,28 @@ public class BulletTimeController : MonoBehaviour
 	// 	trackInstance.transform.localRotation = selectedPath.transform.rotation;
 	// }
 	
-	private void CreateBulletPath(Transform bulletTransform, CinemachinePathController selectedPath)
+	// private void CreateBulletPath(Transform bulletTransform, CinemachinePathController selectedPath)
+	private async UniTask CreateBulletPath(Transform bulletTransform)
 	{
-		trackInstance = Instantiate(selectedPath.path, bulletTransform).GetComponent<CinemachineSmoothPath>();
-		// await UniTask.WaitUntil(() => trackInstance.isActiveAndEnabled == true);
-		trackInstance.transform.localPosition = selectedPath.transform.position;
-		trackInstance.transform.localRotation = selectedPath.transform.rotation;
+		// trackInstance = Instantiate(selectedPath.path, bulletTransform).GetComponent<CinemachineSmoothPath>();
+		GameObject gBulletPath = PrefabManager.Instance.SpawnDollyPathPool("DollyBulletTrack2", bulletTransform.position);
+		gBulletPath.transform.SetParent(bulletTransform);
+		
+		trackInstance = gBulletPath.GetComponent<CinemachineSmoothPath>();
+		await UniTask.WaitUntil(() => trackInstance.isActiveAndEnabled == true);
 
-		if (trackInstance == null)
-		{
-			Helper.DebugLog("NULLLLLLLLLLLLLLLLLLL");
-		}
+
+		// gBulletPath.transform.localPosition = selectedPath.transform.position;
+		// gBulletPath.transform.localRotation = selectedPath.transform.rotation;
+		
+		// gBulletPath.transform.localPosition = bulletTransform.position - bulletTransform.forward * 10f;
+		gBulletPath.transform.position = bulletTransform.position - bulletTransform.forward * 15f + bulletTransform.up * 2f;
+		gBulletPath.transform.LookAt(bulletTransform);
+
+		// if (trackInstance == null)
+		// {
+		// 	Helper.DebugLog("NULLLLLLLLLLLLLLLLLLL");
+		// }
 	}
 
 	private float CalculateDollySpeed()
@@ -106,10 +132,15 @@ public class BulletTimeController : MonoBehaviour
 	}
 
 
-	private void CreateEnemyPath(Transform enemytransform, Transform bulletTransform, CinemachinePathController selectedPath)
+	private async UniTask CreateEnemyPath(Transform enemytransform, Transform bulletTransform, CinemachinePathController selectedPath)
 	{
-		Quaternion rotation = Quaternion.Euler(Vector3.up * bulletTransform.root.eulerAngles.y);
-		trackInstance = Instantiate(selectedPath.path, enemytransform.position, rotation);
+		Quaternion rotation = Quaternion.Euler(Vector3.up * enemytransform.root.eulerAngles.y);
+		// trackInstance = Instantiate(selectedPath.path, enemytransform.position, rotation);
+		GameObject gEnemyPath = PrefabManager.Instance.SpawnDollyPathPool("DollyTrackEnemy2", enemytransform.position + enemytransform.root.right * 30f, rotation);
+		// gBulletPath.transform.SetParent(bulletTransform);
+		// trackInstance = gEnemyPath.GetComponent<CinemachineSmoothPath>();
+		await UniTask.WaitForEndOfFrame();
+		trackInstance = gEnemyPath.GetComponent<CinemachineSmoothPath>();
 	}
 
 	private TargetTrackingSetup SelectTrackingSetup(Transform trans, TargetTrackingSetup[] setups, Quaternion orientation)
@@ -145,7 +176,8 @@ public class BulletTimeController : MonoBehaviour
 		return Vector3.Distance(activeBullet3.transform.position, targetPosition) < distanceToChangeCamera;
 	}
 
-	private void ChangeCamera()
+	// private void ChangeCamera()
+	private async UniTask ChangeCamera()
 	{
 		if (isLastCameraActive)
 			return;
@@ -159,7 +191,8 @@ public class BulletTimeController : MonoBehaviour
 			if (selectedTrackingSetup != null)
 			{
 				CreateEnemyPath(hitTransform, activeBullet3.transform, selectedTrackingSetup.avaliableTrack);
-				CreateDolly(selectedTrackingSetup);
+				CreateDolly(false);
+				await UniTask.WaitUntil(() => trackInstance.isActiveAndEnabled == true);
 				dollyInstance.InitDolly(trackInstance, hitTransform.transform);
 				timeScaleController.SlowDownTime();
 			}
@@ -173,7 +206,7 @@ public class BulletTimeController : MonoBehaviour
 		{
 			if (trackInstance.gameObject.activeInHierarchy == true)
 			{
-				Destroy(trackInstance.gameObject);
+				PrefabManager.Instance.DespawnPool(trackInstance.gameObject);
 			}
 		}
 		
@@ -181,7 +214,7 @@ public class BulletTimeController : MonoBehaviour
 		{
 			if (dollyInstance.gameObject.activeInHierarchy == true)
 			{
-				Destroy(dollyInstance.gameObject);
+				PrefabManager.Instance.DespawnPool(dollyInstance.gameObject);
 			}
 		}
 		
@@ -196,7 +229,7 @@ public class BulletTimeController : MonoBehaviour
 		canvas.gameObject.SetActive(true);
 		timeScaleController.SpeedUpTime();
 		DestroyCinemachineSetup();
-		Destroy(activeBullet3.gameObject);
+		PrefabManager.Instance.DespawnPool(activeBullet3.gameObject);
 		ResetVariables();
 	}
 

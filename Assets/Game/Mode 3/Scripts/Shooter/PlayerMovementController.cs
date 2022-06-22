@@ -63,7 +63,7 @@ public class PlayerMovementController : MonoBehaviour
 		horizontalInput = Input.GetAxisRaw(HORIZONTAL);
 		verticalInput = Input.GetAxisRaw(VERTICAL);
 		
-		Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
+		Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 1f;
 		mouseInputX = mouseInput.x;
 		mouseInputY = mouseInput.y;
 		

@@ -19,6 +19,9 @@ public class PrefabManager : Singleton2<PrefabManager>
 
     private Dictionary<string, GameObject> m_VFXPrefabDict = new Dictionary<string, GameObject>();
     public GameObject[] m_VFXPrefabs;
+    
+    private Dictionary<string, GameObject> m_DollyPathDict = new Dictionary<string, GameObject>();
+    public GameObject[] m_DollyPaths;
 
     private Dictionary<string, GameObject> m_CharPrefabDict = new Dictionary<string, GameObject>();
     public GameObject[] m_CharPrefabs;
@@ -100,6 +103,20 @@ public class PrefabManager : Singleton2<PrefabManager>
                 continue;
             }
         }
+        for (int i = 0; i < m_DollyPaths.Length; i++)
+        {
+            GameObject iPrefab = m_DollyPaths[i];
+            if (iPrefab == null) continue;
+            string iName = iPrefab.name;
+            try
+            {
+                m_DollyPathDict.Add(iName, iPrefab);
+            }
+            catch (System.Exception)
+            {
+                continue;
+            }
+        }
         for (int i = 0; i < m_VFXPrefabs.Length; i++)
         {
             GameObject iPrefab = m_VFXPrefabs[i];
@@ -134,6 +151,26 @@ public class PrefabManager : Singleton2<PrefabManager>
     {
         SimplePool.Preload(prefab, amount, name);
     }
+    
+    public GameObject SpawnPool(string name)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name);
+                return go;
+            }
+        }
+        return null;
+    }
 
     public GameObject SpawnPool(string name, Vector3 pos)
     {
@@ -149,6 +186,26 @@ public class PrefabManager : Singleton2<PrefabManager>
             {
                 SimplePool.Preload(prefab, 1, name);
                 GameObject go = SpawnPool(name, pos);
+                return go;
+            }
+        }
+        return null;
+    }
+    
+    public GameObject SpawnPool(string name, Vector3 pos, Quaternion _quaternion)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name, pos, _quaternion);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name, pos, _quaternion);
                 return go;
             }
         }
@@ -192,6 +249,15 @@ public class PrefabManager : Singleton2<PrefabManager>
         }
         return null;
     }
+    
+    public GameObject GetDollyPathPrefabByName(string name)
+    {
+        if (m_DollyPathDict.ContainsKey(name))
+        {
+            return m_DollyPathDict[name];
+        }
+        return null;
+    }
 
     public GameObject SpawnBulletPool(string name, Vector3 pos)
     {
@@ -203,6 +269,66 @@ public class PrefabManager : Singleton2<PrefabManager>
         else
         {
             GameObject prefab = GetBulletPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name, pos);
+                return go;
+            }
+        }
+        return null;
+    }
+    
+    public GameObject SpawnDollyPathPool(string name)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetDollyPathPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name);
+                return go;
+            }
+        }
+        return null;
+    }
+    
+    public GameObject SpawnDollyPathPool(string name, Vector3 pos)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name, pos, Quaternion.identity);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetDollyPathPrefabByName(name);
+            if (prefab != null)
+            {
+                SimplePool.Preload(prefab, 1, name);
+                GameObject go = SpawnPool(name, pos);
+                return go;
+            }
+        }
+        return null;
+    }
+    
+    public GameObject SpawnDollyPathPool(string name, Vector3 pos, Quaternion _quaternion)
+    {
+        if (SimplePool.IsHasPool(name))
+        {
+            GameObject go = SimplePool.Spawn(name, pos, _quaternion);
+            return go;
+        }
+        else
+        {
+            GameObject prefab = GetDollyPathPrefabByName(name);
             if (prefab != null)
             {
                 SimplePool.Preload(prefab, 1, name);
@@ -226,7 +352,7 @@ public class PrefabManager : Singleton2<PrefabManager>
             if (prefab != null)
             {
                 SimplePool.Preload(prefab, 1, name);
-                GameObject go = SpawnPool(name, pos);
+                GameObject go = SpawnPool(name, pos, _quaternion);
                 return go;
             }
         }

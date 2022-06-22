@@ -34,14 +34,22 @@ public class Bullet3 : MonoBehaviour
 
     private void Move()
     {
-        // transform.LookAt(hitPoint);
+        transform.LookAt(hitPoint);
         direction = (hitPoint - transform.position).normalized;
-        transform.Translate(direction * shootingForce * Time.deltaTime, Space.World);
+        transform.position += direction * shootingForce * Time.deltaTime;
+        // transform.Translate(direction * shootingForce * Time.deltaTime, Space.World);
     }
 
     private void CheckDistanceToEnemy()
     {
         float distance = Vector3.Distance(transform.position, hitPoint);
+
+        if (distance <= 20f && !isEnemyShot && BulletTimeController.Instance.trackInstance.transform.parent != null)
+        {
+            BulletTimeController.Instance.trackInstance.transform.SetParent(null);
+            Helper.DebugLog("AAAAAAAAAAAAAAAAAAAAAAAAA");
+        }
+
         if(distance <= 1f && !isEnemyShot)
         {
             IBodyPart enemy = hitTransform.GetComponent<IBodyPart>();

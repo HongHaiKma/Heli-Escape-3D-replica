@@ -39,7 +39,8 @@ public class PlayerShootingController : MonoBehaviour
                 {
                     // controller.StopAnimation();
                     // Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
-                    Bullet3 bullet3Instance = PrefabManager.Instance.SpawnBulletPool("Bullet", bulletSpawnTransform.position, bulletSpawnTransform.rotation).GetComponent<Bullet3>();
+                    GameObject go = PrefabManager.Instance.SpawnBulletPool("Bullet", bulletSpawnTransform.position, bulletSpawnTransform.rotation);
+                    Bullet3 bullet3Instance = go.GetComponent<Bullet3>();
                     await UniTask.WaitUntil(() => bullet3Instance.isActiveAndEnabled == true);
                     bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
                     if (bullet3Instance == null)

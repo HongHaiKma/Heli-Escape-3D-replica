@@ -162,6 +162,15 @@ MonoBehaviour:
   - {fileID: 5573679948565856986, guid: c0db63750bc8faa4798e42f9cb88f5e2, type: 3}
   - {fileID: 5573679948565856986, guid: e8d15d49ebc6fd748a7cdc2fd48cb455, type: 3}
   - {fileID: 5573679948565856986, guid: e6c0aaef7610d3444b98f769fc1f98d8, type: 3}
+  m_DollyPaths:
+  - {fileID: 8527613666560117586, guid: abed177d90e5b3949ac0ea32a93990e0, type: 3}
+  - {fileID: 8527613666560117586, guid: b93b256ad19baea43a02f68dffc6fb5e, type: 3}
+  - {fileID: 8527613666560117586, guid: 70e3165dac0f1be4082a92f2e64864ec, type: 3}
+  - {fileID: 8527613666560117586, guid: 0ab99ceefbf654244883ea4877b5dbe4, type: 3}
+  - {fileID: 3580480321478149808, guid: 2f596c64931ff4143907d924bdcf81d2, type: 3}
+  - {fileID: 3580480321478149808, guid: 8b5b47d7920629e4b88059883bd7bd30, type: 3}
+  - {fileID: 6338229774482970692, guid: 0c4ef5654a9ae7541a25f3aa76414126, type: 3}
+  - {fileID: 1930909125078659177, guid: 01d1c1b92fa24114eaeeb6fc999d217a, type: 3}
   m_CharPrefabs: []
   m_CharStudios: []
   m_AOEDmgPrefabs: []
