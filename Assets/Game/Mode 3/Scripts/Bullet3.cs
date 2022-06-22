@@ -15,6 +15,8 @@ public class Bullet3 : MonoBehaviour
     public Vector3 hitPoint;
     public RaycastHit rayHit;
 
+    public GameObject go_Model;
+
     public void Launch(float shootingForce, Transform hitTransform, Vector3 hitPoint, RaycastHit hit)
     {
         direction = (hitPoint - transform.position).normalized;
@@ -32,6 +34,11 @@ public class Bullet3 : MonoBehaviour
         CheckDistanceToEnemy();
     }
 
+    private void OnEnable()
+    {
+        go_Model.SetActive(true);
+    }
+
     private void Move()
     {
         transform.LookAt(hitPoint);
@@ -47,7 +54,6 @@ public class Bullet3 : MonoBehaviour
         if (distance <= 20f && !isEnemyShot && BulletTimeController.Instance.trackInstance.transform.parent != null)
         {
             BulletTimeController.Instance.trackInstance.transform.SetParent(null);
-            Helper.DebugLog("AAAAAAAAAAAAAAAAAAAAAAAAA");
         }
 
         if(distance <= 1f && !isEnemyShot)
@@ -69,9 +75,10 @@ public class Bullet3 : MonoBehaviour
     {
         isEnemyShot = true;
         Rigidbody shotRB = hitTransform.GetComponent<Rigidbody>();
-        PrefabManager.Instance.SpawnVFXPool("VFX_4", transform.position);
+        PrefabManager.Instance.SpawnVFXPool("VFX_3", transform.position);
         enemy.OnHit();
- 
+        go_Model.SetActive(false);
+
         // ExploderSingleton.Instance.ExplodeObject(rayHit.collider.gameObject);
     }
 

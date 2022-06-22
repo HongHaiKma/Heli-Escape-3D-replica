@@ -33,7 +33,7 @@ public class Hostage : MonoBehaviour
         m_AI.isStopped = false;
         rb_Owner.useGravity = true;
         // skin_Owner.material.SetColor("_Color", Helper.ConvertColor(Color.white));
-        skin_Owner.material.SetColor("_Color", Color.white);
+        // skin_Owner.material.SetColor("_Color", Color.white);
         m_StateMachine = new StateMachine<Hostage>(this);
         m_StateMachine.Init(P_WaitState.Instance);
         

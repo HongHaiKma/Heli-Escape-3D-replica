@@ -105,7 +105,7 @@ public class CamController2 : Singleton<CamController2>
         }
 
         m_CMCamOffset.m_Offset = targetPosition;
-        UIIngame2.Instance.go_PopupLose.SetActive(true);
+        PopupCaller.OpenPopup(UIID.POPUP_LOSE);
     }
     
     public async UniTask CameraZoomInAnimation(float fov, float duration)

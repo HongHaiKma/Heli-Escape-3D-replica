@@ -23,6 +23,10 @@ public class BodyPart3 : MonoBehaviour, IBodyPart
 
     public void OnHit()
     {
+        m_EnemyOwner.m_Anim.speed = 1f;
+        m_EnemyOwner.m_AI.canMove = true;
+        m_EnemyOwner.m_AI.isStopped = false;
+        
         m_EnemyOwner.m_Health -= 1f;
 
         if (m_EnemyOwner.m_Health <= 0f)
@@ -113,6 +117,9 @@ public class BodyPart3 : MonoBehaviour, IBodyPart
 
     public bool OnCanSlowmotion()
     {
+        m_EnemyOwner.m_Anim.speed = 0f;
+        m_EnemyOwner.m_AI.canMove = false;
+        m_EnemyOwner.m_AI.isStopped = true;
         return (m_EnemyOwner.m_Health - 4 <= 0);
     }
     

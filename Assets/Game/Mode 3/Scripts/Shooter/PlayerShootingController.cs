@@ -30,28 +30,20 @@ public class PlayerShootingController : MonoBehaviour
     {
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
         {
-            // Enemy3 controller = hit.collider.GetComponentInParent<Enemy3>();
             IBodyPart IBodyPart = hit.collider.GetComponent<IBodyPart>();
             Vector3 direction = hit.point - bulletSpawnTransform.position;
             if (IBodyPart != null)
             {
                 if (IBodyPart.OnCanSlowmotion()) //LOGIC TRIGGER BULLET TIME
                 {
-                    // controller.StopAnimation();
-                    // Bullet3 bullet3Instance = Instantiate(bullet3Prefab, bulletSpawnTransform.position, bulletSpawnTransform.rotation);
                     GameObject go = PrefabManager.Instance.SpawnBulletPool("Bullet", bulletSpawnTransform.position, bulletSpawnTransform.rotation);
                     Bullet3 bullet3Instance = go.GetComponent<Bullet3>();
                     await UniTask.WaitUntil(() => bullet3Instance.isActiveAndEnabled == true);
                     bullet3Instance.Launch(shootingForce, hit.collider.transform, hit.point, hit);
-                    if (bullet3Instance == null)
-                    {
-                        Helper.DebugLog("NULLLLLLLLLLLLLLLLLLLL");
-                    }
                     bulletTimeController.StartSequence(bullet3Instance, hit.point);
                 }
                 else
                 {
-                    // controller.OnEnemyShot(direction, hit.collider.GetComponent<Rigidbody>());
                     IBodyPart.OnHit();
                 }
             }       
