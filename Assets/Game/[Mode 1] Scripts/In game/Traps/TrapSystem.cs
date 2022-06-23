@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class TrapSystem : MonoBehaviour, ITrap
@@ -13,13 +14,24 @@ public class TrapSystem : MonoBehaviour, ITrap
     {
         if (!m_Activated)
         {
-            m_Key.enabled = false;
-            m_VFXOwner.Play();
-            m_Activated = true;
-            for (int i = 0; i < m_Items.Count; i++)
-            {
-                m_Items[i].m_Activated = true;
-            }
+            ActivateTrap();
         }
+    }
+
+    public virtual void ActivateTrap()
+    {
+        m_Key.enabled = false;
+        m_VFXOwner.Play();
+        m_Activated = true;
+        for (int i = 0; i < m_Items.Count; i++)
+        {
+            m_Items[i].m_Activated = true;
+        }
+    }
+
+    [Button]
+    public void TestTrap()
+    {
+        OnTrigger();
     }
 }

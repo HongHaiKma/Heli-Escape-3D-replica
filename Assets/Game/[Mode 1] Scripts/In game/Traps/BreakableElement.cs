@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class BreakableElement : MonoBehaviour, ITrap
@@ -15,5 +16,11 @@ public class BreakableElement : MonoBehaviour, ITrap
         go_Bridge.SetActive(false);
         col_Owner.enabled = false;
         col_Ground.enabled = false;
+    }
+
+    [Button]
+    public void Activate()
+    {
+        OnTrigger();
     }
 }

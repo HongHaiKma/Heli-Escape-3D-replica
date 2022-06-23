@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapItem : MonoBehaviour
+public class  TrapItem : MonoBehaviour
 {
     public float m_Time = 0f;
     public bool m_CanCollide = true;

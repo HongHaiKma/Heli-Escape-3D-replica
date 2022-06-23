@@ -61,7 +61,8 @@ public class CamController : Singleton<CamController>
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
             
             RaycastHit hitInfo;
-            if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(ray, 0.25f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
+            // if (Physics.SphereCastAll(ray, 0.5f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             {
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)

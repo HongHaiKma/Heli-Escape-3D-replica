@@ -10,6 +10,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Micosmo.SensorToolkit;
 using MoreMountains.NiceVibrations;
+using Pathfinding.RVO;
 using Unity.VisualScripting;
 using Random = System.Random;
 using UnityEditor;
@@ -49,6 +50,7 @@ public class Enemy : MonoBehaviour, IDamageable
         
         m_AIPath.canMove = true;
         m_AIPath.isStopped = false;
+        GetComponent<RVOController>().enabled = true;
         isClimbing = false;
         
         col_Owner.enabled = true;
@@ -214,6 +216,7 @@ public class Enemy : MonoBehaviour, IDamageable
         skin_Owner.material.DOKill();
         skin_Owner.material.DOColor(Color.black, "_Color", 1.5f);
 
+        GetComponent<RVOController>().enabled = false;
         m_Anim.SetTrigger("Death");
         m_AIPath.canMove = false;
         go_RaySensor.SetActive(false);
@@ -317,7 +320,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         // Helper.DebugLog("OnClimbStartOnClimbStartOnClimbStartOnClimbStart");
         
-        if (!isClimbing)
+        if (!isClimbing && !IsState(DeathState.Instance))
+        // if (!isClimbing)
         {
             isClimbing = true;
             ChangeState(ClimbState.Instance); 
