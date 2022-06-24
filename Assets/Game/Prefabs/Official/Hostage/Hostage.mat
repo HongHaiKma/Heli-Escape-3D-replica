@@ -68,6 +68,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: 3f626218d1802f44fabf0988bc5be38c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -88,23 +92,33 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _CFXR_DITHERED_SHADOWS: 0
     - _CFXR_GLOW_POW: 0
-    - _Cutoff: 0.022
+    - _ColorMask: 15
+    - _Cutoff: 23.51
     - _DetailNormalMapScale: 1
+    - _DisableRim: 0
+    - _Dissolve: 0
     - _DissolveSmooth: 0.1
     - _DstBlend: 0
     - _EdgeSize: 0.01
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _Glow: 0
     - _GlowMax: 1
     - _GlowMin: 0
     - _HdrBoost: 0
     - _HdrMultiply: 2
+    - _HitTime: 0
+    - _HitTime1: 0
     - _InvertDissolveTex: 0
     - _MaxValue: 10
     - _Metallic: 0
@@ -122,19 +136,31 @@ Material:
     - _SoftParticlesFadeDistanceNear: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     - _Tiling: 0
     - _UVSec: 0
     - _UseDissolve: 0
     - _UseSP: 0
+    - _UseUIAlphaClip: 0
     - _ZWrite: 1
     - __dirty: 1
     - __dummy__: 0
     m_Colors:
+    - _BottomColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BottomColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _BurntColor: {r: 1, g: 1, b: 1, a: 1}
     - _CellColour: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
+    - _DissolveColor: {r: 1, g: 0.5299013, b: 0, a: 0}
     - _EdgeColour: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0, g: 0, b: 1, a: 0}
     - _SColor: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 1}
+    - _TopColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TopColor1: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

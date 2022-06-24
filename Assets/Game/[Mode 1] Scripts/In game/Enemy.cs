@@ -45,7 +45,9 @@ public class Enemy : MonoBehaviour, IDamageable
     private void OnEnable()
     {
         // skin_Owner.material.DOKill();
-        skin_Owner.material.SetColor("_Color", Helper.ConvertColor(209f, 38f, 49f));
+        // skin_Owner.material.SetColor("_Color", Helper.ConvertColor(209f, 38f, 49f));
+        // skin_Owner.material.SetColor("_Color", Helper.ConvertColor(Color.white));
+        skin_Owner.material.SetColor("_Color", Color.white);
         // skin_Owner.material.DOColor(new Color(209f, 38f, 49f), "_Color", 0.1f);
         
         m_AIPath.canMove = true;
