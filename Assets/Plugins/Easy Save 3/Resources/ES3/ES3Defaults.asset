@@ -31,6 +31,42 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp-firstpass
     - Assembly-CSharp
+    - UniTask
+    - AstarPathfindingProject
+    - CW.Common
+    - UniTask.Linq
+    - StompyRobot.SRF
+    - StompyRobot.SRDebugger
+    - LeanCommonPlus
+    - Autodesk.Fbx
+    - MoreMountains.NiceVibrations.Haptics
+    - Cinemachine
+    - LeanTouchPlus
+    - UniTask.DOTween
+    - LeanTouch
+    - UltimateEditorEnhancer
+    - MoreMountains.NiceVibrations.Demos
+    - MoreMountains.NiceVibrations
+    - LeanCommon
+    - ToonyColorsPro2.Demo
+    - ToonyColorsPro.Runtime
+    - UniTask.Addressables
+    - Sirenix.OdinInspector.CompatibilityLayer
+    - UniTask.TextMeshPro
+    - KinoBloom.Runtime
+    - FbxBuildTestAssets
+    - AssetUsageFinder
+    - ToonyColorsPro.Editor
+    - AstarPathfindingProjectEditor
+    - StompyRobot.SRF.Editor
+    - StompyRobot.SRDebugger.Editor
+    - ToolbarExtender.Editor
+    - Sirenix.OdinInspector.CompatibilityLayer.Editor
+    - PackageToolsEditor
+    - UniTask.Editor
+    - MoreMountains.NiceVibrations.Editor
+    - ToonyColorsPro.Demo.Editor
+    - Autodesk.Fbx.Editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

@@ -62,9 +62,36 @@ public class CamController : Singleton<CamController>
             // var ray = Camera.main.ScreenToViewportPoint(tfCrosshair.position);
             
             RaycastHit hitInfo;
+            
+            RaycastHit[] rays = Physics.SphereCastAll(ray, 1f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore);
+            // List<Vector3> rayPos = new List<Vector3>();
+            
+            // for (int i = 0; i < rays.Length; i++)
+            // {
+            //     rayPos.Add(rays[i].);
+            // }
+
+            List<RaycastHit> rayHits = rays.ToList();
+
             if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
+            // if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             // if (Physics.SphereCastAll(ray, 0.5f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
+            
+            // rays.Sort(x. => );
+            
+            // rayHits.Sort();
+            
+            
+            
+            // var target = m_HostageRun.OrderBy(x => (x.tf_Onwer.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
+            
+            if (rays.Length > 0)
             {
+                // if (rayHits.Any(GetComponent<IDamageable>() != null))
+                // {
+                //     
+                // }
+                // var hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).First();
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)
                 {
@@ -95,52 +122,6 @@ public class CamController : Singleton<CamController>
                     }
                 }
             }
-            
-            // RaycastHit[] hitInfo2;
-            // hitInfo2 = Physics.SphereCastAll(ray, 0.3f, Mathf.Infinity, m_IgnoreLayer);
-            // if (hitInfo2.Length > 0)
-            // {
-            //     RaycastHit[] a = hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position))
-            //         .ToArray();
-            //     for (int i = 0; i < a.Length; i++)
-            //     {
-            //         Helper.DebugLog(hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position)).ToArray()[i].collider.name);
-            //     }
-            //     RaycastHit hitInfo22 = hitInfo2.OrderBy(x => Vector3.Distance(tf_Owner.position, x.transform.position)).ToArray()[0];
-            //
-            //     Helper.DebugLog("Name: " + hitInfo22.collider.name);
-            //     tf_LookAimIK.position = hitInfo22.point;
-            //     if (m_ShootTime > 0.1f)
-            //     {
-            //         Collider col = hitInfo22.collider;
-            //         GameObject go = hitInfo22.transform.gameObject;
-            //                                 
-            //         if (col != null)
-            //         {
-            //             m_ShootTime = 0f;
-            //
-            //             if (col.tag.Equals("Ground"))
-            //             {
-            //                 PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo22.point);
-            //                 PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo22.point);
-            //                 PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
-            //             }
-            //
-            //             if (col.gameObject.GetComponent<IDamageable>() != null)
-            //             {
-            //                 col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo22.point);
-            //                 PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
-            //             }
-            //             
-            //             if (col.gameObject.GetComponent<ITrap>() != null)
-            //             {
-            //                 col.gameObject.GetComponent<ITrap>().OnTrigger();
-            //             }
-            //         }
-            //     }
-            // }
-
-            
         }
     }
 
