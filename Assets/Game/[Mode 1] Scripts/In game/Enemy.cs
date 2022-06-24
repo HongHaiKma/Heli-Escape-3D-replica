@@ -194,6 +194,7 @@ public class Enemy : MonoBehaviour, IDamageable
             } 
         }
 
+        // m_AIPath.steeringTarget
         m_AIPath.destination = m_TargetHostage.tf_Onwer.position;
 
         if (Helper.CalDistance(tf_Owner.position, m_TargetHostage.tf_Onwer.position) < 0.5f)

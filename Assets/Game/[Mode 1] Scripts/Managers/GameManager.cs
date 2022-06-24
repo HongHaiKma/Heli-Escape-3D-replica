@@ -65,7 +65,7 @@ public class GameManager : Singleton2<GameManager>
         //               Int3 a = new Int3();
         //               Vector3 b = (Vector3)a;
         //                              
-        //               // m_AIPath.destination = b;
+        //               // m_AI.destination = b;
         //               rb_Owner.position = (Vector3)nearestNode.position;
         //           }  
         // }
