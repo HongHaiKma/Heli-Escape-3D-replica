@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour, IDamageable
     // public virtual async UniTask OnChaseExecute()
     public void OnChaseExecute()
     {
-        m_AIPath.maxSpeed = UnityEngine.Random.Range(1.6f, 2.3f);
+        m_AIPath.maxSpeed = UnityEngine.Random.Range(2.2f, 2.6f);
         
         m_TimeChangeTarget += Time.deltaTime;
 

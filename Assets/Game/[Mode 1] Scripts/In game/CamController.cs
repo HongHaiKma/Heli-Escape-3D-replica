@@ -47,7 +47,7 @@ public class CamController : Singleton<CamController>
         m_ShootTime += Time.deltaTime;
         if (m_TrackPad.Pressed())
         {
-            Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.35f;
+            Vector2 mouseInput = new Vector2(CF2Input.GetAxis("Mouse X"), CF2Input.GetAxis("Mouse Y")) * 0.5f;
             RectTransform tfCrosshair = UIIngame.Instance.img_Crosshair.GetComponent<RectTransform>();
             Vector2 apos = tfCrosshair.anchoredPosition;
             float xPos = apos.x;
@@ -59,6 +59,7 @@ public class CamController : Singleton<CamController>
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
 
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
+            // var ray = Camera.main.ScreenToViewportPoint(tfCrosshair.position);
             
             RaycastHit hitInfo;
             if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
