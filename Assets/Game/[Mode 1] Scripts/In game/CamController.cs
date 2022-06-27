@@ -57,47 +57,39 @@ public class CamController : Singleton<CamController>
             yPos = Mathf.Clamp(yPos, 0f, mainCanvas.rect.height);
 
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
+            
+            if (m_ShootTime <= 0.1f)
+            {
+                return;
+            }
 
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
-            // var ray = Camera.main.ScreenToViewportPoint(tfCrosshair.position);
-            
+
             RaycastHit hitInfo;
             
-            RaycastHit[] rays = Physics.SphereCastAll(ray, 1f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore);
-            // List<Vector3> rayPos = new List<Vector3>();
-            
-            // for (int i = 0; i < rays.Length; i++)
-            // {
-            //     rayPos.Add(rays[i].);
-            // }
+            List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
 
-            List<RaycastHit> rayHits = rays.ToList();
+            if (rayHits.Any(x => x.transform.GetComponent<IDamageable>() != null))
+            {
+                rayHits.RemoveAll(x =>
+                    (x.transform.GetComponent<IDamageable>() == null && x.transform.GetComponent<ITrap>() == null));
+                
+                rayHits.RemoveAll(x =>
+                    (x.transform.GetComponent<Enemy>() != null && x.transform.GetComponent<Enemy>().IsState(DeathState.Instance)));
+            }
 
-            if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
+            // if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             // if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             // if (Physics.SphereCastAll(ray, 0.5f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
-            
-            // rays.Sort(x. => );
-            
-            // rayHits.Sort();
-            
-            
-            
-            // var target = m_HostageRun.OrderBy(x => (x.tf_Onwer.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
-            
-            if (rays.Length > 0)
+            if(rayHits.Count > 0)
             {
-                // if (rayHits.Any(GetComponent<IDamageable>() != null))
-                // {
-                //     
-                // }
-                // var hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).First();
+                hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).FirstOrDefault();
                 tf_LookAimIK.position = hitInfo.point;
                 if (m_ShootTime > 0.1f)
                 {
                     Collider col = hitInfo.collider;
                     GameObject go = hitInfo.transform.gameObject;
-                                            
+            
                     if (col != null)
                     {
                         m_ShootTime = 0f;
@@ -114,7 +106,7 @@ public class CamController : Singleton<CamController>
                             col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
                             PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
                         }
-                        
+            
                         if (col.gameObject.GetComponent<ITrap>() != null)
                         {
                             col.gameObject.GetComponent<ITrap>().OnTrigger();

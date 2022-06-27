@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -27,32 +28,65 @@ public class Bullet : MonoBehaviour
     public float m_FlyingTimeMax;
     public bool m_Collided;
     public Transform tf_Target;
+    
+    [Title("Bullet Collision")]
+    public Vector3 m_ExplosionRadius;
+    public Transform tf_ExploPivot;
+    public float m_ExplosionForce;
+    public bool collide = false;
+    
+    // public void Update()
+    // {
+    //     if (collide)
+    //     {
+    //         Vector3 explosionPos = tf_ExploPivot.position;
+    //         Collider[] colliders = Physics.OverlapBox(explosionPos, m_ExplosionRadius);
+    //         foreach (Collider hit in colliders)
+    //         {
+    //             // Helper.DebugLog("Name: " + hit.name);
+    //             ITrap iTrap = hit.GetComponent<ITrap>();
+    //
+    //             if (iTrap != null)
+    //             {
+    //                 iTrap.OnTrigger();
+    //             }
+    //         }
+    //     }
+    // }
+    
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(tf_ExploPivot.position, m_ExplosionRadius);
+    }
+#endif
+    
 
     public virtual void FixedUpdate()
     {
-        // tf_Owner.position += tf_Owner.forward * m_MoveSpd * Time.fixedDeltaTime;
-        // rb_Owner.position += rb_Owner.transform.forward * m_MoveSpd * Time.fixedDeltaTime;
-        
-        // rb_Owner.MovePosition(rb_Owner.transform.forward * 5f * Time.fixedDeltaTime);
-
-
-        // if (tf_Target != null)
+        // if (collide)
         // {
-        //     tf_Owner.LookAt(tf_Target);
+        //     Vector3 explosionPos = tf_ExploPivot.position;
+        //     Collider[] colliders = Physics.OverlapBox(explosionPos, m_ExplosionRadius);
+        //     foreach (Collider hit in colliders)
+        //     {
+        //         // Helper.DebugLog("Name: " + hit.name);
+        //         ITrap iTrap = hit.GetComponent<ITrap>();
+        //
+        //         if (iTrap != null)
+        //         {
+        //             iTrap.OnTrigger();
+        //         }
+        //     }
         // }
-        
-        // rb_Owner.AddRelativeForce(transform.forward * 200f);
-        
-        // rb_Owner.
-        
-        // rb_Owner.velocity = tf_Owner.forward * 20f;
 
         m_FlyingTime += Time.fixedDeltaTime;
 
         if (m_FlyingTime >= m_FlyingTimeMax)
         {
             PrefabManager.Instance.DespawnPool(gameObject);
-            // Helper.DebugLog("BBBBBBBBBBBB");
         }
     }
 
@@ -72,23 +106,44 @@ public class Bullet : MonoBehaviour
         tf_Target = _tfTarget;
         tf_Owner.LookAt(_lookAt);
         // rb_Owner.AddRelativeForce(transform.forward * 2300f);
-        rb_Owner.AddForce(transform.forward * 5000f);
+        rb_Owner.AddForce(transform.forward * m_MoveSpd);
         // rb_Owner.velocity = tf_Owner.forward * 5f;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        IDamageable iDMG = collision.gameObject.GetComponent<IDamageable>();
-        if (iDMG != null)
+        // IDamageable iDMG = collision.gameObject.GetComponent<IDamageable>();
+        // if (iDMG != null)
+        // {
+        //     iDMG.OnHit(tf_Owner.position);
+        // }
+        ITrap iTrap = collision.gameObject.GetComponent<ITrap>();
+
+        if (iTrap != null)
         {
-            iDMG.OnHit(tf_Owner.position);
+            iTrap.OnTrigger();
+        }
+        
+        
+        IEnemy2 iEnemy2 = collision.gameObject.GetComponent<IEnemy2>();
+
+        if (iEnemy2 != null)
+        {
+            iEnemy2.OnHit(tf_Owner.position);
+            PrefabManager.Instance.DespawnPool(gameObject);
+        }
+        
+        IDamageable iDamage = collision.gameObject.GetComponent<IDamageable>();
+
+        if (iDamage != null)
+        {
+            iDamage.OnHit(tf_Owner.position);
+            PrefabManager.Instance.DespawnPool(gameObject);
         }
         
         // if (collision.gameObject.tag.Equals("Shooter"))
         // {
         //     SceneManager.LoadScene("PlaySceneMode2");
         // }
-
-        PrefabManager.Instance.DespawnPool(gameObject);
     }
 }

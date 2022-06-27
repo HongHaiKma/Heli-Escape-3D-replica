@@ -15,12 +15,20 @@ public class EnemyHead : MonoBehaviour, IDamageable
 
     public void OnHit(Vector3 _pos)
     {
-        if (GameManager.Instance.m_GameLoop == GameLoop.WaitEndGame)
+        if (!IsState(DeathState.Instance))
         {
-            PrefabManager.Instance.SpawnVFXPool("UIHeadshot", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
+            if (GameManager.Instance.m_GameLoop == GameLoop.WaitEndGame)
+            {
+                PrefabManager.Instance.SpawnVFXPool("UIHeadshot", Vector3.zero).GetComponent<UIDamage>().Fly(_pos, UIIngame.Instance.tf_MainCanvas);
+            }
+            col_Owner.enabled = false;
+            // Debug.Log("Head shotttttttttttt");
+            m_EnemyOwner.OnHit(_pos);  
         }
-        col_Owner.enabled = false;
-        // Debug.Log("Head shotttttttttttt");
-        m_EnemyOwner.OnHit(_pos);
+    }
+    
+    public bool IsState(IState<Enemy> state)
+    {
+        return m_EnemyOwner.IsState(state);
     }
 }

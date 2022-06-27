@@ -33,3 +33,8 @@ interface IHostage3
 {
     void OnHit();
 }
+
+interface IEnemy2
+{
+    void OnHit(Vector3 _pos);
+}

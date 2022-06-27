@@ -15,7 +15,9 @@ public class BreakableElement : MonoBehaviour, ITrap
         go_Shatter.SetActive(true);
         go_Bridge.SetActive(false);
         col_Owner.enabled = false;
-        col_Ground.enabled = false;
+
+        if (col_Ground != null)
+            col_Ground.enabled = false;
     }
 
     [Button]
