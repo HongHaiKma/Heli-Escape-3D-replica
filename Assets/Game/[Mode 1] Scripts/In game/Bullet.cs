@@ -117,11 +117,11 @@ public class Bullet : MonoBehaviour
         // {
         //     iDMG.OnHit(tf_Owner.position);
         // }
-        ITrap iTrap = collision.gameObject.GetComponent<ITrap>();
+        IBreakable2 iBreak = collision.gameObject.GetComponent<IBreakable2>();
 
-        if (iTrap != null)
+        if (iBreak != null)
         {
-            iTrap.OnTrigger();
+            iBreak.OnTrigger();
         }
         
         

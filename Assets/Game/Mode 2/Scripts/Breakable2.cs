@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Exploder.Utils;
 using UnityEngine;
 
-public class Breakable2 : MonoBehaviour, ITrap
+public class Breakable2 : MonoBehaviour, IBreakable2
 {
     public void OnTrigger()
     {

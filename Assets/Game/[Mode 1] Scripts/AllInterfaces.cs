@@ -38,3 +38,8 @@ interface IEnemy2
 {
     void OnHit(Vector3 _pos);
 }
+
+interface IBreakable2
+{
+    void OnTrigger();
+}
