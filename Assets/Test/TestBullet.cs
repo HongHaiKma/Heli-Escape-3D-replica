@@ -51,11 +51,12 @@ public class TestBullet : MonoBehaviour
         {
             // GetComponent<Rigidbody>().DOLookAt(tf_Target.position, 0f);
             Quaternion targetRotation = Quaternion.LookRotation(tf_Target.position - transform.position);
+            Quaternion targetLook = new Quaternion(0f, targetRotation.y, 0f, 0f);
             targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360f * Time.fixedDeltaTime);
             
             // transform.LookAt(tf_Target);
-            GetComponent<Rigidbody>().MovePosition(transform.position + transform.forward.normalized * Time.deltaTime * speed2);  
-            GetComponent<Rigidbody>().MoveRotation(targetRotation);  
+            // GetComponent<Rigidbody>().MovePosition(transform.position + transform.forward.normalized * Time.deltaTime * speed2);
+            GetComponent<Rigidbody>().MoveRotation(targetRotation);
         }
 
         // m_FlyingTime += Time.fixedDeltaTime;

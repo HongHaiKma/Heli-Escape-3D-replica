@@ -19,6 +19,8 @@ public class GameManager : Singleton2<GameManager>
     public bool m_LevelLoaded;
 
     public GameLoop m_GameLoop;
+
+    public float timeScale;
     // public Transform tf_Shooter;
 
     private void Start()
@@ -43,6 +45,7 @@ public class GameManager : Singleton2<GameManager>
 
     private void Update()
     {
+        timeScale = Time.timeScale;
         if (Input.GetKeyDown(KeyCode.A))
         {
             Time.timeScale = 0f;

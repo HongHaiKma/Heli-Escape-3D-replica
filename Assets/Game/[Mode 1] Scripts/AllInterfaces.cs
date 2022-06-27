@@ -41,5 +41,5 @@ interface IEnemy2
 
 interface IBreakable2
 {
-    void OnTrigger();
+    void OnTrigger(GameObject _goBullet);
 }

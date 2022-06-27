@@ -96,12 +96,12 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         m_StateMachine.ExecuteStateUpdate();
 
-        if (Helper.GetKeyDown(KeyCode.S))
-        {
-            RandomPath path = RandomPath.Construct(transform.position, 5000);
-            path.spread = 5000;
-            GetComponent<Seeker>().StartPath(path);
-        }
+        // if (Helper.GetKeyDown(KeyCode.S))
+        // {
+        //     RandomPath path = RandomPath.Construct(transform.position, 5000);
+        //     path.spread = 5000;
+        //     GetComponent<Seeker>().StartPath(path);
+        // }
     }
 
     public void DestroyAllPool()

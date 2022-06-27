@@ -30,11 +30,12 @@ public class CamController2 : Singleton<CamController2>
         m_Enemies.Clear();
     }
 
-    public void ActivateFloor(Floor _floor)
+    public async UniTask ActivateFloor(Floor _floor)
     {
         ResetLevel();
+        _floor.ActivateFloor();
+        await UniTask.Delay(1000);
         m_Enemies = _floor.m_Enemies;
-        _floor.go_Blocks.SetActive(false);
     }
 
     private void Update()
@@ -101,8 +102,9 @@ public class CamController2 : Singleton<CamController2>
                     // else if (col.tag.Equals("Ground") || col.tag.Equals("Gas") || col.tag.Equals("Untagged"))
                     else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
                     {
+                        Transform trans = hitInfo.collider.GetComponent<Transform>();
                         // tf_LookAimIK.position = hitInfo.point;
-                        Shoot(hitInfo.point, null);
+                        Shoot(hitInfo.point, trans);
                     }
                 }
             }
@@ -177,6 +179,7 @@ public class CamController2 : Singleton<CamController2>
         // if (angle < _enemy.m_DetectDegree && !_enemy.IsState(AimState.Instance))
         if (angle < _enemy.m_DetectDegree)
         {
+            // if (_enemy.isActive && !_enemy.IsState(AimState.Instance))
             if (_enemy.isActive)
             {
                 _enemy.SetInRange(true);

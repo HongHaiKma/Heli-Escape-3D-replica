@@ -25,13 +25,19 @@ public class Enemy2 : MonoBehaviour, IEnemy2
 
     private void OnEnable()
     {
-        isActive = false;
+        // isActive = false;
         go_Warning.SetActive(false);
         m_ReadyToShoot = 0f;
         m_DeathTime = 0f;
 
         m_StateMachine = new StateMachine<Enemy2>(this);
         m_StateMachine.Init(IdleState2.Instance);
+    }
+
+    private void OnValidate()
+    {
+        Mathf.Clamp(tf_Owner.rotation.x, 0f, 1f);
+        Mathf.Clamp(tf_Owner.rotation.z, 0f, 1f);
     }
 
     private void Update()
@@ -71,7 +77,8 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         Vector3 shooter = LevelController2.Instance.m_Shooter.transform.position;
         // Vector3 lookat = new Vector3(0f, shooter.y - tf_Owner.position.y ,0f);
         Quaternion lookat = new Quaternion(0f, shooter.y - tf_Owner.position.y ,0f, 0f);
-        // Quaternion look = Quaternion.LookRotation(lookat, Vector3.up);
+        // Quaternion look = Quaternion.LookRotation(lookat, Vector3.up)
+
         while (time < duration)
         {
             // Vec = Vector3.Lerp(startPosition, look, time / duration);
@@ -89,6 +96,13 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         // LookShooter(2f);
         // tf_Owner.LookAt(new Vector3(0f, LevelController2.Instance.tf_Shooter.position.y, 0f));
         m_ReadyToShoot += Time.deltaTime;
+        
+        Transform tf_Target = LevelController2.Instance.m_Shooter.transform;
+        Quaternion targetRotation = Quaternion.LookRotation(tf_Target.position - tf_Owner.position);
+        // Quaternion targetLook = new Quaternion(0f, targetRotation.y, 0f, 0f);
+        targetRotation = Quaternion.RotateTowards(tf_Owner.rotation, targetRotation, 360f * Time.fixedDeltaTime);
+        rb_Owner.MoveRotation(targetRotation);  
+        
         if (m_ReadyToShoot > m_ReadyToShootMax)
         {
             Vector3 shooterPos = LevelController2.Instance.m_Shooter.tf_TargetPoint.position;

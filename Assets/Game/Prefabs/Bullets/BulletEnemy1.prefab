@@ -10398,11 +10398,15 @@ MonoBehaviour:
   col_Onwer: {fileID: 7936403035773594420}
   rb_Owner: {fileID: 261082138934174145}
   v3_CollisionPoint: {x: 0, y: 0, z: 0}
-  m_MoveSpd: 50
+  m_MoveSpd: 500000
   m_FlyingTime: 0
-  m_FlyingTimeMax: 2
+  m_FlyingTimeMax: 50
   m_Collided: 0
   tf_Target: {fileID: 0}
+  m_ExplosionRadius: {x: 0, y: 0, z: 0}
+  tf_ExploPivot: {fileID: 0}
+  m_ExplosionForce: 0
+  collide: 0
 --- !u!65 &7936403035773594420
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10424,7 +10428,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7936403035773594423}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0

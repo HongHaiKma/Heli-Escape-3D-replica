@@ -127,8 +127,9 @@ GameObject:
   - component: {fileID: 33664209257152725}
   - component: {fileID: 23839515182171074}
   - component: {fileID: 109263976428374621}
-  - component: {fileID: 8583709867879725201}
   - component: {fileID: 922161129071264128}
+  - component: {fileID: 8583709867879725201}
+  - component: {fileID: 617357710112338702}
   m_Layer: 19
   m_Name: Glass_full
   m_TagString: Untagged
@@ -214,18 +215,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.09999993, y: 3, z: 1}
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &8583709867879725201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090928836442480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 757eb3ee06708e043afcc5de6c47e87c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &922161129071264128
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -238,10 +227,90 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8583709867879725201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090928836442480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757eb3ee06708e043afcc5de6c47e87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Activated: 0
+  mesh_Owner: {fileID: 23839515182171074}
+  rb_Owner: {fileID: 922161129071264128}
+  m_ExploderObject: {fileID: 617357710112338702}
+--- !u!114 &617357710112338702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090928836442480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b945f9aa6e0d3de46ab1fabcf3b510b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DontUseTag: 0
+  Radius: 5
+  CubeRadius: {x: 0, y: 0, z: 0}
+  UseCubeRadius: 0
+  ForceVector: {x: 0, y: -10, z: 0}
+  UseForceVector: 1
+  Force: 0
+  FrameBudget: 15
+  TargetFragments: 8
+  ThreadOption: 2
+  ExplodeSelf: 1
+  DisableRadiusScan: 1
+  HideSelf: 0
+  DestroyOriginalObject: 0
+  UniformFragmentDistribution: 0
+  SplitMeshIslands: 1
+  DisableTriangulation: 0
+  FragmentPoolSize: 100
+  Use2DCollision: 0
+  CuttingStyle: 0
+  FragmentDeactivation:
+    DeactivateOptions: 2
+    DeactivateTimeout: 3
+    FadeoutOptions: 0
+  FragmentSFX:
+    FragmentEmitter: {fileID: 0}
+    ChanceToPlay: 100
+    PlayOnlyOnce: 0
+    MixMultipleSounds: 0
+    EmitersMax: 1000
+    ParticleTimeout: 11.122388
+  FragmentOptions:
+    FragmentPrefab: {fileID: 0}
+    FreezePositionX: 0
+    FreezePositionY: 0
+    FreezePositionZ: 0
+    FreezeRotationX: 0
+    FreezeRotationY: 0
+    FreezeRotationZ: 0
+    Layer: Breakable2
+    ExplodeFragments: 1
+    MaxVelocity: 100
+    InheritParentPhysicsProperty: 1
+    Mass: 20
+    UseGravity: 1
+    DisableColliders: 0
+    MeshColliders: 0
+    AngularVelocity: 1
+    MaxAngularVelocity: 7
+    AngularVelocityVector: {x: 0, y: 1, z: 0}
+    RandomAngularVelocityVector: 1
+    FragmentMaterial: {fileID: 0}
 --- !u!1 &1114469388201543
 GameObject:
   m_ObjectHideFlags: 0

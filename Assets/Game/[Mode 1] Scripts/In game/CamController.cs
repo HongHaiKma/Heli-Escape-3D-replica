@@ -145,14 +145,6 @@ public class CamController : Singleton<CamController>
         await UniTask.Delay(100);
     }
 
-    public void Shoot(Vector3 _pos, Transform _tfEnemy)
-    {
-        GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePoint.position);
-        go.transform.LookAt(_pos);
-        go.transform.parent = tf_LookAimIK;
-        PrefabManager.Instance.SpawnBulletPool("Bullet1", tf_FirePoint.position).GetComponent<Bullet>().Fire(_pos, _tfEnemy);
-    }
-
     public async UniTask CameraIntro(Vector3 targetPosition, float duration)
     {
         await UniTask.WhenAll(ResetLevel());

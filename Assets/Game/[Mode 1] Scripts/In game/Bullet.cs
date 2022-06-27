@@ -121,7 +121,7 @@ public class Bullet : MonoBehaviour
 
         if (iBreak != null)
         {
-            iBreak.OnTrigger();
+            iBreak.OnTrigger(gameObject);
         }
         
         

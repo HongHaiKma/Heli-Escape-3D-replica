@@ -42,7 +42,7 @@ public class LevelController2 : Singleton<LevelController2>
                 return;
             }
             
-            tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnComplete(() =>
+            tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnStart(() =>
             {
                 CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
             });
