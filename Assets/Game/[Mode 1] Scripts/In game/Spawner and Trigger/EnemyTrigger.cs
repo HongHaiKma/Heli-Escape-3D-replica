@@ -51,6 +51,20 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
                         });
                 });
         }
+        else
+        {
+            if (m_EnemySpawner.isSpawned)
+            {
+                if (m_EnemySpawner.isWaiting)
+                {
+                    m_EnemySpawner.EnemyRun();
+                }
+            }
+            else
+            {
+                m_EnemySpawner.SpawnEnemy();
+            }
+        }
     }
 
     [Button]

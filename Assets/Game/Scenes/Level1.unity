@@ -4752,9 +4752,21 @@ PrefabInstance:
       propertyPath: m_Number
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 536730670520258420, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: isSpawned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 536730670520258420, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: isWaiting
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2219681685432534648, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_LocalPosition.z
       value: 4.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 2734654354157076097, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3753873262432290582, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_Name
@@ -4766,7 +4778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5302905995198667330, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_LookCam
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5302905995198667330, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: tf_LookPoint
