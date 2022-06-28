@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 9100005230218292046}
   - component: {fileID: 3420459876536587993}
   - component: {fileID: 803091630624904263}
-  m_Layer: 0
+  - component: {fileID: 1517323387685307175}
+  - component: {fileID: -4465838076252547133}
+  m_Layer: 17
   m_Name: Picture3
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +64,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e7c9c187e315f134198ce0129844b8bb, type: 2}
-  - {fileID: 2100000, guid: 35c303c3983808940ad937b82b157500, type: 2}
+  - {fileID: 2100000, guid: 28cd87ee83831164d89f907d3768e3ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,3 +86,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1517323387685307175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6422763472809218299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.44999978, y: 0.6499998, z: 0.05000001}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-4465838076252547133
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6422763472809218299}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

@@ -16,8 +16,14 @@ public class LevelController2 : Singleton<LevelController2>
     public Shooter2 m_Shooter;
     private float TIMESCALE;
 
+    private bool isSlow = false;
+
+    public bool physicSimulate = true;
+
     private void OnEnable()
     {
+        // Physics.autoSimulation = false;
+        isSlow = false;
         Time.timeScale = 1;
         m_CurFloor = 0;
         CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
@@ -26,6 +32,45 @@ public class LevelController2 : Singleton<LevelController2>
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
         // await UniTask.WaitUntil(() => GUIManager.Instance != null);
         GUIManager.Instance.g_Loading.SetActive(false);
+        
+        EventManager1<bool>.AddListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
+    }
+
+    private void OnDisable()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
+    }
+
+    public override void OnDestroy()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
+    }
+
+    public void OnPivotFollowerSpeed(bool _slowmotion)
+    {
+        if (_slowmotion)
+        {
+            if (!isSlow)
+            {
+                m_RotateSpeed = 40f;
+                tf_PivotFollower.DOKill();
+                tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+                isSlow = true;
+            }
+            
+            
+            // Helper.DebugLog("AAAAAAAAAAAAA");
+        }
+        else
+        {
+            if (isSlow)
+            {
+                m_RotateSpeed = 10f;
+                tf_PivotFollower.DOKill();
+                tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+                isSlow = false;
+            }
+        }
     }
 
     public async UniTask RemoveEnemy(Enemy2 _enemy)
@@ -57,14 +102,36 @@ public class LevelController2 : Singleton<LevelController2>
         //     m_CurFloor++;
         //     tf_PivotFollower.DOLocalMove(tf_Pivots[m_CurFloor].position, 2f);
         // }
-        if (Helper.GetKeyDown(KeyCode.A))
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     // Time.timeScale = 0f;
+        //     // Physics.autoSimulation = false;
+        //     // Physics.Simulate(0.25f * 0.02f);
+        //     
+        //     physicSimulate = false;
+        //     EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, physicSimulate);
+        // }
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            TIMESCALE = Time.timeScale;
-            Time.timeScale = 0;
+            // Time.timeScale = 1f;
+            // Physics.autoSimulation = true;
+            
+            // physicSimulate = true;
+            // EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, physicSimulate);
+            
+            Helper.DebugLog("Simulation: " + Physics.autoSimulation);
         }
-        if (Helper.GetKeyDown(KeyCode.D))
-        {
-            Time.timeScale = TIMESCALE;
-        }
+        //
+        // if (physicSimulate)
+        // {
+        //     // Physics.autoSimulation = true;
+        //     Physics.Simulate(Time.fixedDeltaTime);
+        // }
+        // else
+        // {
+        //     // Physics.autoSimulation = false;
+        //     // Physics.Simulate(Time.fixedDeltaTime * 0.25f);
+        //     Physics.Simulate(Time.fixedDeltaTime * 0.25f);
+        // }
     }
 }

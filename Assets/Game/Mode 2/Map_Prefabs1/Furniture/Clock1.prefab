@@ -11,13 +11,15 @@ GameObject:
   - component: {fileID: 4150706313600413385}
   - component: {fileID: 3828149799879632006}
   - component: {fileID: 1717334141307703659}
-  m_Layer: 0
+  - component: {fileID: -434874044423344795}
+  - component: {fileID: 9040619073148855468}
+  m_Layer: 17
   m_Name: Clock1
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4150706313600413385
 Transform:
   m_ObjectHideFlags: 0
@@ -63,7 +65,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: -1580535799172915004, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
   - {fileID: 2100000, guid: 239f328e0cc1c8843b00da3e5e08e149, type: 2}
-  - {fileID: 2100000, guid: 35c303c3983808940ad937b82b157500, type: 2}
+  - {fileID: 2100000, guid: 28cd87ee83831164d89f907d3768e3ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,3 +87,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-434874044423344795
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614458688510409297}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.03991638, y: 0.6654587, z: 0.6654587}
+  m_Center: {x: -0.000000074505806, y: 0.00000022351742, z: 0.000000014901161}
+--- !u!54 &9040619073148855468
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7614458688510409297}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

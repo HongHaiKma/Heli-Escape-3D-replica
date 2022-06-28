@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6430691946260543155}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Lamp1
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6430691946260543155
 Transform:
   m_ObjectHideFlags: 0
@@ -44,7 +44,9 @@ GameObject:
   - component: {fileID: 3711538062865074138}
   - component: {fileID: 5783230539253793486}
   - component: {fileID: 1811245950826101442}
-  m_Layer: 0
+  - component: {fileID: 3609901644093291599}
+  - component: {fileID: 6794687196419078364}
+  m_Layer: 17
   m_Name: pasted__Cylinder.037
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +118,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3609901644093291599
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529302648000266154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 568737659685756238, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &6794687196419078364
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3529302648000266154}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4541764405224026729
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,7 +159,9 @@ GameObject:
   - component: {fileID: 7294004454857373718}
   - component: {fileID: 898698197565466310}
   - component: {fileID: 144829935407761339}
-  m_Layer: 0
+  - component: {fileID: 6176743417546053345}
+  - component: {fileID: 6293231584835952184}
+  m_Layer: 17
   m_Name: pasted__Cylinder.036
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,3 +233,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6176743417546053345
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4541764405224026729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 948177620296117292, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &6293231584835952184
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4541764405224026729}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

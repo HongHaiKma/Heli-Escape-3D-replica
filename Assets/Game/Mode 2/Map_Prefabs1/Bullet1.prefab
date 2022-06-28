@@ -7686,7 +7686,7 @@ Transform:
   m_GameObject: {fileID: 586920723033280352}
   m_LocalRotation: {x: -0, y: 0.000000059604638, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.298}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 590116819827525854}
@@ -10402,7 +10402,7 @@ Transform:
   m_GameObject: {fileID: 7936403035773594423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.59840006}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.29920006}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 590042905718814603}
@@ -10431,6 +10431,7 @@ MonoBehaviour:
   rb_Owner: {fileID: 261082138934174145}
   v3_CollisionPoint: {x: 0, y: 0, z: 0}
   m_MoveSpd: 500000
+  m_MoveSpdVelocity: 2500
   m_FlyingTime: 0
   m_FlyingTimeMax: 3
   m_Collided: 0
@@ -10460,7 +10461,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7936403035773594423}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 1e+9
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0

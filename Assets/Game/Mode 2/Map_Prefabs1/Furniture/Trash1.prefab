@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 638038235}
   - component: {fileID: 638038237}
   - component: {fileID: 638038236}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Icosphere.008 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,13 +92,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7146262391318779147}
-  m_Layer: 0
+  - component: {fileID: 6552933966839140913}
+  - component: {fileID: 1090620039815448508}
+  m_Layer: 17
   m_Name: Trash1
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7146262391318779147
 Transform:
   m_ObjectHideFlags: 0
@@ -120,6 +122,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &6552933966839140913
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065094565851333442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.69, y: 0.76, z: 0.69}
+  m_Center: {x: 0, y: 0.06, z: 0}
+--- !u!54 &1090620039815448508
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065094565851333442}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3942617288856076455
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +162,7 @@ GameObject:
   - component: {fileID: 6454448437641424843}
   - component: {fileID: 6975273550469467337}
   - component: {fileID: 4870738138411639610}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Icosphere.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +245,7 @@ GameObject:
   - component: {fileID: 6364897772345426453}
   - component: {fileID: 1060292428994569967}
   - component: {fileID: 5446532831005595566}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Icosphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +328,7 @@ GameObject:
   - component: {fileID: 7604977198519359686}
   - component: {fileID: 3094217302454903678}
   - component: {fileID: 6679319317937509657}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Cylinder.040
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +411,7 @@ GameObject:
   - component: {fileID: 6654512097690864531}
   - component: {fileID: 6856458833030247457}
   - component: {fileID: 2129958048059521748}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Icosphere.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +494,7 @@ GameObject:
   - component: {fileID: 7699218716296944836}
   - component: {fileID: 7638906555605780453}
   - component: {fileID: 8930690872749355837}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: pasted__Icosphere.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}

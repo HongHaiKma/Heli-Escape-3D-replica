@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715e522c8bc77a144a3952eec999b1a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aaa: {x: 3, y: 2, z: 3}
+  m_ExplosionRadius: {x: 0, y: 0, z: 0}
   tf_ExploPivot: {fileID: 2770818166510763964}
   m_ExplosionForce: 3000
 --- !u!136 &3365226395251087968
@@ -262,7 +262,7 @@ GameObject:
   m_Layer: 0
   m_Name: Pivot
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

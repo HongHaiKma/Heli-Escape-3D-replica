@@ -162,6 +162,7 @@ MonoBehaviour:
   - {fileID: 5573679948565856986, guid: c0db63750bc8faa4798e42f9cb88f5e2, type: 3}
   - {fileID: 5573679948565856986, guid: e8d15d49ebc6fd748a7cdc2fd48cb455, type: 3}
   - {fileID: 5573679948565856986, guid: e6c0aaef7610d3444b98f769fc1f98d8, type: 3}
+  - {fileID: 1563188529167364, guid: 107d0940a3096bf43857e90fa0933805, type: 3}
   m_DollyPaths:
   - {fileID: 8527613666560117586, guid: abed177d90e5b3949ac0ea32a93990e0, type: 3}
   - {fileID: 8527613666560117586, guid: b93b256ad19baea43a02f68dffc6fb5e, type: 3}
@@ -221,3 +222,4 @@ MonoBehaviour:
   m_EnemyWarning: 0
   m_LevelLoaded: 0
   m_GameLoop: 0
+  timeScale: 0

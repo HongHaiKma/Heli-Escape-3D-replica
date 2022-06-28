@@ -45,19 +45,22 @@ public class GameManager : Singleton2<GameManager>
 
     private void Update()
     {
-        timeScale = Time.timeScale;
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Time.timeScale = 0f;
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Time.timeScale = 1f;
-        }
+        // timeScale = Time.timeScale;
+        // if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     // Time.timeScale = 0f;
+        //     Physics.autoSimulation = false;
+        //     Physics.Simulate(0.25f * 0.02f);
+        // }
+        // if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     // Time.timeScale = 1f;
+        //     Physics.autoSimulation = true;
+        // }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Helper.DebugLog("Time Scale: " + Time.timeScale);
+            Time.timeScale = 0.25f;
         }
         
         // GraphNode nearestNode = AstarPath.active.GetNearest(tf_Owner.position, NNConstraint.Default).node;

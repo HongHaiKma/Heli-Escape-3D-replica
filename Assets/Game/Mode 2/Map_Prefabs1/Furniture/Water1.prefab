@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 4378182265144637055}
   - component: {fileID: 2295528296010591481}
   - component: {fileID: 3189175448503425326}
-  m_Layer: 0
+  - component: {fileID: 6747354540266576574}
+  - component: {fileID: 2093560607510966177}
+  m_Layer: 17
   m_Name: Water01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +85,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6747354540266576574
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558985882537839685}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1828423701168176673, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &2093560607510966177
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558985882537839685}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3477245456615400420
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +126,9 @@ GameObject:
   - component: {fileID: 3342478475892558165}
   - component: {fileID: 3188936372969405829}
   - component: {fileID: 7222058462236056131}
-  m_Layer: 0
+  - component: {fileID: 1184417338361920717}
+  - component: {fileID: 4404919485939067249}
+  m_Layer: 17
   m_Name: Water05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +200,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1184417338361920717
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477245456615400420}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -300834538363021578, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &4404919485939067249
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477245456615400420}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4522666861557731012
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +241,9 @@ GameObject:
   - component: {fileID: 2410610462273145435}
   - component: {fileID: 1490693772782358832}
   - component: {fileID: 1852218376409387698}
-  m_Layer: 0
+  - component: {fileID: 2445081693992186609}
+  - component: {fileID: 2133078363438915405}
+  m_Layer: 17
   m_Name: Water03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,6 +315,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2445081693992186609
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522666861557731012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3404942827917762709, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &2133078363438915405
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4522666861557731012}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4652867219143651935
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,9 +354,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6147856879735911087}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Water1
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,7 +392,9 @@ GameObject:
   - component: {fileID: 372978424832160861}
   - component: {fileID: 942130930086262585}
   - component: {fileID: 2131761405636697017}
-  m_Layer: 0
+  - component: {fileID: 4719190932783796701}
+  - component: {fileID: 7161721093776367371}
+  m_Layer: 17
   m_Name: Water02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,6 +466,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4719190932783796701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5492832472485921762}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8849008068196753967, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &7161721093776367371
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5492832472485921762}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5834616734528670699
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +507,9 @@ GameObject:
   - component: {fileID: 7884113202650651093}
   - component: {fileID: 7326431179501214595}
   - component: {fileID: 536757744536258}
-  m_Layer: 0
+  - component: {fileID: 4007141740987488633}
+  - component: {fileID: 3287274674988036697}
+  m_Layer: 17
   m_Name: Water04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,3 +581,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4007141740987488633
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834616734528670699}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5130386597474084627, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
+--- !u!54 &3287274674988036697
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834616734528670699}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

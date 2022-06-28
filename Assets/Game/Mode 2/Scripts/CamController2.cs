@@ -20,6 +20,7 @@ public class CamController2 : Singleton<CamController2>
     private void OnEnable()
     {
         // ResetLevel();
+        Physics.autoSimulation = false;
         IsZooming = false;
     }
 
@@ -42,7 +43,20 @@ public class CamController2 : Singleton<CamController2>
     {
         if (m_Enemies.Count > 0)
         {
-            Time.timeScale = m_Enemies.Any(IsSlow) ? Time.timeScale = 0.25f : Time.timeScale = 1f;
+            if (m_Enemies.Any(IsSlow))
+            {
+                // Physics.autoSimulation = false;
+                Physics.Simulate(Time.fixedDeltaTime * 0.25f);
+                EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, true);
+            }
+            else
+            {
+                // Physics.autoSimulation = true;
+                Physics.Simulate(Time.fixedDeltaTime);
+                EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, false);
+                // Physics.Simulate(0.25f * 0.02);
+            }
+            // Time.timeScale = m_Enemies.Any(IsSlow) ? Time.timeScale = 0.25f : Time.timeScale = 1f;
             // if (!IsZooming)
             // {
             //     if (m_Enemies.Any(IsSlow))
@@ -73,7 +87,8 @@ public class CamController2 : Singleton<CamController2>
             RaycastHit hitInfo;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             
-            List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
+            // List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
+            List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer).ToList();
 
             if (rayHits.Any(x => x.transform.GetComponent<IEnemy2>() != null))
             {
@@ -86,7 +101,6 @@ public class CamController2 : Singleton<CamController2>
             {
                 
                 hitInfo = rayHits.OrderBy(x => (x.point - shooter.transform.position).sqrMagnitude).FirstOrDefault();
-                Helper.DebugLog("Name: " + hitInfo.collider.name);
                 var col = hitInfo.collider.GetComponent<Collider>();
                 GameObject go = hitInfo.transform.gameObject;
                 // if (col != null)
@@ -100,7 +114,7 @@ public class CamController2 : Singleton<CamController2>
                         Shoot(hitInfo.point, trans);
                     }
                     // else if (col.tag.Equals("Ground") || col.tag.Equals("Gas") || col.tag.Equals("Untagged"))
-                    else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged"))
+                    else if (go.tag.Equals("Ground") || go.tag.Equals("Gas") || go.tag.Equals("Untagged") || go.tag.Equals("Furniture"))
                     {
                         Transform trans = hitInfo.collider.GetComponent<Transform>();
                         // tf_LookAimIK.position = hitInfo.point;

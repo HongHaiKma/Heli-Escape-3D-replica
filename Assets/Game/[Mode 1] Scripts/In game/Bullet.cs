@@ -24,6 +24,7 @@ public class Bullet : MonoBehaviour
 
     [Header("---Movements---")]
     public float m_MoveSpd;
+    public float m_MoveSpdVelocity;
     public float m_FlyingTime;
     public float m_FlyingTimeMax;
     public bool m_Collided;
@@ -81,6 +82,8 @@ public class Bullet : MonoBehaviour
         //         }
         //     }
         // }
+        
+        rb_Owner.velocity = transform.forward * m_MoveSpdVelocity * Time.fixedDeltaTime;
 
         m_FlyingTime += Time.fixedDeltaTime;
 
@@ -99,6 +102,34 @@ public class Bullet : MonoBehaviour
         rb_Owner.angularVelocity = Vector3.zero; 
         m_Collided = false;
         m_FlyingTime = 0f;
+        
+        // rb_Owner.velocity = transform.forward * m_MoveSpdVelocity * Time.fixedDeltaTime;
+
+        // OnChangeSpeed(Physics.autoSimulation);
+        EventManager1<bool>.AddListener(GameEvent.SLOWMOTION, OnChangeSpeed);
+        // EventManager1<int>.AddListener(GameEvent.DESTROY_SCORE_LINE, Event_SCORE_LINE_PICK);
+    }
+
+    private void OnDisable()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.SLOWMOTION, OnChangeSpeed);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.SLOWMOTION, OnChangeSpeed);
+    }
+
+    public void OnChangeSpeed(bool _slowmotion)
+    {
+        if (_slowmotion)
+        {
+            m_MoveSpdVelocity = 1500f;
+        }
+        else
+        {
+            m_MoveSpdVelocity = 2500f;
+        }
     }
 
     public void Fire(Vector3 _lookAt, Transform _tfTarget)
@@ -106,9 +137,19 @@ public class Bullet : MonoBehaviour
         tf_Target = _tfTarget;
         tf_Owner.LookAt(_lookAt);
         // rb_Owner.AddRelativeForce(transform.forward * 2300f);
-        rb_Owner.AddForce(transform.forward * m_MoveSpd);
+        // rb_Owner.AddForce(transform.forward * m_MoveSpd);
         // rb_Owner.velocity = tf_Owner.forward * 5f;
     }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     IBreakable2 iBreak = other.gameObject.GetComponent<IBreakable2>();
+    //
+    //     if (iBreak != null)
+    //     {
+    //         iBreak.OnTrigger(gameObject);
+    //     }
+    // }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -117,10 +158,22 @@ public class Bullet : MonoBehaviour
         // {
         //     iDMG.OnHit(tf_Owner.position);
         // }
+        
+        // Helper.DebugLog("AAAAAAAAAAAAAAA");
+        
+        string colTag = collision.gameObject.tag;
+        if (colTag.Equals("Furniture"))
+        {
+            PrefabManager.Instance.SpawnVFXPool("BulletHit", collision.contacts[0].point);
+            PrefabManager.Instance.DespawnPool(gameObject);
+            return;
+        }
+        
         IBreakable2 iBreak = collision.gameObject.GetComponent<IBreakable2>();
-
+        
         if (iBreak != null)
         {
+            rb_Owner.velocity = transform.forward * m_MoveSpdVelocity * Time.fixedDeltaTime;
             iBreak.OnTrigger(gameObject);
         }
         
@@ -134,9 +187,10 @@ public class Bullet : MonoBehaviour
         }
         
         IDamageable iDamage = collision.gameObject.GetComponent<IDamageable>();
-
+        
         if (iDamage != null)
         {
+            Helper.DebugLog("Name: " + collision.gameObject.name);
             iDamage.OnHit(tf_Owner.position);
             PrefabManager.Instance.DespawnPool(gameObject);
         }

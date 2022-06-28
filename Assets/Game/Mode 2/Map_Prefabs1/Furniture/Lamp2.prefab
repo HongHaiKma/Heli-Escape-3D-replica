@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 2483694015868167876}
   - component: {fileID: 3951943705790610059}
   - component: {fileID: 968207140250582942}
-  m_Layer: 0
+  - component: {fileID: 1937443567327504931}
+  - component: {fileID: 8684952434833203576}
+  m_Layer: 17
   m_Name: Lamp01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b37a272f97c6033469323ba8f06318e9, type: 2}
+  - {fileID: 2100000, guid: 28cd87ee83831164d89f907d3768e3ef, type: 2}
   - {fileID: 2100000, guid: 239f328e0cc1c8843b00da3e5e08e149, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -84,6 +86,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &1937443567327504931
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369536306540243662}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!64 &8684952434833203576
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369536306540243662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1905102930025053637, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
 --- !u!1 &1696962668517440687
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,13 +125,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2490558028330144419}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Lamp2
-  m_TagString: Untagged
+  m_TagString: Furniture
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2490558028330144419
 Transform:
   m_ObjectHideFlags: 0
@@ -128,7 +160,9 @@ GameObject:
   - component: {fileID: 4306745340617172032}
   - component: {fileID: 8217142687146850854}
   - component: {fileID: 6022993769439963592}
-  m_Layer: 0
+  - component: {fileID: 2375785155101049187}
+  - component: {fileID: 2263821095453340869}
+  m_Layer: 17
   m_Name: Lamp02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,3 +235,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &2375785155101049187
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390175007460923282}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!64 &2263821095453340869
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8390175007460923282}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4516270096655458733, guid: 3610f303bbc345842a489485e4f8d9e2, type: 3}
