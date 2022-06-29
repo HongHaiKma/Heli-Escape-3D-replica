@@ -515,6 +515,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3219592426786578675, guid: 0463d8996147b5e4c97eaaab059857ea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -972335413517983142, guid: 0463d8996147b5e4c97eaaab059857ea, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -1074,6 +1078,51 @@ MonoBehaviour:
   - {x: -0.5297526, y: 0.06784672, z: 2.4582672}
   - {x: -0.52396846, y: -0.016051412, z: 2.3350556}
   Color: {r: 0.6445951, g: 1, b: 0.44932944, a: 1}
+--- !u!1 &785815519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785815521}
+  - component: {fileID: 785815520}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &785815520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785815519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66a5928499d232a4da12c64454cd1182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  go: {fileID: 302443663}
+--- !u!4 &785815521
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785815519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900573126 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5358185493486015155, guid: 0463d8996147b5e4c97eaaab059857ea, type: 3}
@@ -2857,12 +2906,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7da90c7c25b7364d8bb2164631559c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Separation: 0.02
+  Separation: 0.0002
   DestroyTargets: 1
   UseAsync: 1
   VertexCreationThreshold: 0
   DefaultMaterial: {fileID: 2100000, guid: 30d3bdcd8e9e6a947b19338f628af5b5, type: 2}
-  DebugPlaneLength: 7.12
+  DebugPlaneLength: 1
 --- !u!4 &1664366118
 Transform:
   m_ObjectHideFlags: 0
@@ -3524,9 +3573,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameobjectRoot: {fileID: 302443663}
   OverrideFaceMaterial: {fileID: 2100000, guid: 30d3bdcd8e9e6a947b19338f628af5b5, type: 2}
-  SeparateMeshes: 1
+  SeparateMeshes: 0
   ApplyTranslation: 1
-  DefaultBehaviour: 0100000001000000
+  DefaultBehaviour: 0000000002000000
   DynamicRagdoll: {fileID: 302443666}
   Animator: {fileID: 302443665}
   GroupBehaviours: []
