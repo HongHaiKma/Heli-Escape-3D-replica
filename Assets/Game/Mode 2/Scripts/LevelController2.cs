@@ -111,16 +111,16 @@ public class LevelController2 : Singleton<LevelController2>
         //     physicSimulate = false;
         //     EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, physicSimulate);
         // }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            // Time.timeScale = 1f;
-            // Physics.autoSimulation = true;
-            
-            // physicSimulate = true;
-            // EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, physicSimulate);
-            
-            Helper.DebugLog("Simulation: " + Physics.autoSimulation);
-        }
+        // if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     // Time.timeScale = 1f;
+        //     // Physics.autoSimulation = true;
+        //     
+        //     // physicSimulate = true;
+        //     // EventManager1<bool>.CallEvent(GameEvent.SLOWMOTION, physicSimulate);
+        //     
+        //     Helper.DebugLog("Simulation: " + Physics.autoSimulation);
+        // }
         //
         // if (physicSimulate)
         // {
