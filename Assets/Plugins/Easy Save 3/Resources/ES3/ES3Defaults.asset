@@ -55,6 +55,15 @@ MonoBehaviour:
     - UniTask.TextMeshPro
     - KinoBloom.Runtime
     - FbxBuildTestAssets
+    - ScriptableObject-Architecture
+    - MoreMountains.Interface
+    - MoreMountains.Feedbacks
+    - MoreMountains.Tools
+    - MoreMountains.Feedbacks.MMTools
+    - MoreMountains.InventoryEngine
+    - MoreMountains.Tools.Feedbacks
+    - MoreMountains.Feedbacks.Cinemachine
+    - MoreMountains.Tools.Cinemachine
     - AssetUsageFinder
     - ToonyColorsPro.Editor
     - AstarPathfindingProjectEditor
@@ -67,7 +76,13 @@ MonoBehaviour:
     - MoreMountains.NiceVibrations.Editor
     - ToonyColorsPro.Demo.Editor
     - Autodesk.Fbx.Editor
-    showAdvancedSettings: 0
+    - MoreMountains.Tools.Editor
+    - ScriptableObject-Architecture.Editor
+    - MoreMountains.InventoryEngine.Editor
+    - MoreMountains.Feedbacks.Editor
+    - MoreMountains.Interface.Editor
+    - MoreMountains.Tools.Feedbacks.Editor
+    showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
   addAllPrefabsToManager: 1
