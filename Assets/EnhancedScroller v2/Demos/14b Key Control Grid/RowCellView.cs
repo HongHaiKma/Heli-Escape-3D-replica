@@ -48,8 +48,8 @@ namespace EnhancedScrollerDemos.KeyControlGrid
             // we need to refresh the cell view
             _data = data;
 
-            // this cell was outside the range of the data, so we disable the container.
-            // Note: We could have disable the cell gameobject instead of a child container,
+            // this cell was outside the range of the data, so we disable the img_Gun.
+            // Note: We could have disable the cell gameobject instead of a child img_Gun,
             // but that can cause problems if you are trying to get components (disabled objects are ignored).
             container.SetActive(data != null);
 

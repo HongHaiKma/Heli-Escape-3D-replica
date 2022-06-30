@@ -106,7 +106,12 @@ public class UICanvas : MonoBehaviour
     IEnumerator OnWaitingRegister()
     {
         yield return Yielders.EndOfFrame;
-        GUIManager.Instance.RegisterUI(this);
+        
+        // if (GUIManager.Instance != null)
+        // {
+            GUIManager.Instance.RegisterUI(this);
+        // }
+        
         gameObject.SetActive(false);
     }
 

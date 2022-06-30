@@ -34,9 +34,9 @@
     public class Data
     {
         public string someText;
-
+    
         public SelectedChangedDelegate selectedChanged;
-
+    
         /// <summary>
         /// The selection state
         /// </summary>

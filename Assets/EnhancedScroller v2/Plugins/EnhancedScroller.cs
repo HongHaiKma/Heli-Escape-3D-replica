@@ -358,7 +358,7 @@ namespace EnhancedUI.EnhancedScroller
         }
 
         /// <summary>
-        /// The size of the active cell view container minus the visibile portion
+        /// The size of the active cell view img_Gun minus the visibile portion
         /// of the scroller
         /// </summary>
         public float ScrollSize
@@ -641,7 +641,7 @@ namespace EnhancedUI.EnhancedScroller
         }
 
         /// <summary>
-        /// Access to the scroll rect container
+        /// Access to the scroll rect img_Gun
         /// </summary>
         public RectTransform Container
         {
@@ -663,7 +663,7 @@ namespace EnhancedUI.EnhancedScroller
             if (cellView == null)
             {
                 // no recyleable cell found, so we create a new view
-                // and attach it to our container
+                // and attach it to our img_Gun
                 var go = Instantiate(cellPrefab.gameObject);
                 cellView = go.GetComponent<EnhancedScrollerCellView>();
                 cellView.transform.SetParent(_container);
@@ -1179,7 +1179,7 @@ namespace EnhancedUI.EnhancedScroller
         private Scrollbar _scrollbar;
 
         /// <summary>
-        /// Cached reference to the active cell view container
+        /// Cached reference to the active cell view img_Gun
         /// </summary>
         private RectTransform _container;
 
@@ -1220,7 +1220,7 @@ namespace EnhancedUI.EnhancedScroller
         private LayoutElement _lastPadder;
 
         /// <summary>
-        /// Cached reference to the container that holds the recycled cell views
+        /// Cached reference to the img_Gun that holds the recycled cell views
         /// </summary>
         private RectTransform _recycledCellViewContainer;
 
@@ -1410,7 +1410,7 @@ namespace EnhancedUI.EnhancedScroller
             // calculate the offsets of each cell view
             _CalculateCellViewOffsets();
 
-            // set the size of the active cell view container based on the number of cell views there are and each of their sizes
+            // set the size of the active cell view img_Gun based on the number of cell views there are and each of their sizes
             if (scrollDirection == ScrollDirectionEnum.Vertical)
                 _container.sizeDelta = new Vector2(_container.sizeDelta.x, _cellViewOffsetArray.Last() + padding.top + padding.bottom);
             else
@@ -1633,7 +1633,7 @@ namespace EnhancedUI.EnhancedScroller
             // add the cell view to the recycled list
             _recycledCellViews.Add(cellView);
 
-            // move the GameObject to the recycled container
+            // move the GameObject to the recycled img_Gun
             //cellView.transform.SetParent(_recycledCellViewContainer);
 
             // deactivate the cellview (this is more efficient than moving the to a new parent like the above commented lines)
@@ -1666,7 +1666,7 @@ namespace EnhancedUI.EnhancedScroller
             cellView.dataIndex = dataIndex;
             cellView.active = true;
 
-            // add the cell view to the active container
+            // add the cell view to the active img_Gun
             cellView.transform.SetParent(_container, false);
             cellView.transform.localScale = Vector3.one;
 
@@ -1686,7 +1686,7 @@ namespace EnhancedUI.EnhancedScroller
             else
                 _activeCellViews.Add(cellView);
 
-            // set the hierarchy position of the cell view in the container
+            // set the hierarchy position of the cell view in the img_Gun
             if (listPosition == ListPositionEnum.Last)
                 cellView.transform.SetSiblingIndex(_container.childCount - 2);
             else if (listPosition == ListPositionEnum.First)
@@ -1830,7 +1830,7 @@ namespace EnhancedUI.EnhancedScroller
                 DestroyImmediate(_scrollRect.content.gameObject);
             }
 
-            // Create a new active cell view container with a layout group
+            // Create a new active cell view img_Gun with a layout group
             go = new GameObject("Container", typeof(RectTransform));
             go.transform.SetParent(_scrollRectTransform);
             if (scrollDirection == ScrollDirectionEnum.Vertical)
@@ -1892,7 +1892,7 @@ namespace EnhancedUI.EnhancedScroller
             go.transform.SetParent(_container, false);
             _lastPadder = go.GetComponent<LayoutElement>();
 
-            // create the recycled cell view container
+            // create the recycled cell view img_Gun
             go = new GameObject("Recycled Cells", typeof(RectTransform));
             go.transform.SetParent(_scrollRect.transform, false);
             _recycledCellViewContainer = go.GetComponent<RectTransform>();
