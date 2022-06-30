@@ -16,10 +16,23 @@ public class PopupCaller
     
     public static void OpenPopup(UIID _uiid, bool _isClose = false, bool _isSetup = false)
     {
-        Helper.DebugLog("Open POPUPPPPPPPPPP");
         UICanvas popup = GUIManager.Instance.GetUICanvasByID(_uiid) as UICanvas;
 
         GUIManager.Instance.ShowUIPopup(popup, _isClose, _isSetup);
+    }
+    
+    public static UICanvas GetPopup(UIID _uiid)
+    {
+        UICanvas popup = GUIManager.Instance.GetUICanvasByID(_uiid) as UICanvas;
+
+        return popup;
+    }
+    
+    public static PopupInventory GetPopupInventory()
+    {
+        PopupInventory popup = GUIManager.Instance.GetUICanvasByID(UIID.POPUP_INVENTORY) as PopupInventory;
+
+        return popup;
     }
 }
 

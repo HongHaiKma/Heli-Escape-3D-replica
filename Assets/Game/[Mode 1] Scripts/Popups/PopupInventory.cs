@@ -6,8 +6,9 @@ using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 using EnhancedScrollerDemos.GridSelection;
 using Sirenix.OdinInspector;
+using UI.ThreeDimensional;
 
-public class PopupInventory : MonoBehaviour, IEnhancedScrollerDelegate
+public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
 {
     [Title("Property")]
     public GameMode m_GameMode;
@@ -19,25 +20,40 @@ public class PopupInventory : MonoBehaviour, IEnhancedScrollerDelegate
     public EnhancedScroller scroller;
     public EnhancedScrollerCellView cellViewPrefab;
 
-    [Title("Gun Data")]
+    [Title("Gun Data")] 
+    public UIObject3D m_UIObject3D;
+    public GunInventoryConfig gunConfigs;
     public GunInventoryConfig m_GunConfig_Mode1;
+    public GunInventoryConfig m_GunConfig_Mode2;
+    public GunInventoryConfig m_GunConfig_Mode3;
 
-    // private void Awake()
-    // {
-    //     m_ID = UIID.POPUP_WIN;
-    //     Init();
-    //     
-    //     
-    // }
+    private void Awake()
+    {
+        m_ID = UIID.POPUP_INVENTORY;
+        Init();
+    }
 
-    void Start()
+    public override void Start()
         {
+            base.Start();
             // tell the scroller that this script will be its delegate
             scroller.Delegate = this;
 
             // load in a large set of data
             LoadData();
         }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        LoadData();
+        Helper.DebugLog("POpup Inventory OnEnableeeeeeee");
+    }
+
+    public void SelectGun(int _index)
+    {
+        m_UIObject3D.ObjectPrefab = gunConfigs.m_GunItem[_index].go_UIPrefabInventory.transform;
+    }
     
     #region EnhancedScroller Handlers
 
@@ -57,22 +73,43 @@ public class PopupInventory : MonoBehaviour, IEnhancedScrollerDelegate
                 }
             }
 
-            GunInventoryConfig gunConfigs = m_GunConfig_Mode1;
+            // GunInventoryConfig gunConfigs = new GunInventoryConfig();
+            if (m_GameMode == GameMode.MODE_1)
+            {
+                gunConfigs = m_GunConfig_Mode1;
+            }
+            else if (m_GameMode == GameMode.MODE_2)
+            {
+                gunConfigs = m_GunConfig_Mode2;
+            }
+            else if (m_GameMode == GameMode.MODE_3)
+            {
+                gunConfigs = m_GunConfig_Mode3;
+            }
+            
+            
 
             // set up some simple data
             _data = new SmallList<UIGunInventoryData>();
             for (var i = 0; i < gunConfigs.m_GunItem.Count; i ++)
             {
+                Helper.DebugLog("ID: " + gunConfigs.m_GunItem[i].m_ID);
                 // _data.data
                 _data.Add(new UIGunInventoryData()
                 {
-                    someText = i.ToString(),
+                    m_ID = gunConfigs.m_GunItem[i].m_ID,
                     sprite_Gun = gunConfigs.m_GunItem[i].img_Gun
                 });
             }
 
             // tell the scroller to reload now that we have the data
             scroller.ReloadData();
+        }
+
+        [Button]
+        public void ReloadData()
+        {
+            LoadData();
         }
 
         /// <summary>
@@ -123,7 +160,7 @@ public class PopupInventory : MonoBehaviour, IEnhancedScrollerDelegate
 public class UIGunInventoryData
 // public class Data
 {
-    public string someText;
+    public int m_ID;
     public Sprite sprite_Gun;
 
     public SelectedChangedDelegate selectedChanged;

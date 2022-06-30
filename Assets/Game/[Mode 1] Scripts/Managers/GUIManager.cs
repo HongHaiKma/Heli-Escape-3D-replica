@@ -555,6 +555,9 @@ public class GUIManager : MonoBehaviour
             case UIID.POPUP_LOSE:
                 prefabName = "PopupLose";
                 break;
+            case UIID.POPUP_INVENTORY:
+                prefabName = "PopupInventory";
+                break;
         }
         prefab = GetPopupPrefabByName(prefabName);
         return prefab;

@@ -8,4 +8,5 @@ public class GunInventoryItem : ScriptableObject
     public int m_ID;
     public string m_Name;
     public Sprite img_Gun;
+    public GameObject go_UIPrefabInventory;
 }

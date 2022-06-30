@@ -22,6 +22,7 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
         {
             Vector3 oldPos = LevelController.Instance.tf_CamLookPoint.localPosition;
             CamController.Instance.m_CMCam.Follow = null;
+            // CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_PivotFollower;
             LevelController.Instance.tf_CamLookPoint.DOMove(tf_LookPoint.position, 1f).OnStart(() =>
                 {
                     Time.timeScale = 0.5f;

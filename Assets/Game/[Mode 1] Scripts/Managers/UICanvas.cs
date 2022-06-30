@@ -20,17 +20,18 @@ public class UICanvas : MonoBehaviour
     }
 
     protected CanvasGroup m_CanvasGroup;
-    protected bool IsClosing = false;
+    public bool IsClosing = false;
     public bool IsOpenPrevious = true;
     public bool IsAutoRemove = false;
     public bool IsAvoidBackKey = false;
 
     public Button btn_Close;
 
-    private void Start()
+    public virtual void Start()
     {
         if (btn_Close != null)
         {
+            Helper.DebugLog("On Starrr");
             GUIManager.Instance.AddClickEvent(btn_Close, OnClose);
         }
     }
@@ -93,7 +94,9 @@ public class UICanvas : MonoBehaviour
 
     public virtual void OnClose()
     {
+        Helper.DebugLog("Start closeeeeeeeeee");
         if (IsClosing) return;
+        Helper.DebugLog("OnCloseeeee");
         GUIManager.Instance.HideUIPopup(this, IsAutoRemove, IsOpenPrevious);
         IsClosing = true;
     }

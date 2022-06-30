@@ -8,11 +8,8 @@ using UnityEngine.Serialization;
 
 public class UIGunInventoryItemRow : MonoBehaviour
 {
-    /// <summary>
-        /// These are the UI elements that will be updated when the data changes
-        /// </summary>
+    public int m_ID;
         public Image img_Gun;
-        public Text text;
         public Image selectionPanel;
 
         /// <summary>
@@ -69,7 +66,7 @@ public class UIGunInventoryItemRow : MonoBehaviour
             if (data != null)
             {
                 // set the text if the cell is inside the data range
-                text.text = data.someText;
+                m_ID = data.m_ID;
                 img_Gun.sprite = data.sprite_Gun;
             }
 
@@ -123,6 +120,7 @@ public class UIGunInventoryItemRow : MonoBehaviour
             //     Helper.DebugLog("AAAAAAAAAAAA");
             // }
             
-            Helper.DebugLog("Data text: " + _data.someText.ToString());
+            PopupInventory popInventory = PopupCaller.GetPopup(UIID.POPUP_INVENTORY) as PopupInventory;
+            popInventory.SelectGun(m_ID);
         }
 }

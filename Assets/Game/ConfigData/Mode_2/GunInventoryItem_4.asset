@@ -15,3 +15,4 @@ MonoBehaviour:
   m_ID: 3
   m_Name: Gun_4
   img_Gun: {fileID: 21300000, guid: 441aac6944bb6484e992268d10d383b5, type: 3}
+  go_UIPrefabInventory: {fileID: 2031963683584357450, guid: a0cf061e059d5c84fa10f7cc4dc31f78, type: 3}
