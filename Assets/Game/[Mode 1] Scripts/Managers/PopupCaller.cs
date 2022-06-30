@@ -28,4 +28,5 @@ public enum UIID
     POPUP_PAUSE = 0,
     POPUP_WIN = 1,
     POPUP_LOSE = 2,
+    POPUP_INVENTORY = 3,
 }

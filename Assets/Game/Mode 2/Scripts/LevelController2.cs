@@ -23,6 +23,7 @@ public class LevelController2 : Singleton<LevelController2>
     private void OnEnable()
     {
         // Physics.autoSimulation = false;
+        GameManager.Instance.m_GameMode = GameMode.MODE_2;
         isSlow = false;
         Time.timeScale = 1;
         m_CurFloor = 0;

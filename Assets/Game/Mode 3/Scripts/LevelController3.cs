@@ -12,6 +12,7 @@ public class LevelController3 : Singleton<LevelController3>
 
     private void OnEnable()
     {
+        GameManager.Instance.m_GameMode = GameMode.MODE_3;
         Time.timeScale = 1;
         GUIManager.Instance.g_Loading.SetActive(false);
     }

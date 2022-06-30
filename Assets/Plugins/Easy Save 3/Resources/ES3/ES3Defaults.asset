@@ -35,53 +35,53 @@ MonoBehaviour:
     - AstarPathfindingProject
     - CW.Common
     - UniTask.Linq
+    - ScriptableObject-Architecture
     - StompyRobot.SRF
+    - MoreMountains.Tools
     - StompyRobot.SRDebugger
     - LeanCommonPlus
     - Autodesk.Fbx
     - MoreMountains.NiceVibrations.Haptics
+    - MoreMountains.Feedbacks
     - Cinemachine
+    - MoreMountains.Feedbacks.MMTools
+    - MoreMountains.Interface
     - LeanTouchPlus
     - UniTask.DOTween
     - LeanTouch
     - UltimateEditorEnhancer
     - MoreMountains.NiceVibrations.Demos
     - MoreMountains.NiceVibrations
+    - MoreMountains.Feedbacks.Cinemachine
     - LeanCommon
     - ToonyColorsPro2.Demo
     - ToonyColorsPro.Runtime
+    - MoreMountains.InventoryEngine
     - UniTask.Addressables
+    - MoreMountains.Tools.Feedbacks
     - Sirenix.OdinInspector.CompatibilityLayer
+    - MoreMountains.Tools.Cinemachine
     - UniTask.TextMeshPro
     - KinoBloom.Runtime
     - FbxBuildTestAssets
-    - ScriptableObject-Architecture
-    - MoreMountains.Interface
-    - MoreMountains.Feedbacks
-    - MoreMountains.Tools
-    - MoreMountains.Feedbacks.MMTools
-    - MoreMountains.InventoryEngine
-    - MoreMountains.Tools.Feedbacks
-    - MoreMountains.Feedbacks.Cinemachine
-    - MoreMountains.Tools.Cinemachine
+    - MoreMountains.Tools.Editor
+    - ScriptableObject-Architecture.Editor
     - AssetUsageFinder
     - ToonyColorsPro.Editor
     - AstarPathfindingProjectEditor
+    - MoreMountains.Feedbacks.Editor
     - StompyRobot.SRF.Editor
     - StompyRobot.SRDebugger.Editor
     - ToolbarExtender.Editor
+    - MoreMountains.InventoryEngine.Editor
+    - MoreMountains.Tools.Feedbacks.Editor
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - PackageToolsEditor
     - UniTask.Editor
     - MoreMountains.NiceVibrations.Editor
     - ToonyColorsPro.Demo.Editor
     - Autodesk.Fbx.Editor
-    - MoreMountains.Tools.Editor
-    - ScriptableObject-Architecture.Editor
-    - MoreMountains.InventoryEngine.Editor
-    - MoreMountains.Feedbacks.Editor
     - MoreMountains.Interface.Editor
-    - MoreMountains.Tools.Feedbacks.Editor
     showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

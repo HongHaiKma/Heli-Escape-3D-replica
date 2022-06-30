@@ -23,6 +23,8 @@ public class LevelController : Singleton<LevelController>
 
     public async UniTask OnEnable()
     {
+        GameManager.Instance.m_GameMode = GameMode.MODE_1;
+        
         Time.timeScale = 1;
         
         m_HostageRun.Clear();

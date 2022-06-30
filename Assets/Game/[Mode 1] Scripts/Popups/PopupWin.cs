@@ -9,31 +9,9 @@ public class PopupWin : UICanvas
 
     private void Awake()
     {
-        m_ID = UIID.POPUP_WIN;
+        m_ID = UIID.POPUP_INVENTORY;
         Init();
 
-        GUIManager.Instance.AddClickEvent(btn_NextLevel, OnNextLevel);
-    }
-
-    public void OnNextLevel()
-    {
-        // EventManager.CallEvent(GameEvent.DespawnAllPool);
-        // UIIngame.Instance.ResetLevel();
-        // GameManager.Instance.ResetLevel();
-        // // GameManager.Instance.LoadLevel();
-        // GameManager.Instance.LoadLevelTask();
-        
-        if (ProfileManager.GetLevel() < 3)
-        {
-            ProfileManager.SetLevel(ProfileManager.GetLevel() + 1); 
-        }
-
-        OnClose();
-
-        GameManager.Instance.m_GameLoop = GameLoop.Wait;
-
-        // GameManager.Instance.LoadSceneTest();
-        // StartCoroutine(GUIManager.Instance.LoadPlayScene());
-        GUIManager.Instance.LoadPlayScene();
+        // GUIManager.Instance.AddClickEvent(btn_NextLevel, OnNextLevel);
     }
 }

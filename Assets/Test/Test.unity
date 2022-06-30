@@ -736,6 +736,56 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!1 &1332710006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1332710008}
+  - component: {fileID: 1332710007}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1332710007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332710006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf79c1343bb31747b8fb1b4ca5d9055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GunSaveData_Mode1: {fileID: 11400000, guid: 3b29c567da156ae4fbba5da80656575c, type: 2}
+  m_GunSaveData_Mode2: {fileID: 11400000, guid: 261d96069b5914f429994a6a37699833, type: 2}
+  m_GunSaveData_Mode3: {fileID: 11400000, guid: 3d53ead474802884fb34fc75d805695e, type: 2}
+  m_GunConfig_Mode1: {fileID: 11400000, guid: 2caf984487003a44dba4126603b58f14, type: 2}
+  m_GunConfig_Mode2: {fileID: 11400000, guid: 9f5d6dc2433ff61448deaa27ff8bd8e8, type: 2}
+  m_GunConfig_Mode3: {fileID: 11400000, guid: 1a55c61dbceab31458c7b3779aaf4ba0, type: 2}
+--- !u!4 &1332710008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332710006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353312846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2075365237
 MonoBehaviour:
   m_ObjectHideFlags: 0

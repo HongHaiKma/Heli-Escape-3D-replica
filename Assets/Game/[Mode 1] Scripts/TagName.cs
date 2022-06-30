@@ -8,6 +8,17 @@ public static class TagName
     {
         public const string testCharSave = "TestCharSave";
     }
+    
+    public static class Inventory
+    {
+        public const string m_GunSaveData_Mode1 = "m_GunSaveData_Mode1";
+        public const string m_GunSaveData_Mode2 = "m_GunSaveData_Mode2";
+        public const string m_GunSaveData_Mode3 = "m_GunSaveData_Mode3";
+
+        public const string m_CurrentGun_Mode1 = "m_CurrentGun_Mode1";
+        public const string m_CurrentGun_Mode2 = "m_CurrentGun_Mode2";
+        public const string m_CurrentGun_Mode3 = "m_CurrentGun_Mode3";
+    }
 }
 
 [System.Serializable]

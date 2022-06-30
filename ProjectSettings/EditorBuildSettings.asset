@@ -8,5 +8,68 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/FirstScene.unity
     guid: 6afd554f577b5164ba5adb6a72e2d813
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/01.unity
+    guid: 478a41911737e714ca48071cb930cb8b
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/02.unity
+    guid: c4f4c9437a6158a4c8ca2887a5a7569c
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/03.unity
+    guid: 1c239b4fb5659f24b80a02089e55eda4
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/04.unity
+    guid: 3190fd7990ac5664cbc7970168896f32
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/05.unity
+    guid: a4f6ec12c0382104bacca9b376dd2d47
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/06.unity
+    guid: 5f73d8945d2362447b35aef0dac76a42
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/07.unity
+    guid: 8929a2969d834a34eb8393dcaa4eff73
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/08.unity
+    guid: 884600baa3a950a4a9532b8ba814178f
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/09.unity
+    guid: 086578ec3516f394fb9289c0bf765ff8
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/10.unity
+    guid: a068c62a78a7b104b9c3099648be7afb
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/10b.unity
+    guid: a0b942d643ac5e14688d64078ec8d61a
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/11.unity
+    guid: 2b285097d93f46941ac0db23f744c083
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/12.unity
+    guid: c3701a538cfcaf841b12ea2dc520f3e3
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/12b.unity
+    guid: f4038de7a136c4ed6be4e20b80aa7454
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/13.unity
+    guid: 01e896cabca0540909e2af31830c3f60
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/14.unity
+    guid: 4d7973f49a020409a8659260669327f3
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/14b.unity
+    guid: 2e8655a09250742a5943ec63b0fc1ee8
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/15.unity
+    guid: 924433c1e3f7146708c54713d87a036b
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/16.unity
+    guid: 2e328866babf346feb49b3933844493c
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/17.unity
+    guid: b0dea0a14ebee4c6ca17cdec3b4cd92d
+  - enabled: 1
+    path: Assets/EnhancedScroller v2/Demos/MainMenu.unity
+    guid: 8eeacee47d6ad004ea2dc42a279a60a8
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 5db37d417dd4b504d9956806f32b5f5b, type: 2}
