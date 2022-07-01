@@ -232,6 +232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a6e2bc601ebb064dab82af0074934db, type: 3}
+--- !u!4 &5312722665266104105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7966913822691944621, guid: 0a6e2bc601ebb064dab82af0074934db, type: 3}
+  m_PrefabInstance: {fileID: 2822275876700925828}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7383619570568519870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4710024233557839674, guid: 0a6e2bc601ebb064dab82af0074934db, type: 3}
@@ -604,6 +609,10 @@ PrefabInstance:
       propertyPath: tf_FirePoint
       value: 
       objectReference: {fileID: 7383619571383231103}
+    - target: {fileID: 3930801145206989409, guid: 377fd3cc4fe73b6428a73826dc2668e4, type: 3}
+      propertyPath: tf_GunHolder
+      value: 
+      objectReference: {fileID: 5312722665266104105}
     - target: {fileID: 3930801145206989409, guid: 377fd3cc4fe73b6428a73826dc2668e4, type: 3}
       propertyPath: tf_LookAimIK
       value: 

@@ -14,4 +14,5 @@ public class GunInventoryItem : ScriptableObject
     public int m_ID;
     public string m_Name;
     public GameObject go_UIPrefabInventory;
+    public GameObject go_UIPrefabInGame;
 }

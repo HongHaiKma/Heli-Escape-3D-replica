@@ -11,6 +11,7 @@ using SRF.UI.Layout;
 using Unity.VisualScripting;
 using UnityEngine;
 using ControlFreak2;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 
 public class CamController : Singleton<CamController>
@@ -25,6 +26,7 @@ public class CamController : Singleton<CamController>
     public Transform tf_HeliHolder;
     public Transform tf_HeliHolderPoint;
     public Transform tf_ShooterHolder;
+    
 
     public RectTransform mainCanvas;
 
@@ -35,9 +37,23 @@ public class CamController : Singleton<CamController>
 
     public TouchTrackPad m_TrackPad;
 
+
+    private RaycastHit hitInfo;
+    
+    [Title("Gun Data")]
+    public Transform tf_GunHolder;
+    public GunInventoryConfig m_GunInventoryConfig;
+
     private async UniTask OnEnable()
     {
         await UniTask.WaitUntil(() => LevelController.Instance != null);
+        
+        int curGunMode1 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+        var gunInvent = m_GunInventoryConfig.m_GunItem.Find(x => x.m_ID == curGunMode1);
+
+        if (gunInvent != null)
+            Transform gun = GameObject.Instantiate(gunInvent.go_UIPrefabInGame).GetComponent<Transform>();
+        
         m_CMCam.Follow = LevelController.Instance.tf_CamIntroFollower;
         m_CMCam.LookAt = LevelController.Instance.tf_CamIntroFollower;
         CameraOffset(new Vector3(30f, 30f, 30f), 0f);
@@ -59,16 +75,24 @@ public class CamController : Singleton<CamController>
 
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
             
+            
+            var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
+            
+            List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
+
+            if (rayHits.Count > 0)
+            {
+                hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).FirstOrDefault();
+                // tf_LookAimIK.position = hitInfo.point;
+                
+                tf_GunHolder.rotation = Quaternion.LookRotation(hitInfo.point - tf_GunHolder.position);
+            }
+
             if (m_ShootTime <= 0.1f)
             {
                 return;
             }
 
-            var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
-
-            RaycastHit hitInfo;
-            
-            List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
 
             if (rayHits.Any(x => x.transform.GetComponent<IDamageable>() != null))
             {
@@ -84,8 +108,7 @@ public class CamController : Singleton<CamController>
             // if (Physics.SphereCastAll(ray, 0.5f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             if(rayHits.Count > 0)
             {
-                hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).FirstOrDefault();
-                tf_LookAimIK.position = hitInfo.point;
+                // tf_GunHolder.LookAt(hitInfo.point);
                 if (m_ShootTime > 0.1f)
                 {
                     Collider col = hitInfo.collider;

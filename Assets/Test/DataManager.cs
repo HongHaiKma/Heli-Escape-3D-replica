@@ -18,6 +18,20 @@ public class DataManager : Singleton<DataManager>
 
     private void Start()
     {
+        if (!ES3.KeyExists(TagName.Inventory.m_CurrentGun_Mode1))
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, 0);
+        }
+        if (!ES3.KeyExists(TagName.Inventory.m_CurrentGun_Mode2))
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, 0);
+        }
+        if (!ES3.KeyExists(TagName.Inventory.m_CurrentGun_Mode3))
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, 0);
+        }
+
+
         if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode1))
         {
             m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1);

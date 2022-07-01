@@ -16,3 +16,4 @@ MonoBehaviour:
   m_ID: 0
   m_Name: Gun 1
   go_UIPrefabInventory: {fileID: 4749584735017879372, guid: 1bc45b4e5c06b664a9dbb46af4c593a0, type: 3}
+  go_UIPrefabInGame: {fileID: 528347550070709401, guid: 366456b4738ab854eab36acbe9ef1a0d, type: 3}
