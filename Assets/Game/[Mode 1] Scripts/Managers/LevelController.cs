@@ -11,6 +11,7 @@ public class LevelController : Singleton<LevelController>
 {
     public Transform tf_CamLookPoint;
     public Transform tf_PivotFollower;
+    public Transform tf_CamIntroFollower;
 
     public List<Hostage> m_HostageRun;
     public List<Hostage> m_HostageWait;
@@ -24,20 +25,29 @@ public class LevelController : Singleton<LevelController>
     public async UniTask OnEnable()
     {
         GameManager.Instance.m_GameMode = GameMode.MODE_1;
+        GameManager.Instance.m_GameLoop = GameLoop.Wait;
         
         Time.timeScale = 1;
         
         m_HostageRun.Clear();
         m_HostageWait.Clear();
         
-        if (UIIngame.Instance.img_Flash.gameObject.activeInHierarchy) 
-            Trasition();
-        else 
-            CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
+        tf_CamIntroFollower.DOKill();
+        tf_CamIntroFollower.DORotate(new Vector3(0f, -360f, 0f), 20f, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        
+        // if (UIIngame.Instance.img_Flash.gameObject.activeInHierarchy) 
+        //     Trasition();
+        // else 
+        //     CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
 
         await UniTask.WaitUntil(() => GUIManager.Instance != null);
         GUIManager.Instance.g_Loading.SetActive(false);
         GameManager.Instance.m_LevelLoaded = true;
+    }
+
+    public void PlayGame()
+    {
+        tf_CamIntroFollower.DOKill();
     }
 
     async UniTask Trasition()

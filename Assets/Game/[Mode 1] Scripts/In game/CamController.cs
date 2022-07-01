@@ -38,8 +38,9 @@ public class CamController : Singleton<CamController>
     private async UniTask OnEnable()
     {
         await UniTask.WaitUntil(() => LevelController.Instance != null);
-        m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
-        m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
+        m_CMCam.Follow = LevelController.Instance.tf_CamIntroFollower;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamIntroFollower;
+        CameraOffset(new Vector3(30f, 30f, 30f), 0f);
     }
 
     void Update()
@@ -143,6 +144,13 @@ public class CamController : Singleton<CamController>
         // m_CMCamOffset.m_Offset = new Vector3(5f, 5f, 5f);
         
         await UniTask.Delay(100);
+    }
+
+    public void PlayGame()
+    {
+        m_CMCam.Follow = LevelController.Instance.tf_CamIntroFollower;
+        m_CMCam.LookAt = LevelController.Instance.tf_CamIntroFollower;
+        CameraIntro(new Vector3(15f, 15f, -4.5f), 2.5f);
     }
 
     public async UniTask CameraIntro(Vector3 targetPosition, float duration)

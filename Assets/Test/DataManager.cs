@@ -20,22 +20,56 @@ public class DataManager : Singleton<DataManager>
     {
         if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode1))
         {
-            m_GunSaveData_Mode1.Value =
-                ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1);
-            // Helper.DebugLog("11111111111111111111");
+            m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1);
         }
         else
         {
-            m_GunSaveData_Mode1.Value =
-                ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
+            m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
             ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
-            // Helper.DebugLog("22222222222222222222");
         }
+        
+        if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode2))
+        {
+            m_GunSaveData_Mode2.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2);
+        }
+        else
+        {
+            m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
+            ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
+        }
+        
+        if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode3))
+        {
+            m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3);
+        }
+        else
+        {
+            m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
+            ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
+        }
+    }
+
+    public void SaveData()
+    {
+        ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
+        m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1);
+        
+        ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2, m_GunSaveData_Mode2.Value);
+        m_GunSaveData_Mode2.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2);
+        
+        ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
+        m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3);
     }
 
     [Button]
     public void Test()
     {
+        GunSaveData newSave = new GunSaveData();
+        newSave.m_ID = 1;
+        m_GunSaveData_Mode1.Value.Add(newSave);
+        
+        SaveData();
+        
         // List<GunInventoryItem> gunItems = m_GunConfig_Mode1.m_GunItem;
         // for (int i = 0; i < gunItems.Count; i++)
         // {
@@ -51,12 +85,12 @@ public class DataManager : Singleton<DataManager>
         //     }
         // }
 
-        int gunItemIndex = 2;
-
-        var gunSave = m_GunSaveData_Mode1.Value.Find(x => x.m_ID == gunItemIndex);
-
-        if (gunSave != null)
-            Helper.DebugLog("Gun ID: " + gunSave.m_ID);
+        // int gunItemIndex = 2;
+        //
+        // var gunSave = m_GunSaveData_Mode1.Value.Find(x => x.m_ID == gunItemIndex);
+        //
+        // if (gunSave != null)
+        //     Helper.DebugLog("Gun ID: " + gunSave.m_ID);
 
         // for (int i = 0; i < m_GunSaveData_Mode1.Value.Count; i++)
         // {

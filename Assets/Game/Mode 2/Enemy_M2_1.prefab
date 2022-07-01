@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tf_Owner: {fileID: 2446271729604268989}
-  isActive: 1
+  isActive: 0
   go_Warning: {fileID: 4389362529173665743}
   m_Anim: {fileID: 2446271729768637498}
   tf_FirePivot: {fileID: 1146237384492682060}

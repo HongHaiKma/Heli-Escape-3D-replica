@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970e4b31d5845774892ba44541134d14, type: 3}
   m_Name: Mode3_GunSaveData
   m_EditorClassIdentifier: 
-  _list: []
-  img_Gun: {fileID: 0}
+  _list:
+  - m_ID: 0

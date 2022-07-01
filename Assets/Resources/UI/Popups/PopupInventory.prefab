@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ID: 3
+  IsClosing: 0
   IsOpenPrevious: 0
   IsAutoRemove: 1
   IsAvoidBackKey: 0
@@ -337,7 +338,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 334.1238, y: 350.2842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3065374351173681224
 CanvasRenderer:

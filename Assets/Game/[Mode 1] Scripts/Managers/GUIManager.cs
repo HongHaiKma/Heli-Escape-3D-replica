@@ -217,14 +217,6 @@ public class GUIManager : MonoBehaviour
         }
     }
 
-    async UniTask SetupScene()
-    {
-        Helper.DebugLog("AAAAAAAAAAAA");
-        await UniTask.WaitUntil(() => LevelController.Instance != null);
-        CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
-        CamController.Instance.m_CMCam.LookAt = LevelController.Instance.tf_CamLookPoint;
-    }
-
     IEnumerator SetCamCharFirstTime()
     {
         yield return Yielders.EndOfFrame;

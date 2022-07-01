@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using RootMotion;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,21 +20,47 @@ public class LevelController2 : Singleton<LevelController2>
     private bool isSlow = false;
 
     public bool physicSimulate = true;
+    
+    public Transform tf_MainCamera;
 
-    private void OnEnable()
+
+    public Animator anim_IntroCam;
+
+    private async UniTask OnEnable()
     {
         // Physics.autoSimulation = false;
         GameManager.Instance.m_GameMode = GameMode.MODE_2;
+        GameManager.Instance.m_GameLoop = GameLoop.Wait;
+        
         isSlow = false;
         Time.timeScale = 1;
         m_CurFloor = 0;
+        
+        GUIManager.Instance.g_Loading.SetActive(false);
+
+        await UniTask.WaitUntil(() => GameManager.Instance.m_GameLoop == GameLoop.Play);
+        
+        anim_IntroCam.SetTrigger("Intro");
+
+        await UniTask.Delay(2000);
+        
+        CamController2.Instance.tf_HeliHolder.SetParent(tf_MainCamera);
+
         CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
         tf_PivotFollower.DOKill();
         tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
-        // await UniTask.WaitUntil(() => GUIManager.Instance != null);
-        GUIManager.Instance.g_Loading.SetActive(false);
         
+        
+        tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
+        
+        // tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() =>
+        // {
+        //     Time.timeScale = 1f;
+        //     CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
+        //     tf_PivotFollower.DOKill();
+        //     tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        // });
+
         EventManager1<bool>.AddListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
     }
 

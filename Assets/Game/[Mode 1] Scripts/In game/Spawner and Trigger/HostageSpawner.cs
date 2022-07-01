@@ -18,7 +18,8 @@ public class HostageSpawner : MonoBehaviour, ITriggerble
     private async UniTask OnEnable()
     {
         await UniTask.WaitUntil(() => GameManager.Instance.m_LevelLoaded == true);
-        
+        await UniTask.WaitUntil(() => GameManager.Instance.m_GameLoop == GameLoop.Play);
+
         m_Collider.enabled = isWaiting;
         
         List<Hostage> a = new List<Hostage>();

@@ -9,20 +9,17 @@ using UnityEngine.UI;
 
 public class UIIngame : Singleton2<UIIngame>
 {
-    // public Transform tf_LevelHolder;
     public Image img_Flash;
     public Image img_Crosshair;
     public Transform tf_MainCanvas;
     
-    // [Header("Combo")]
-    // public Animator m_AnimUI;
-    // public float m_ComboTime;
-    // public int m_Combo;
-    // public TextMeshProUGUI txt_Combo;
-    // public GameObject go_Combo;
+    public GameObject go_TapToPlay;
+
 
     public override void OnEnable()
     {
+        img_Crosshair.gameObject.SetActive(true);
+        go_TapToPlay.SetActive(true);
         // m_Combo = 0;
         // go_Combo.SetActive(false);
     }
@@ -33,6 +30,19 @@ public class UIIngame : Singleton2<UIIngame>
         // {
         //     m_ComboTime -= Time.deltaTime;
         // }
+    }
+    
+    public void PlayGame()
+    {
+        GameManager.Instance.m_GameLoop = GameLoop.Play;
+        go_TapToPlay.SetActive(false);
+        LevelController.Instance.PlayGame();
+        CamController.Instance.PlayGame();
+    }
+
+    public void OpenInventory()
+    {
+        PopupCaller.OpenPopup(UIID.POPUP_INVENTORY);
     }
 
     public void ResetLevel()

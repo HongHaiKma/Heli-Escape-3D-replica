@@ -12,7 +12,10 @@ public class CamController2 : Singleton<CamController2>
     public bool slow = false;
     public Transform tf_FirePivot;
     public int m_IgnoreLayer = ~(1 << 15 | 1 << 3);
+    
     public Transform tf_HeliHolder;
+    public Transform tf_MainCamera;
+    
     public CinemachineCameraOffset m_CMCamOffset;
     public CinemachineVirtualCamera m_CMCam;
     public bool IsZooming;
@@ -20,8 +23,15 @@ public class CamController2 : Singleton<CamController2>
     private void OnEnable()
     {
         // ResetLevel();
+        tf_HeliHolder.SetParent(null);
         Physics.autoSimulation = false;
         IsZooming = false;
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        Physics.autoSimulation = true;
     }
 
     public void ResetLevel()
@@ -81,7 +91,7 @@ public class CamController2 : Singleton<CamController2>
 
         Shooter2 shooter = LevelController2.Instance.m_Shooter;
 
-        if (Input.GetMouseButtonDown(0) && !shooter.IsState(P_DeathState2.Instance))
+        if (Input.GetMouseButtonDown(0) && !shooter.IsState(P_DeathState2.Instance) && GameManager.Instance.m_GameLoop == GameLoop.Play)
         {
             
             RaycastHit hitInfo;
@@ -172,6 +182,20 @@ public class CamController2 : Singleton<CamController2>
 
         m_CMCam.m_Lens.FieldOfView = fov;
         IsZooming = false;
+    }
+    
+    public async UniTask CameraOffset(Vector3 targetPosition, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = m_CMCamOffset.m_Offset;
+        while (time < duration)
+        {
+            m_CMCamOffset.m_Offset = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            time += Time.deltaTime;
+            await UniTask.Yield();
+        }
+
+        m_CMCamOffset.m_Offset = targetPosition;
     }
     
     public void Shoot(Vector3 _lookAt, Transform _tfEnemy)
