@@ -695,6 +695,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7383619571012766952}
     m_Modifications:
+    - target: {fileID: 4021143101019765684, guid: 20fb78481470cd6438861930e9f8eb91, type: 3}
+      propertyPath: follow
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4021143101019765684, guid: 20fb78481470cd6438861930e9f8eb91, type: 3}
+      propertyPath: editorSetPosition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4538876238721008012, guid: 20fb78481470cd6438861930e9f8eb91, type: 3}
       propertyPath: m_Icon
       value: 

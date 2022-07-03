@@ -256,7 +256,6 @@ MonoBehaviour:
   IsAutoRemove: 1
   IsAvoidBackKey: 0
   btn_Close: {fileID: 9121767947823529073}
-  m_GameMode: 1
   btn_NextLevel: {fileID: 0}
   numberOfCellsPerRow: 3
   scroller: {fileID: 3065374352011977330}
@@ -266,6 +265,7 @@ MonoBehaviour:
   m_GunConfig_Mode1: {fileID: 11400000, guid: 2caf984487003a44dba4126603b58f14, type: 2}
   m_GunConfig_Mode2: {fileID: 11400000, guid: 9f5d6dc2433ff61448deaa27ff8bd8e8, type: 2}
   m_GunConfig_Mode3: {fileID: 11400000, guid: 1a55c61dbceab31458c7b3779aaf4ba0, type: 2}
+  img_Fix3DObject: {fileID: 6959638658590785943}
 --- !u!1 &3065374350846141750
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,5 +835,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dce9b85c0662ee44fbf4a0aa94c69985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6959638658590785943 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5341268913694290556, guid: 231c0b4b26026014d9a952692147e455, type: 3}
+  m_PrefabInstance: {fileID: 3065374351838999531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b358c5d9bb9d44fbbdc279745e5e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

@@ -7,6 +7,7 @@ using EnhancedUI.EnhancedScroller;
 using EnhancedScrollerDemos.GridSelection;
 using Sirenix.OdinInspector;
 using UI.ThreeDimensional;
+using Cysharp.Threading.Tasks;
 
 public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
 {
@@ -25,6 +26,8 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
     public GunInventoryConfig m_GunConfig_Mode1;
     public GunInventoryConfig m_GunConfig_Mode2;
     public GunInventoryConfig m_GunConfig_Mode3;
+
+    public Image img_Fix3DObject;
 
     private void Awake()
     {
@@ -46,11 +49,23 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
     {
         base.OnEnable();
         LoadData();
+
+        int gunIndex = 0;
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            gunIndex = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+        }
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            gunIndex = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+        }
+        SelectGun(gunIndex);
     }
 
     public void SelectGun(int _index)
     {
         m_UIObject3D.ObjectPrefab = gunConfigs.m_GunItem[_index].go_UIPrefabInventory.transform;
+        img_Fix3DObject.color = Color.white;
     }
 
     #region EnhancedScroller Handlers
@@ -70,6 +85,8 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
                 _data[i].selectedChanged = null;
             }
         }
+
+        // await UniTask.WaitUntil(() => GameManager.Instance != null);
 
         // GunInventoryConfig gunConfigs = new GunInventoryConfig();
         if (GameManager.Instance.m_GameMode == GameMode.MODE_1)

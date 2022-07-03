@@ -12,6 +12,7 @@ public class PlayerShootingController : MonoBehaviour
     public BulletTimeController bulletTimeController;
     public Transform bulletSpawnTransform;
     public Scope scope;
+    public Camera m_CameraAim;
     public float shootingForce;
     public float minDistanceToPlayAnimation;
     public bool isScopeEnabled = false;
@@ -28,7 +29,7 @@ public class PlayerShootingController : MonoBehaviour
 
     private async UniTask Shoot()
     {
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
+        if (Physics.Raycast(m_CameraAim.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out RaycastHit hit))
         {
             IBodyPart IBodyPart = hit.collider.GetComponent<IBodyPart>();
             Vector3 direction = hit.point - bulletSpawnTransform.position;
@@ -46,7 +47,7 @@ public class PlayerShootingController : MonoBehaviour
                 {
                     IBodyPart.OnHit();
                 }
-            }       
+            }
         }
     }
 

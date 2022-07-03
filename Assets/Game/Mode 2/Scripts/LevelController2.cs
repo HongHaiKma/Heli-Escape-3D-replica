@@ -39,8 +39,24 @@ public class LevelController2 : Singleton<LevelController2>
 
         GUIManager.Instance.g_Loading.SetActive(false);
 
-        await UniTask.WaitUntil(() => GameManager.Instance.m_GameLoop == GameLoop.Play);
+        // tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() =>
+        // {
+        //     Time.timeScale = 1f;
+        //     CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
+        //     tf_PivotFollower.DOKill();
+        //     tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        // });
 
+        EventManager1<bool>.AddListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
+    }
+
+    public void PlayGame()
+    {
+        UniPlayGame();
+    }
+
+    public async UniTask UniPlayGame()
+    {
         anim_IntroCam.SetTrigger("Intro");
 
         await UniTask.Delay(2000);
@@ -53,16 +69,6 @@ public class LevelController2 : Singleton<LevelController2>
 
 
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
-
-        // tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() =>
-        // {
-        //     Time.timeScale = 1f;
-        //     CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
-        //     tf_PivotFollower.DOKill();
-        //     tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        // });
-
-        EventManager1<bool>.AddListener(GameEvent.SLOWMOTION, OnPivotFollowerSpeed);
     }
 
     private void OnDisable()

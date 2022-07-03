@@ -164,6 +164,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4648546546998353510}
     m_Modifications:
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4648546546998353513}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LevelController2, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496134156260864091, guid: 695ad49bd531c494ebf120bded566797, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6463123728210887024, guid: 695ad49bd531c494ebf120bded566797, type: 3}
       propertyPath: m_Pivot.x
       value: 0

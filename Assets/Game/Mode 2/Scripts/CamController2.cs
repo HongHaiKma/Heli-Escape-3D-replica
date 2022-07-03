@@ -225,10 +225,10 @@ public class CamController2 : Singleton<CamController2>
 
     public void Shoot(Vector3 _lookAt, Transform _tfEnemy)
     {
-        GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePivot.position);
+        GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
         go.transform.LookAt(_lookAt);
-        go.transform.parent = tf_FirePivot;
-        PrefabManager.Instance.SpawnBulletPool("Bullet1", tf_FirePivot.position).GetComponent<Bullet>().Fire(_lookAt, _tfEnemy);
+        go.transform.parent = m_GunIngame.tf_FirePoint;
+        PrefabManager.Instance.SpawnBulletPool("Bullet1", m_GunIngame.tf_FirePoint.position).GetComponent<Bullet>().Fire(_lookAt, _tfEnemy);
     }
 
     public bool IsSlow(Enemy2 _enemy)

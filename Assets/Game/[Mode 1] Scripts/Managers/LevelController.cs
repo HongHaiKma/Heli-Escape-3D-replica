@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using Dreamteck.Splines;
 
 public class LevelController : Singleton<LevelController>
 {
@@ -16,7 +17,7 @@ public class LevelController : Singleton<LevelController>
     public List<Hostage> m_HostageRun;
     public List<Hostage> m_HostageWait;
 
-    [Header("GameWin")] 
+    [Header("GameWin")]
     public Transform tf_CamPos;
     public Transform tf_CamLook;
     public Transform tf_CamFinish;
@@ -24,23 +25,22 @@ public class LevelController : Singleton<LevelController>
 
     public async UniTask OnEnable()
     {
-        GameManager.Instance.m_GameMode = GameMode.MODE_1;
-        GameManager.Instance.m_GameLoop = GameLoop.Wait;
-        
         Time.timeScale = 1;
-        
+
         m_HostageRun.Clear();
         m_HostageWait.Clear();
-        
+
         tf_CamIntroFollower.DOKill();
         tf_CamIntroFollower.DORotate(new Vector3(0f, -360f, 0f), 20f, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        
+
         // if (UIIngame.Instance.img_Flash.gameObject.activeInHierarchy) 
         //     Trasition();
         // else 
         //     CamController.Instance.CameraIntro(new Vector3(15f, 15f, -4.5f), 1.5f);
 
         await UniTask.WaitUntil(() => GUIManager.Instance != null);
+        GameManager.Instance.m_GameMode = GameMode.MODE_1;
+        GameManager.Instance.m_GameLoop = GameLoop.Wait;
         GUIManager.Instance.g_Loading.SetActive(false);
         GameManager.Instance.m_LevelLoaded = true;
     }
@@ -48,6 +48,7 @@ public class LevelController : Singleton<LevelController>
     public void PlayGame()
     {
         tf_CamIntroFollower.DOKill();
+        tf_PivotFollower.GetComponent<SplineFollower>().follow = true;
     }
 
     async UniTask Trasition()
@@ -67,7 +68,7 @@ public class LevelController : Singleton<LevelController>
     public Hostage FindNearestHostage(Vector3 _pos)
     {
         var target = m_HostageRun.OrderBy(x => (x.tf_Onwer.position - _pos).sqrMagnitude).First().GetComponent<Hostage>();
-        
+
         return target;
     }
 }
