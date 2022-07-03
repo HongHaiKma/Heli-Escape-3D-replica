@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Items:
   - {fileID: 261100483}
   m_Joint: {fileID: 1533627796}
+  rb_Owner: {fileID: 7739303376094352865}
 --- !u!1 &4448290818358176499
 GameObject:
   m_ObjectHideFlags: 0

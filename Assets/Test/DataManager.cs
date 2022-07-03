@@ -41,7 +41,7 @@ public class DataManager : Singleton<DataManager>
             m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
             ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
         }
-        
+
         if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode2))
         {
             m_GunSaveData_Mode2.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2);
@@ -51,7 +51,7 @@ public class DataManager : Singleton<DataManager>
             m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
             ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
         }
-        
+
         if (ES3.KeyExists(TagName.Inventory.m_GunSaveData_Mode3))
         {
             m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3);
@@ -67,10 +67,10 @@ public class DataManager : Singleton<DataManager>
     {
         ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSaveData_Mode1.Value);
         m_GunSaveData_Mode1.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1);
-        
+
         ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2, m_GunSaveData_Mode2.Value);
         m_GunSaveData_Mode2.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2);
-        
+
         ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSaveData_Mode3.Value);
         m_GunSaveData_Mode3.Value = ES3.Load<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3);
     }
@@ -81,9 +81,9 @@ public class DataManager : Singleton<DataManager>
         GunSaveData newSave = new GunSaveData();
         newSave.m_ID = 1;
         m_GunSaveData_Mode1.Value.Add(newSave);
-        
+
         SaveData();
-        
+
         // List<GunInventoryItem> gunItems = m_GunConfig_Mode1.m_GunItem;
         // for (int i = 0; i < gunItems.Count; i++)
         // {

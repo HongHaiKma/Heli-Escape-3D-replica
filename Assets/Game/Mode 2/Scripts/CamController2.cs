@@ -1,10 +1,11 @@
- using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class CamController2 : Singleton<CamController2>
 {
@@ -12,17 +13,27 @@ public class CamController2 : Singleton<CamController2>
     public bool slow = false;
     public Transform tf_FirePivot;
     public int m_IgnoreLayer = ~(1 << 15 | 1 << 3);
-    
+
     public Transform tf_HeliHolder;
     public Transform tf_MainCamera;
-    
+
     public CinemachineCameraOffset m_CMCamOffset;
     public CinemachineVirtualCamera m_CMCam;
     public bool IsZooming;
 
+    [Title("Gun")]
+    public Gun2 m_GunIngame;
+    public Transform tf_GunHolder;
+    public GunInventoryConfig m_GunInventoryConfig;
+
     private void OnEnable()
     {
         // ResetLevel();
+        int curGunMode2 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+        var gunInvent = m_GunInventoryConfig.m_GunItem.Find(x => x.m_ID == curGunMode2);
+
+        SpawnGun(gunInvent);
+
         tf_HeliHolder.SetParent(null);
         Physics.autoSimulation = false;
         IsZooming = false;
@@ -32,6 +43,20 @@ public class CamController2 : Singleton<CamController2>
     {
         base.OnDestroy();
         Physics.autoSimulation = true;
+    }
+
+    public void SpawnGun(GunInventoryItem _gunInvent)
+    {
+        if (m_GunIngame != null)
+        {
+            PrefabManager.Instance.DespawnPool(m_GunIngame.gameObject);
+            m_GunIngame = null;
+        }
+
+        Transform gun = GameObject.Instantiate(_gunInvent.go_UIPrefabInGame, tf_GunHolder).GetComponent<Transform>();
+        m_GunIngame = gun.GetComponent<Gun2>();
+        gun.localPosition = Vector3.zero;
+        gun.localRotation = new Quaternion(0f, 0f, 0f, 0f);
     }
 
     public void ResetLevel()
@@ -85,18 +110,18 @@ public class CamController2 : Singleton<CamController2>
             //     }
             // }
         }
-        
-        
+
+
         // RaycastHit hitInfo;
 
         Shooter2 shooter = LevelController2.Instance.m_Shooter;
 
         if (Input.GetMouseButtonDown(0) && !shooter.IsState(P_DeathState2.Instance) && GameManager.Instance.m_GameLoop == GameLoop.Play)
         {
-            
+
             RaycastHit hitInfo;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
+
             // List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
             List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer).ToList();
 
@@ -105,11 +130,11 @@ public class CamController2 : Singleton<CamController2>
                 rayHits.RemoveAll(x =>
                     (x.transform.GetComponent<IEnemy2>() == null));
             }
-            
+
             // if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity, m_IgnoreLayer))
             if (rayHits.Count > 0)
             {
-                
+
                 hitInfo = rayHits.OrderBy(x => (x.point - shooter.transform.position).sqrMagnitude).FirstOrDefault();
                 var col = hitInfo.collider.GetComponent<Collider>();
                 GameObject go = hitInfo.transform.gameObject;
@@ -132,9 +157,9 @@ public class CamController2 : Singleton<CamController2>
                     }
                 }
             }
-        } 
+        }
     }
-    
+
     public async UniTask CameraDeathAnimation(Vector3 targetPosition, float duration)
     {
         tf_HeliHolder.parent = null;
@@ -151,7 +176,7 @@ public class CamController2 : Singleton<CamController2>
         m_CMCamOffset.m_Offset = targetPosition;
         PopupCaller.OpenPopup(UIID.POPUP_LOSE);
     }
-    
+
     public async UniTask CameraZoomInAnimation(float fov, float duration)
     {
         IsZooming = true;
@@ -167,7 +192,7 @@ public class CamController2 : Singleton<CamController2>
         m_CMCam.m_Lens.FieldOfView = fov;
         IsZooming = false;
     }
-    
+
     public async UniTask CameraZoomOutAnimation(float fov, float duration)
     {
         IsZooming = true;
@@ -183,7 +208,7 @@ public class CamController2 : Singleton<CamController2>
         m_CMCam.m_Lens.FieldOfView = fov;
         IsZooming = false;
     }
-    
+
     public async UniTask CameraOffset(Vector3 targetPosition, float duration)
     {
         float time = 0;
@@ -197,7 +222,7 @@ public class CamController2 : Singleton<CamController2>
 
         m_CMCamOffset.m_Offset = targetPosition;
     }
-    
+
     public void Shoot(Vector3 _lookAt, Transform _tfEnemy)
     {
         GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", tf_FirePivot.position);
@@ -210,9 +235,9 @@ public class CamController2 : Singleton<CamController2>
     {
         Vector3 targetDir = transform.position - _enemy.tf_Owner.position;
         targetDir = targetDir.normalized;
-       
+
         float dot = Vector3.Dot(targetDir, _enemy.tf_Owner.forward);
-        float angle = Mathf.Acos( dot ) * Mathf.Rad2Deg;
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
         // if (angle < _enemy.m_DetectDegree && !_enemy.IsState(AimState.Instance))
         if (angle < _enemy.m_DetectDegree)

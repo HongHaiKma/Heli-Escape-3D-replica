@@ -20,7 +20,7 @@ public class LevelController2 : Singleton<LevelController2>
     private bool isSlow = false;
 
     public bool physicSimulate = true;
-    
+
     public Transform tf_MainCamera;
 
 
@@ -29,30 +29,31 @@ public class LevelController2 : Singleton<LevelController2>
     private async UniTask OnEnable()
     {
         // Physics.autoSimulation = false;
+        await UniTask.WaitUntil(() => GameManager.Instance != null);
         GameManager.Instance.m_GameMode = GameMode.MODE_2;
         GameManager.Instance.m_GameLoop = GameLoop.Wait;
-        
+
         isSlow = false;
         Time.timeScale = 1;
         m_CurFloor = 0;
-        
+
         GUIManager.Instance.g_Loading.SetActive(false);
 
         await UniTask.WaitUntil(() => GameManager.Instance.m_GameLoop == GameLoop.Play);
-        
+
         anim_IntroCam.SetTrigger("Intro");
 
         await UniTask.Delay(2000);
-        
+
         CamController2.Instance.tf_HeliHolder.SetParent(tf_MainCamera);
 
         CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);
         tf_PivotFollower.DOKill();
         tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
-        
-        
+
+
         tf_PivotFollower.position = tf_Pivots[m_CurFloor].position;
-        
+
         // tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() =>
         // {
         //     Time.timeScale = 1f;
@@ -85,8 +86,8 @@ public class LevelController2 : Singleton<LevelController2>
                 tf_PivotFollower.DORotate(new Vector3(0f, -360f, 0f), m_RotateSpeed, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
                 isSlow = true;
             }
-            
-            
+
+
             // Helper.DebugLog("AAAAAAAAAAAAA");
         }
         else
@@ -114,7 +115,7 @@ public class LevelController2 : Singleton<LevelController2>
                 PopupCaller.OpenPopup(UIID.POPUP_WIN);
                 return;
             }
-            
+
             tf_PivotFollower.DOMove(tf_Pivots[m_CurFloor].position, 2f).OnStart(() => Time.timeScale = 1f).OnStart(() =>
             {
                 CamController2.Instance.ActivateFloor(m_Floors[m_CurFloor]);

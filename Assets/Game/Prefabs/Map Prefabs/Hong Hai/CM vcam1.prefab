@@ -98,6 +98,8 @@ MonoBehaviour:
   m_ShootTime: 0.4
   m_IgnoreLayer: -514
   m_TrackPad: {fileID: 0}
+  tf_GunHolder: {fileID: 0}
+  m_GunInventoryConfig: {fileID: 11400000, guid: 2caf984487003a44dba4126603b58f14, type: 2}
 --- !u!114 &7283987589590960185
 MonoBehaviour:
   m_ObjectHideFlags: 0

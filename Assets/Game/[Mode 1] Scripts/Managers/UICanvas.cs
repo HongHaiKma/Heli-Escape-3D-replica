@@ -94,9 +94,7 @@ public class UICanvas : MonoBehaviour
 
     public virtual void OnClose()
     {
-        Helper.DebugLog("Start closeeeeeeeeee");
         if (IsClosing) return;
-        Helper.DebugLog("OnCloseeeee");
         GUIManager.Instance.HideUIPopup(this, IsAutoRemove, IsOpenPrevious);
         IsClosing = true;
     }
@@ -109,12 +107,12 @@ public class UICanvas : MonoBehaviour
     IEnumerator OnWaitingRegister()
     {
         yield return Yielders.EndOfFrame;
-        
+
         // if (GUIManager.Instance != null)
         // {
-            GUIManager.Instance.RegisterUI(this);
+        GUIManager.Instance.RegisterUI(this);
         // }
-        
+
         gameObject.SetActive(false);
     }
 

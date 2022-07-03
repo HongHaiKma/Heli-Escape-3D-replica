@@ -9,118 +9,136 @@ using UnityEngine.Serialization;
 public class UIGunInventoryItemRow : MonoBehaviour
 {
     public int m_ID;
-        public Image img_Gun;
-        public Image selectionPanel;
+    public Image img_Gun;
+    public Image selectionPanel;
 
-        /// <summary>
-        /// These are the colors for the selection of the cells
-        /// </summary>
-        // public Color selectedColor;
-        // public Color unSelectedColor;
+    /// <summary>
+    /// These are the colors for the selection of the cells
+    /// </summary>
+    // public Color selectedColor;
+    // public Color unSelectedColor;
 
-        /// <summary>
-        /// Public reference to the index of the data
-        /// </summary>
-        public int DataIndex { get; private set; }
+    /// <summary>
+    /// Public reference to the index of the data
+    /// </summary>
+    public int DataIndex { get; private set; }
 
-        /// <summary>
-        /// The handler to call when this cell's button traps a click event
-        /// </summary>
-        public SelectedDelegate selected;
+    /// <summary>
+    /// The handler to call when this cell's button traps a click event
+    /// </summary>
+    public SelectedDelegate selected;
 
-        /// <summary>
-        /// Reference to the underlying data driving this view
-        /// </summary>
-        private UIGunInventoryData _data;
+    /// <summary>
+    /// Reference to the underlying data driving this view
+    /// </summary>
+    private UIGunInventoryData _data;
 
-        /// <summary>
-        /// This is called if the cell is destroyed. The EnhancedScroller will
-        /// not call this since it uses recycling, but we include it in case 
-        /// the user decides to destroy the cell anyway
-        /// </summary>
-        void OnDestroy()
+    /// <summary>
+    /// This is called if the cell is destroyed. The EnhancedScroller will
+    /// not call this since it uses recycling, but we include it in case 
+    /// the user decides to destroy the cell anyway
+    /// </summary>
+    void OnDestroy()
+    {
+        if (_data != null)
         {
-            if (_data != null)
-            {
-                // remove the handler from the data so 
-                // that any changes to the data won't try
-                // to call this destroyed view's function
-                _data.selectedChanged -= SelectedChanged;
-            }
+            // remove the handler from the data so 
+            // that any changes to the data won't try
+            // to call this destroyed view's function
+            _data.selectedChanged -= SelectedChanged;
+        }
+    }
+
+    /// <summary>
+    /// This function just takes the Demo data and displays it
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetData(int dataIndex, UIGunInventoryData data, SelectedDelegate selected)
+    {
+        // set the selected delegate
+        this.selected = selected;
+
+        // this cell was outside the range of the data, so we disable the img_Gun.
+        // Note: We could have disable the cell gameobject instead of a child img_Gun,
+        // but that can cause problems if you are trying to get components (disabled objects are ignored).
+        img_Gun.gameObject.SetActive(data != null);
+
+        if (data != null)
+        {
+            // set the text if the cell is inside the data range
+            m_ID = data.m_ID;
+            img_Gun.sprite = data.sprite_Gun;
         }
 
-        /// <summary>
-        /// This function just takes the Demo data and displays it
-        /// </summary>
-        /// <param name="data"></param>
-        public void SetData(int dataIndex, UIGunInventoryData data, SelectedDelegate selected)
+        // if there was previous data assigned to this cell view,
+        // we need to remove the handler for the selection change
+        if (_data != null)
         {
-            // set the selected delegate
-            this.selected = selected;
-
-            // this cell was outside the range of the data, so we disable the img_Gun.
-            // Note: We could have disable the cell gameobject instead of a child img_Gun,
-            // but that can cause problems if you are trying to get components (disabled objects are ignored).
-            img_Gun.gameObject.SetActive(data != null);
-
-            if (data != null)
-            {
-                // set the text if the cell is inside the data range
-                m_ID = data.m_ID;
-                img_Gun.sprite = data.sprite_Gun;
-            }
-
-            // if there was previous data assigned to this cell view,
-            // we need to remove the handler for the selection change
-            if (_data != null)
-            {
-                _data.selectedChanged -= SelectedChanged;
-            }
-
-            // link the data to the cell view
-            DataIndex = dataIndex;
-            _data = data;
-
-            if (data != null)
-            {
-                // set up a handler so that when the data changes
-                // the cell view will update accordingly. We only
-                // want a single handler for this cell view, so 
-                // first we remove any previous handlers before
-                // adding the new one
-                _data.selectedChanged -= SelectedChanged;
-                _data.selectedChanged += SelectedChanged;
-
-                // update the selection state UI
-                SelectedChanged(data.Selected);
-            }
+            _data.selectedChanged -= SelectedChanged;
         }
 
-        /// <summary>
-        /// This function changes the UI state when the item is 
-        /// selected or unselected.
-        /// </summary>
-        /// <param name="selected">The selection state of the cell</param>
-        private void SelectedChanged(bool selected)
+        // link the data to the cell view
+        DataIndex = dataIndex;
+        _data = data;
+
+        if (data != null)
         {
-            // selectionPanel.color = (selected ? selectedColor : unSelectedColor);
+            // set up a handler so that when the data changes
+            // the cell view will update accordingly. We only
+            // want a single handler for this cell view, so 
+            // first we remove any previous handlers before
+            // adding the new one
+            _data.selectedChanged -= SelectedChanged;
+            _data.selectedChanged += SelectedChanged;
+
+            // update the selection state UI
+            SelectedChanged(data.Selected);
+        }
+    }
+
+    /// <summary>
+    /// This function changes the UI state when the item is 
+    /// selected or unselected.
+    /// </summary>
+    /// <param name="selected">The selection state of the cell</param>
+    private void SelectedChanged(bool selected)
+    {
+        // selectionPanel.color = (selected ? selectedColor : unSelectedColor);
+    }
+
+    /// <summary>
+    /// This function is called by the cell's button click event
+    /// </summary>
+    public void OnSelected()
+    {
+        // if a handler exists for this cell, then
+        // call it.
+
+        // if (selected != null)
+        // {
+        //     selected(this);
+        //     Helper.DebugLog("AAAAAAAAAAAA");
+        // }
+
+        PopupInventory popInventory = PopupCaller.GetPopup(UIID.POPUP_INVENTORY) as PopupInventory;
+        popInventory.SelectGun(m_ID);
+
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_ID);
+            int curGunMode1 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+            GunInventoryConfig gunConfig = PopupCaller.GetPopup(UIID.POPUP_INVENTORY).GetComponent<PopupInventory>().gunConfigs;
+            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode1);
+            CamController.Instance.SpawnGun(gunInvent);
+        }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, m_ID);
+            int curGunMode2 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+            GunInventoryConfig gunConfig = PopupCaller.GetPopup(UIID.POPUP_INVENTORY).GetComponent<PopupInventory>().gunConfigs;
+            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode2);
+            CamController2.Instance.SpawnGun(gunInvent);
         }
 
-        /// <summary>
-        /// This function is called by the cell's button click event
-        /// </summary>
-        public void OnSelected()
-        {
-            // if a handler exists for this cell, then
-            // call it.
-            
-            // if (selected != null)
-            // {
-            //     selected(this);
-            //     Helper.DebugLog("AAAAAAAAAAAA");
-            // }
-            
-            PopupInventory popInventory = PopupCaller.GetPopup(UIID.POPUP_INVENTORY) as PopupInventory;
-            popInventory.SelectGun(m_ID);
-        }
+    }
 }

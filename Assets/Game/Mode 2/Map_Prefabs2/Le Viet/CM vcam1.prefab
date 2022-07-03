@@ -185,6 +185,9 @@ MonoBehaviour:
   tf_FirePivot: {fileID: 0}
   m_IgnoreLayer: -32769
   tf_HeliHolder: {fileID: 0}
+  tf_MainCamera: {fileID: 0}
   m_CMCamOffset: {fileID: 1921772691929168320}
   m_CMCam: {fileID: 1921772691929168335}
   IsZooming: 0
+  tf_GunHolder: {fileID: 0}
+  m_GunInventoryConfig: {fileID: 11400000, guid: 9f5d6dc2433ff61448deaa27ff8bd8e8, type: 2}

@@ -1,25 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sirenix.OdinInspector;
 
 public class UIIngame : Singleton2<UIIngame>
 {
     public Image img_Flash;
     public Image img_Crosshair;
     public Transform tf_MainCanvas;
-    
+
+    [Title("UI")]
     public GameObject go_TapToPlay;
+    public GameObject go_Shop;
 
 
     public override void OnEnable()
     {
         img_Crosshair.gameObject.SetActive(true);
         go_TapToPlay.SetActive(true);
+        go_Shop.SetActive(true);
         // m_Combo = 0;
         // go_Combo.SetActive(false);
     }
@@ -31,11 +30,12 @@ public class UIIngame : Singleton2<UIIngame>
         //     m_ComboTime -= Time.deltaTime;
         // }
     }
-    
+
     public void PlayGame()
     {
         GameManager.Instance.m_GameLoop = GameLoop.Play;
         go_TapToPlay.SetActive(false);
+        go_Shop.SetActive(false);
         LevelController.Instance.PlayGame();
         CamController.Instance.PlayGame();
     }
@@ -63,7 +63,7 @@ public class UIIngame : Singleton2<UIIngame>
         // await UniTask.Delay(10);
         // m_AnimUI.SetTrigger("Combo");
     }
-    
+
     // private void Update()
     // {
     //     if (Input.GetKeyDown(KeyCode.S))

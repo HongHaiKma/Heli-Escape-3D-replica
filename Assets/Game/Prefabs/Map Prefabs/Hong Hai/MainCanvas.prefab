@@ -355,6 +355,7 @@ MonoBehaviour:
   img_Crosshair: {fileID: 3005611909395952507}
   tf_MainCanvas: {fileID: 3005611907801998408}
   go_TapToPlay: {fileID: 7859953384401281702}
+  go_Shop: {fileID: 6319717725435151214}
 --- !u!1 &3005611908545225313
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5022871646870291300
 RectTransform:
   m_ObjectHideFlags: 0
@@ -847,6 +848,10 @@ PrefabInstance:
     - target: {fileID: 6325489281914741128, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
       propertyPath: m_Name
       value: TapToPlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 6325489281914741128, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7830558115541643513, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
       propertyPath: m_Pivot.x
