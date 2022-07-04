@@ -10,7 +10,8 @@ public class UIGunInventoryItemRow : MonoBehaviour
 {
     public int m_ID;
     public Image img_Gun;
-    public Image selectionPanel;
+    public Image img_BG;
+    // public Image selectionPanel;
 
     /// <summary>
     /// These are the colors for the selection of the cells
@@ -38,8 +39,20 @@ public class UIGunInventoryItemRow : MonoBehaviour
     /// not call this since it uses recycling, but we include it in case 
     /// the user decides to destroy the cell anyway
     /// </summary>
+
+    private void OnEnable()
+    {
+        EventManager1<int>.AddListener(GameEvent.SELECT_GUN, OnSelectGun);
+    }
+
+    private void OnDisable()
+    {
+        EventManager1<int>.RemoveListener(GameEvent.SELECT_GUN, OnSelectGun);
+    }
+
     void OnDestroy()
     {
+        EventManager1<int>.RemoveListener(GameEvent.SELECT_GUN, OnSelectGun);
         if (_data != null)
         {
             // remove the handler from the data so 
@@ -62,6 +75,7 @@ public class UIGunInventoryItemRow : MonoBehaviour
         // Note: We could have disable the cell gameobject instead of a child img_Gun,
         // but that can cause problems if you are trying to get components (disabled objects are ignored).
         img_Gun.gameObject.SetActive(data != null);
+        img_BG.gameObject.SetActive(data != null);
 
         if (data != null)
         {
@@ -96,6 +110,24 @@ public class UIGunInventoryItemRow : MonoBehaviour
         }
     }
 
+    public void OnSelectGun(int _id)
+    {
+        bool selected = false;
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            selected = (m_ID == ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1));
+        }
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            selected = (m_ID == ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2));
+        }
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            selected = (m_ID == ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3));
+        }
+        img_BG.color = (selected ? Helper.ConvertColor(new Color(47f, 255f, 53f, 255f)) : Helper.ConvertColor(new Color(77f, 77f, 77f, 255f)));
+    }
+
     /// <summary>
     /// This function changes the UI state when the item is 
     /// selected or unselected.
@@ -104,6 +136,12 @@ public class UIGunInventoryItemRow : MonoBehaviour
     private void SelectedChanged(bool selected)
     {
         // selectionPanel.color = (selected ? selectedColor : unSelectedColor);
+        // Helper.DebugLog("GGGGGGGGGGG");
+        // if (true)
+        // {
+        //     Helper.DebugLog("GGGGGGGGGGG");
+        // }
+        // img_BG.color = (selected ? Helper.ConvertColor(new Color(77f, 77f, 77f, 255f)) : Helper.ConvertColor(new Color(47f, 255f, 53f, 255f)));
     }
 
     /// <summary>
@@ -123,6 +161,9 @@ public class UIGunInventoryItemRow : MonoBehaviour
         PopupInventory popInventory = PopupCaller.GetPopup(UIID.POPUP_INVENTORY) as PopupInventory;
         popInventory.SelectGun(m_ID);
 
+        Helper.DebugLog("ID: " + m_ID);
+        Helper.DebugLog("Current Gun: " + ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1));
+
         if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
         {
             ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_ID);
@@ -139,6 +180,31 @@ public class UIGunInventoryItemRow : MonoBehaviour
             var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode2);
             CamController2.Instance.SpawnGun(gunInvent);
         }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, m_ID);
+            int curGunMode3 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
+            GunInventoryConfig gunConfig = popInventory.gunConfigs;
+            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode3);
+            PlayerShootingController.Instance.SpawnGun(gunInvent);
+        }
 
+        UpdateUI();
+    }
+
+    public void UpdateUI()
+    {
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, m_ID);
+        }
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, m_ID);
+        }
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, m_ID);
+        }
     }
 }

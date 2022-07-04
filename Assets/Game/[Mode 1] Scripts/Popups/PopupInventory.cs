@@ -29,6 +29,11 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
 
     public Image img_Fix3DObject;
 
+    [Title("Buttons")]
+    public GameObject go_BtnBuyGold;
+    public GameObject go_BtnBuyAds;
+    public GameObject go_BtnEquip;
+
     private void Awake()
     {
         m_ID = UIID.POPUP_INVENTORY;
@@ -60,6 +65,21 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
             gunIndex = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
         }
         SelectGun(gunIndex);
+    }
+
+    public void BuyGold()
+    {
+        go_BtnBuyGold.SetActive(false);
+    }
+
+    public void BuyAds()
+    {
+        go_BtnBuyAds.SetActive(false);
+    }
+
+    public void Equip()
+    {
+        go_BtnEquip.SetActive(false);
     }
 
     public void SelectGun(int _index)
@@ -111,12 +131,29 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
             _data.Add(new UIGunInventoryData()
             {
                 m_ID = gunConfigs.m_GunItem[i].m_ID,
-                sprite_Gun = gunConfigs.m_GunItem[i].img_Gun
+                sprite_Gun = gunConfigs.m_GunItem[i].img_Gun,
             });
         }
 
         // tell the scroller to reload now that we have the data
         scroller.ReloadData();
+
+        for (var i = 0; i < _data.Count; i++)
+        {
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+            {
+                // EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1));
+                EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, _data[i].m_ID);
+            }
+            else if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+            {
+                EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, _data[i].m_ID);
+            }
+            else if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+            {
+                EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, _data[i].m_ID);
+            }
+        }
     }
 
     [Button]

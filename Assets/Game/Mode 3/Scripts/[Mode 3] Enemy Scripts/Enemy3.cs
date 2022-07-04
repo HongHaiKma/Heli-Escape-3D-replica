@@ -21,7 +21,7 @@ public class Enemy3 : MonoBehaviour
 
     [Title("Attributes")]
     public float m_Health;
-    
+
     public Animator m_Anim;
     private RagdollController ragdollController;
     public UIEnemy3Bar m_UIHealth;
@@ -35,12 +35,12 @@ public class Enemy3 : MonoBehaviour
     private StateMachine<Enemy3> m_StateMachine;
     public EnemyState3 m_EnemyState;
     public Hostage3 m_HostageTarget;
-    
+
     [Title("Attack Area")]
     public Vector3 m_ExplosionRadius;
     public Transform tf_ExploPivot;
 
-    [Title("AI")] 
+    [Title("AI")]
     public AIPath m_AI;
 
     private void Awake()
@@ -53,7 +53,7 @@ public class Enemy3 : MonoBehaviour
         // m_Health = 3f;
         m_Anim.speed = m_AnimSpd;
         m_StateMachine = new StateMachine<Enemy3>(this);
-        m_StateMachine.Init(ChaseState3.Instance);
+        m_StateMachine.Init(IdleState3.Instance);
 
         m_LegCut = LegCut.NONE;
         m_ArmCut = ArmCut.NONE;
@@ -72,7 +72,7 @@ public class Enemy3 : MonoBehaviour
     {
         m_AI.destination = m_HostageTarget.tf_Owner.position;
     }
-    
+
     public virtual void OnIdleEnter()
     {
         m_EnemyState = EnemyState3.Idle;
@@ -84,14 +84,17 @@ public class Enemy3 : MonoBehaviour
 
     public virtual void OnIdleExecute()
     {
-        
+        if (GameManager.Instance.m_GameLoop == GameLoop.Play)
+        {
+            ChangeState(ChaseState3.Instance);
+        }
     }
-    
+
     public virtual void OnIdleExit()
     {
-        
+
     }
-    
+
     public virtual void OnChaseEnter()
     {
         m_EnemyState = EnemyState3.Chase;
@@ -103,7 +106,7 @@ public class Enemy3 : MonoBehaviour
                 m_Anim.SetTrigger(animChase);
             else if (m_ArmCut == ArmCut.LEFT)
                 m_Anim.SetTrigger(animChaseRArm);
-            else if (m_ArmCut == ArmCut.RIGHT) 
+            else if (m_ArmCut == ArmCut.RIGHT)
                 m_Anim.SetTrigger(animChaseLArm);
         }
         else if (m_LegCut == LegCut.LEFT)
@@ -122,11 +125,11 @@ public class Enemy3 : MonoBehaviour
             List<Hostage3> a = LevelController3.Instance.m_Hostages;
             m_HostageTarget = a[UnityEngine.Random.Range(0, a.Count)];
         }
-        
+
         // m_AIPath.destination = GameManager.Instance.m_Hostage.tf_Owner.position;
         // m_AIPath.
     }
-    
+
     public virtual void OnChaseExecute()
     {
         if (m_HostageTarget == null)
@@ -143,29 +146,29 @@ public class Enemy3 : MonoBehaviour
             Helper.DebugLog("Chase to Attack");
         }
     }
-    
+
     public virtual void OnChaseExit()
     {
-        
+
     }
-    
+
     public virtual void OnAttackEnter()
     {
         m_EnemyState = EnemyState3.Attack;
-        
+
         // m_AIPath.canMove = false;
         if (m_LegCut == LegCut.RIGHT)
         {
             m_Anim.ResetTrigger(animAttack2);
             m_Anim.SetTrigger(animAttack2);
-            
+
             Helper.DebugLog("Attack Left");
         }
         else
         {
             m_Anim.ResetTrigger(animAttack);
             m_Anim.SetTrigger(animAttack);
-           
+
             Helper.DebugLog("Attack Right");
         }
 
@@ -179,14 +182,14 @@ public class Enemy3 : MonoBehaviour
         // m_Anim.SetTrigger(animAttack);
         ChangeState(AttackState3.Instance);
     }
-    
+
     [Button]
     public void TestOverLap()
     {
         Collider[] colliders = Physics.OverlapBox(tf_ExploPivot.position, m_ExplosionRadius);
-        
+
         Helper.DebugLog("Count: " + colliders.Length);
-        
+
         foreach (Collider hit in colliders)
         {
             Helper.DebugLog(hit.name);
@@ -203,7 +206,7 @@ public class Enemy3 : MonoBehaviour
     public void Attack()
     {
         Collider[] colliders = Physics.OverlapBox(tf_ExploPivot.position, m_ExplosionRadius);
-        
+
         foreach (Collider hit in colliders)
         {
             IDamageable hos = hit.GetComponent<IDamageable>();
@@ -223,37 +226,37 @@ public class Enemy3 : MonoBehaviour
 
     public virtual void OnAttackExecute()
     {
-        
+
     }
-    
+
     public virtual void OnAttackExit()
     {
-        
+
     }
-    
+
     public virtual void OnFallEnter()
     {
         m_EnemyState = EnemyState3.Fall;
         // m_AIPath.canMove = false;
         if (m_FallBack)
             m_Anim.SetTrigger(animFallBack);
-        else 
+        else
             m_Anim.SetTrigger(animFall);
-        
+
         // m_AIPath.destination = GameManager.Instance.m_Hostage.tf_Owner.position;
         // m_AIPath.
     }
-    
+
     public virtual void OnFallExecute()
     {
-        
+
     }
-    
+
     public virtual void OnFallExit()
     {
-        
+
     }
-    
+
     public void OnDeathEnter()
     {
         m_EnemyState = EnemyState3.Death;
@@ -265,7 +268,7 @@ public class Enemy3 : MonoBehaviour
         // m_AIPath.canMove = false;
         // go_RaySensor.SetActive(false);
     }
-    
+
     public virtual void OnDeathExecute()
     {
         // f_TimeDeath += Time.deltaTime;
@@ -275,17 +278,17 @@ public class Enemy3 : MonoBehaviour
         //     PrefabManager.Instance.DespawnPool(gameObject);
         // }
     }
-    
+
     public virtual void OnDeathExit()
     {
-        
+
     }
-    
+
     public bool IsState(IState<Enemy3> state)
     {
         return m_StateMachine.curState == state;
     }
-    
+
     public void ChangeState(IState<Enemy3> state)
     {
         m_StateMachine.ChangeState(state);
@@ -301,7 +304,7 @@ public class Enemy3 : MonoBehaviour
         Gizmos.DrawWireCube(tf_ExploPivot.position, m_ExplosionRadius);
     }
 #endif
-    
+
     // public void OnHit(Vector3 shootDirection, Rigidbody shotRB, bool isDie)
 
     // public void OnEnemyShot(Vector3 shootDirection, Rigidbody shotRB, bool isDie)

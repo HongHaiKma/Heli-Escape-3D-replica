@@ -1,0 +1,197 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &733906764849786161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 733906764849786163}
+  - component: {fileID: 733906764849786162}
+  - component: {fileID: 733906764849786164}
+  m_Layer: 0
+  m_Name: Bullet Time Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &733906764849786163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906764849786161}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2331543, y: -9.579338, z: 6.9035773}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 733906765027633607}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &733906764849786162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906764849786161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a11e1a954e12f054a8e403d6c9408065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  cameraBrain: {fileID: 733906765027633603}
+  bulletTackingSetup:
+  - avaliableTrack: {fileID: 3702870032219790636, guid: 8b5b47d7920629e4b88059883bd7bd30, type: 3}
+    avaliableDolly: {fileID: 5075031780560834203, guid: b93b256ad19baea43a02f68dffc6fb5e, type: 3}
+    minDistance: 60
+    maxDistance: 200
+  - avaliableTrack: {fileID: 3702870032219790636, guid: 8b5b47d7920629e4b88059883bd7bd30, type: 3}
+    avaliableDolly: {fileID: 5075031780560834203, guid: b93b256ad19baea43a02f68dffc6fb5e, type: 3}
+    minDistance: 0
+    maxDistance: 60
+  enemyTrackingSetup:
+  - avaliableTrack: {fileID: -1952291087265292807, guid: 0c4ef5654a9ae7541a25f3aa76414126, type: 3}
+    avaliableDolly: {fileID: 5075031780560834203, guid: 70e3165dac0f1be4082a92f2e64864ec, type: 3}
+  - avaliableTrack: {fileID: -1952291087265292807, guid: 0c4ef5654a9ae7541a25f3aa76414126, type: 3}
+    avaliableDolly: {fileID: 5075031780560834203, guid: 70e3165dac0f1be4082a92f2e64864ec, type: 3}
+  shootingController: {fileID: 0}
+  distanceToChangeCamera: 0.8
+  finishingCameraDuration: 4.5
+  timeScaleController: {fileID: 733906764849786164}
+  trackInstance: {fileID: 0}
+  dollyInstance: {fileID: 0}
+  activeBullet3: {fileID: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  clearTracks: []
+  isLastCameraActive: 0
+--- !u!114 &733906764849786164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906764849786161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bfe05e41dddeab4199a7d2a16a5c521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowTimeScale: 1
+--- !u!1 &733906765027633602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 733906765027633607}
+  - component: {fileID: 733906765027633606}
+  - component: {fileID: 733906765027633603}
+  m_Layer: 0
+  m_Name: Bullet Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &733906765027633607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906765027633602}
+  m_LocalRotation: {x: 2.508887e-18, y: -0.2886134, z: 1.0043304e-18, w: 0.95744574}
+  m_LocalPosition: {x: -3.9351544, y: 2.559337, z: -0.35087657}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 733906764849786163}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 10.8, y: 47.545002, z: -0.001}
+--- !u!20 &733906765027633606
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906765027633602}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!114 &733906765027633603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733906765027633602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []

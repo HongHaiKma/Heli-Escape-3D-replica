@@ -5,19 +5,21 @@ using UnityEngine;
 public class TestCallFunction : MonoBehaviour
 {
     public float m_Health;
-    
+    public List<Transform> tf_Transform;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            TestFunc();
+        }
+    }
+
     public void TestFunc()
     {
-        Helper.DebugLog("AAAAAAAAAAAA");
-        // transform.position = new Vector3(0f, 0f, 0f);
-        // transform.position = new Vector3(1f, 0f, 0f);
-        // transform.position = new Vector3(0f, 4f, 0f);
-        // transform.position = new Vector3(0f, 2f, 0f);
-        // transform.position = new Vector3(2f, 0f, 0f);
-        // transform.position = new Vector3(0f, 0f, 5f);
-        // transform.position = new Vector3(0f, 5f, 0f);
-        // transform.position = new Vector3(0f, 3f, 0f);
-        // transform.position = new Vector3(0f, 0f, 6f);
-        // transform.position = new Vector3(0f, 0f, 6f);
+        for (int i = 0; i < tf_Transform.Count; i++)
+        {
+            Helper.DebugLog("Position: " + tf_Transform[i].position);
+        }
     }
 }

@@ -3918,7 +3918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1793307393701499387, guid: 2f37bed402a3fa74594562fb447c7f67, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793307393701499391, guid: 2f37bed402a3fa74594562fb447c7f67, type: 3}
       propertyPath: m_RootOrder
@@ -60928,6 +60928,10 @@ PrefabInstance:
     - target: {fileID: 6706375412651070182, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
       propertyPath: m_BlockingMask.m_Bits
       value: 3831
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706375412651070201, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7051037975859202865, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
       propertyPath: alwaysDraw

@@ -491,10 +491,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3005611907801998404, guid: e0bbcc61dbd166c409809302a96119b0, type: 3}
-      propertyPath: m_TagString
-      value: MainCamera
-      objectReference: {fileID: 0}
     - target: {fileID: 3005611907801998408, guid: e0bbcc61dbd166c409809302a96119b0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -577,10 +573,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3005611907801998408, guid: e0bbcc61dbd166c409809302a96119b0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3005611909395952505, guid: e0bbcc61dbd166c409809302a96119b0, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

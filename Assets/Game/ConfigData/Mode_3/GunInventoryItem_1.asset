@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1691f07850f7af54897426047a3f6357, type: 3}
   m_Name: GunInventoryItem_1
   m_EditorClassIdentifier: 
+  img_Gun: {fileID: 21300000, guid: 152d4b9974251d24a859d182debe3c4e, type: 3}
   m_ID: 0
   m_Name: Gun_1
-  img_Gun: {fileID: 21300000, guid: 152d4b9974251d24a859d182debe3c4e, type: 3}
   go_UIPrefabInventory: {fileID: 6776872768575389391, guid: f7dde4a77d178a0489a2ba9c15eb4cd6, type: 3}
+  go_UIPrefabInGame: {fileID: 4013838380866146931, guid: 52cc8c2f298ac4947914b46874ba4c59, type: 3}

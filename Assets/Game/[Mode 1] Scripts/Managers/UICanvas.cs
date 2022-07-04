@@ -31,7 +31,6 @@ public class UICanvas : MonoBehaviour
     {
         if (btn_Close != null)
         {
-            Helper.DebugLog("On Starrr");
             GUIManager.Instance.AddClickEvent(btn_Close, OnClose);
         }
     }

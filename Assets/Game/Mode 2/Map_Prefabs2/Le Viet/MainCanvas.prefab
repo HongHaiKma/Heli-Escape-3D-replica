@@ -193,7 +193,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 3831
+    m_Bits: 4194295
 --- !u!114 &6463123728210887025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,9 +560,9 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 1
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &7122327153345004339
 MonoBehaviour:
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4087
+    m_Bits: 4194295
 --- !u!225 &7122327153345004338
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -741,6 +741,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7122327151850145546}
     m_Modifications:
+    - target: {fileID: 3131228650158936392, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.35584742
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131228650158936392, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.07255275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131228650158936392, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2.3266602
+      objectReference: {fileID: 0}
+    - target: {fileID: 3131228650158936392, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4648690834372257287, guid: 735a7fdfabb0a6748b63306f6e642326, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
