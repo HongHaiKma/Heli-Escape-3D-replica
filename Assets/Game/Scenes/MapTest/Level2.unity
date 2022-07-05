@@ -525,63 +525,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7825864423705499359, guid: 89f4e9ed3ca80db4d8d93f63e25eccd3, type: 3}
   m_PrefabInstance: {fileID: 525395171}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &569439252
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2003715847}
-    m_Modifications:
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 12.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.0542264
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0000036954875
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -89.99968
-      objectReference: {fileID: 0}
-    - target: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -180
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178502318380341974, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
-      propertyPath: m_Name
-      value: SpawnZone Enemy
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
 --- !u!1001 &660719505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1386,6 +1329,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 3753873262432290582, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5302905995198667330, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_LookCam
       value: 1
@@ -1436,11 +1383,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
---- !u!4 &2003715847 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2152008184551104359, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
-  m_PrefabInstance: {fileID: 2003715846}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2115395325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3323,6 +3265,10 @@ PrefabInstance:
     - target: {fileID: 6706375412651070182, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
       propertyPath: m_BlockingMask.m_Bits
       value: 3831
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706375412651070201, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7051037975859202865, guid: 91265aa4794896e4e80f28f1b4f94f94, type: 3}
       propertyPath: hasSamples

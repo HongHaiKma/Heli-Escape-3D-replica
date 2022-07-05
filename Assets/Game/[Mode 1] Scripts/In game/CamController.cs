@@ -75,7 +75,6 @@ public class CamController : Singleton<CamController>
 
             tfCrosshair.anchoredPosition = new Vector2(xPos + mouseInput.x * 50f, yPos + mouseInput.y * 50f);
 
-
             var ray = Camera.main.ScreenPointToRay(tfCrosshair.position);
 
             List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();

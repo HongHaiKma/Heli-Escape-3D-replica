@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf79c1343bb31747b8fb1b4ca5d9055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Gold: {fileID: 11400000, guid: 54fdbcc2b22827c4b990fa2b0ee112b8, type: 2}
   m_GunSaveData_Mode1: {fileID: 11400000, guid: 3b29c567da156ae4fbba5da80656575c, type: 2}
   m_GunSaveData_Mode2: {fileID: 11400000, guid: 261d96069b5914f429994a6a37699833, type: 2}
   m_GunSaveData_Mode3: {fileID: 11400000, guid: 3d53ead474802884fb34fc75d805695e, type: 2}

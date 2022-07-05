@@ -8,7 +8,9 @@ public static class TagName
     {
         public const string testCharSave = "TestCharSave";
     }
-    
+
+    public static string m_Gold = "m_Gold";
+
     public static class Inventory
     {
         public const string m_GunSaveData_Mode1 = "m_GunSaveData_Mode1";

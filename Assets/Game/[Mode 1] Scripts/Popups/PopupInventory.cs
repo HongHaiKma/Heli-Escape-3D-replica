@@ -7,12 +7,15 @@ using EnhancedUI.EnhancedScroller;
 using EnhancedScrollerDemos.GridSelection;
 using Sirenix.OdinInspector;
 using UI.ThreeDimensional;
-using Cysharp.Threading.Tasks;
+using ScriptableObjectArchitecture;
+using TMPro;
 
 public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
 {
     [Title("Property")]
+    public IntVariable m_Gold;
     public Button btn_NextLevel;
+    public TextMeshProUGUI txt_Gold;
 
     [Title("Scroller")]
     public int numberOfCellsPerRow = 3;
@@ -21,11 +24,17 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
     public EnhancedScrollerCellView cellViewPrefab;
 
     [Title("Gun Data")]
+    public TextMeshProUGUI txt_Price;
+    public int m_CurGunID;
     public UIObject3D m_UIObject3D;
     public GunInventoryConfig gunConfigs;
     public GunInventoryConfig m_GunConfig_Mode1;
     public GunInventoryConfig m_GunConfig_Mode2;
     public GunInventoryConfig m_GunConfig_Mode3;
+
+    public GunSaveDataCollection m_GunSave_Mode1;
+    public GunSaveDataCollection m_GunSave_Mode2;
+    public GunSaveDataCollection m_GunSave_Mode3;
 
     public Image img_Fix3DObject;
 
@@ -55,21 +64,66 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
         base.OnEnable();
         LoadData();
 
-        int gunIndex = 0;
         if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
         {
-            gunIndex = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+            m_CurGunID = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
         }
         else if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
         {
-            gunIndex = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+            m_CurGunID = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
         }
-        SelectGun(gunIndex);
+        else if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            m_CurGunID = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
+        }
+        SelectGun(m_CurGunID);
+
+        txt_Gold.text = m_Gold.Value.ToString();
     }
 
     public void BuyGold()
     {
         go_BtnBuyGold.SetActive(false);
+
+        var gunInvent = gunConfigs.m_GunItem.Find(x => x.m_ID == m_CurGunID);
+        if (m_Gold >= gunInvent.m_Price)
+        {
+            // m_Gold.SetValue(m_Gold.Value - gunInvent.m_Price);
+            m_Gold.Value -= gunInvent.m_Price;
+            m_Gold.Raise();
+            txt_Gold.text = m_Gold.Value.ToString();
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+            {
+                GunSaveData newGun = new GunSaveData();
+                newGun.m_ID = m_CurGunID;
+                m_GunSave_Mode1.Value.Add(newGun);
+                ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode1, m_GunSave_Mode1.Value);
+
+                ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_CurGunID);
+                CamController.Instance.SpawnGun(gunInvent);
+            }
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+            {
+                GunSaveData newGun = new GunSaveData();
+                newGun.m_ID = m_CurGunID;
+                m_GunSave_Mode2.Value.Add(newGun);
+                ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode2, m_GunSave_Mode2.Value);
+
+                ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, m_CurGunID);
+                CamController2.Instance.SpawnGun(gunInvent);
+            }
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+            {
+                GunSaveData newGun = new GunSaveData();
+                newGun.m_ID = m_CurGunID;
+                m_GunSave_Mode3.Value.Add(newGun);
+                ES3.Save<List<GunSaveData>>(TagName.Inventory.m_GunSaveData_Mode3, m_GunSave_Mode3.Value);
+
+                ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, m_CurGunID);
+                PlayerShootingController.Instance.SpawnGun(gunInvent);
+            }
+            EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, m_CurGunID);
+        }
     }
 
     public void BuyAds()
@@ -80,10 +134,84 @@ public class PopupInventory : UICanvas, IEnhancedScrollerDelegate
     public void Equip()
     {
         go_BtnEquip.SetActive(false);
+
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_CurGunID);
+            int curGunMode1 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+            var gunInvent = gunConfigs.m_GunItem.Find(x => x.m_ID == curGunMode1);
+            CamController.Instance.SpawnGun(gunInvent);
+        }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, m_CurGunID);
+            int curGunMode2 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+            var gunInvent = gunConfigs.m_GunItem.Find(x => x.m_ID == curGunMode2);
+            CamController2.Instance.SpawnGun(gunInvent);
+        }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, m_CurGunID);
+            int curGunMode3 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
+            var gunInvent = gunConfigs.m_GunItem.Find(x => x.m_ID == curGunMode3);
+            PlayerShootingController.Instance.SpawnGun(gunInvent);
+        }
+
+        EventManager1<int>.CallEvent(GameEvent.SELECT_GUN, m_CurGunID);
     }
 
-    public void SelectGun(int _index)
+    public void SelectGun(int _index) //!Chọn súng theo config rồi check xem có trong save data hay chưa
     {
+        var gunInvent = gunConfigs.m_GunItem.Find(x => x.m_ID == m_CurGunID);
+        var gunSaveData = new GunSaveData();
+
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        {
+            gunSaveData = m_GunSave_Mode1.Value.Find(x => x.m_ID == m_CurGunID);
+        }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        {
+            gunSaveData = m_GunSave_Mode1.Value.Find(x => x.m_ID == m_CurGunID);
+        }
+        if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        {
+            gunSaveData = m_GunSave_Mode1.Value.Find(x => x.m_ID == m_CurGunID);
+        }
+
+        if (gunSaveData == null)
+        {
+            go_BtnBuyGold.SetActive(true);
+            txt_Price.text = gunInvent.m_Price.ToString();
+            go_BtnEquip.SetActive(false);
+        }
+        else
+        {
+            go_BtnBuyGold.SetActive(false);
+
+            int idSave = 0;
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+            {
+                idSave = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+            }
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+            {
+                idSave = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+            }
+            if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+            {
+                idSave = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
+            }
+
+            if (m_CurGunID != idSave)
+            {
+                go_BtnEquip.SetActive(true);
+            }
+            else
+            {
+                go_BtnEquip.SetActive(false);
+            }
+        }
+
         m_UIObject3D.ObjectPrefab = gunConfigs.m_GunItem[_index].go_UIPrefabInventory.transform;
         img_Fix3DObject.color = Color.white;
     }

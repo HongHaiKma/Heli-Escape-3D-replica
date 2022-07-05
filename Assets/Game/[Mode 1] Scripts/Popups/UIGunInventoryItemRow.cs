@@ -159,37 +159,35 @@ public class UIGunInventoryItemRow : MonoBehaviour
         // }
 
         PopupInventory popInventory = PopupCaller.GetPopup(UIID.POPUP_INVENTORY) as PopupInventory;
+        popInventory.m_CurGunID = m_ID;
         popInventory.SelectGun(m_ID);
 
-        Helper.DebugLog("ID: " + m_ID);
-        Helper.DebugLog("Current Gun: " + ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1));
+        // if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
+        // {
+        //     ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_ID);
+        //     int curGunMode1 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
+        //     GunInventoryConfig gunConfig = popInventory.gunConfigs;
+        //     var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode1);
+        //     CamController.Instance.SpawnGun(gunInvent);
+        // }
+        // if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
+        // {
+        //     ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, m_ID);
+        //     int curGunMode2 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
+        //     GunInventoryConfig gunConfig = popInventory.gunConfigs;
+        //     var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode2);
+        //     CamController2.Instance.SpawnGun(gunInvent);
+        // }
+        // if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
+        // {
+        //     ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, m_ID);
+        //     int curGunMode3 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
+        //     GunInventoryConfig gunConfig = popInventory.gunConfigs;
+        //     var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode3);
+        //     PlayerShootingController.Instance.SpawnGun(gunInvent);
+        // }
 
-        if (GameManager.Instance.m_GameMode == GameMode.MODE_1)
-        {
-            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode1, m_ID);
-            int curGunMode1 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode1);
-            GunInventoryConfig gunConfig = popInventory.gunConfigs;
-            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode1);
-            CamController.Instance.SpawnGun(gunInvent);
-        }
-        if (GameManager.Instance.m_GameMode == GameMode.MODE_2)
-        {
-            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode2, m_ID);
-            int curGunMode2 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode2);
-            GunInventoryConfig gunConfig = popInventory.gunConfigs;
-            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode2);
-            CamController2.Instance.SpawnGun(gunInvent);
-        }
-        if (GameManager.Instance.m_GameMode == GameMode.MODE_3)
-        {
-            ES3.Save<int>(TagName.Inventory.m_CurrentGun_Mode3, m_ID);
-            int curGunMode3 = ES3.Load<int>(TagName.Inventory.m_CurrentGun_Mode3);
-            GunInventoryConfig gunConfig = popInventory.gunConfigs;
-            var gunInvent = gunConfig.m_GunItem.Find(x => x.m_ID == curGunMode3);
-            PlayerShootingController.Instance.SpawnGun(gunInvent);
-        }
-
-        UpdateUI();
+        // UpdateUI();
     }
 
     public void UpdateUI()
