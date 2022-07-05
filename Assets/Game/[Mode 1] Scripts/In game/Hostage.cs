@@ -36,7 +36,7 @@ public class Hostage : MonoBehaviour
         // skin_Owner.material.SetColor("_Color", Color.white);
         m_StateMachine = new StateMachine<Hostage>(this);
         m_StateMachine.Init(P_WaitState.Instance);
-        
+
         EventManager.AddListener(GameEvent.LEVEL_WIN, OnHostageWin);
         // EventManager.AddListener(GameEvent.DespawnAllPool, DestroyAllPool);
     }
@@ -58,10 +58,10 @@ public class Hostage : MonoBehaviour
     {
         m_StateMachine.ExecuteStateUpdate();
     }
-    
+
     public void DestroyAllPool()
     {
-        if(gameObject.activeInHierarchy == true)
+        if (gameObject.activeInHierarchy == true)
         {
             PrefabManager.Instance.DespawnPool(gameObject);
         }
@@ -71,7 +71,7 @@ public class Hostage : MonoBehaviour
     {
         // if (GameManager.Instance.m_GameLoop != GameLoop.GameWin)
         // {
-            WinTask(); 
+        WinTask();
         // }
     }
 
@@ -95,7 +95,7 @@ public class Hostage : MonoBehaviour
     }
 
     #region States
-    
+
     public void ChangeState(IState<Hostage> state)
     {
         m_StateMachine.ChangeState(state);
@@ -108,7 +108,7 @@ public class Hostage : MonoBehaviour
         m_AI.isStopped = false;
         m_Anim.SetTrigger("Run");
     }
-    
+
     public void OnRunExecute()
     {
         // if (m_Anim.tri)
@@ -117,12 +117,12 @@ public class Hostage : MonoBehaviour
         // }
         m_AI.destination = LevelController.Instance.tf_PivotFollower.position;
     }
-    
+
     public void OnRunExit()
     {
-        
+
     }
-    
+
     public void OnJumpToHeliEnter()
     {
         m_HostageStates = HostageStates.JUMP_HELI;
@@ -131,17 +131,17 @@ public class Hostage : MonoBehaviour
         rb_Owner.useGravity = false;
         m_Anim.SetTrigger("JumpHeli");
     }
-    
+
     public void OnJumpToHeliExecute()
     {
-        
+
     }
-    
+
     public void OnJumpToHeliExit()
     {
-        
+
     }
-    
+
     public async UniTask OnDeathEnter()
     {
         m_HostageStates = HostageStates.DEATH;
@@ -150,15 +150,15 @@ public class Hostage : MonoBehaviour
         skin_Owner.material.DOColor(Color.black, "_Color", 1.5f);
         LevelController.Instance.m_HostageRun.Remove(this);
         Helper.DebugLog("Hostage Die");
-        
+
         await UniTask.Delay(1000);
-        
-        if(gameObject.activeInHierarchy == true)
+
+        if (gameObject.activeInHierarchy == true)
         {
             PrefabManager.Instance.DespawnPool(gameObject);
         }
 
-        if (LevelController.Instance.m_HostageRun.Count <= 0 
+        if (LevelController.Instance.m_HostageRun.Count <= 0
             && GameManager.Instance.m_GameLoop != GameLoop.GameLose)
         {
             GameManager.Instance.m_GameLoop = GameLoop.GameLose;
@@ -167,7 +167,7 @@ public class Hostage : MonoBehaviour
             PopupCaller.OpenPopup(UIID.POPUP_LOSE);
         }
     }
-    
+
     public void OnDeathExecute()
     {
 
@@ -175,29 +175,29 @@ public class Hostage : MonoBehaviour
 
     public void OnDeathExit()
     {
-        
+
     }
-    
+
     public void OnWaitEnter()
     {
         m_HostageStates = HostageStates.WAIT;
         m_Anim.SetTrigger("Wait");
     }
-    
+
     public void OnWaitExecute()
     {
-        
+
     }
-    
+
     public void OnWaitExit()
     {
-        
+
     }
 
     #endregion
 
     #region Collision
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag.Equals("DeadZone"))
@@ -213,7 +213,7 @@ public class Hostage : MonoBehaviour
         {
             ITriggerble trigger = other.GetComponent<ITriggerble>();
             if (trigger != null)
-                trigger.OnTrigger();  
+                trigger.OnTrigger();
         }
     }
 

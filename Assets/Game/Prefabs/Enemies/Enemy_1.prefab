@@ -636,6 +636,8 @@ MonoBehaviour:
   isClimbing: 0
   m_RaySensor: {fileID: 7324865867704525273}
   go_RaySensor: {fileID: 5326485959827220325}
+  m_RVO: {fileID: 1967965359691337606}
+  m_AlterPath: {fileID: 2298879133462833217}
   m_TimeCatch: 0
   m_TimeCatchMax: 5
   f_TimeDeath: 0

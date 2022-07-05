@@ -24,6 +24,7 @@ TagManager:
   - ITargetExplosion
   - supply
   - Furniture
+  - OutHouseTrigger
   layers:
   - Default
   - TransparentFX

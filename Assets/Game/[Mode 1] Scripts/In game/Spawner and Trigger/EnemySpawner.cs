@@ -56,6 +56,7 @@ public class EnemySpawner : MonoBehaviour
                     // }
                     if (!isGoup)
                     {
+                        hos.m_RaySensor.gameObject.SetActive(false);
                         hos.ChangeState(ChaseState.Instance);
                     }
                 }
@@ -79,17 +80,17 @@ public class EnemySpawner : MonoBehaviour
             m_Enemies.Add(hos);
             await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
             await UniTask.WaitForEndOfFrame();
-            // if (isGoup)
-            // {
-            //     hos.ChangeState(ClimbState.Instance);
-            // }
-            // else
-            // {
-            //     hos.ChangeState(ChaseState.Instance);  
-            // }
+
+            hos.m_RVO.enabled = false;
+            hos.m_AlterPath.enabled = false;
+
             if (!isGoup)
             {
                 hos.ChangeState(ChaseState.Instance);
+            }
+            else //! Xử lý trèo lên ở đây
+            {
+                hos.ChangeState(ClimbState.Instance);
             }
         }
     }
@@ -99,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < m_Enemies.Count; i++)
         {
             m_Enemies[i].m_StateMachine.ChangeState(ChaseState.Instance);
-        } 
+        }
     }
 }
 

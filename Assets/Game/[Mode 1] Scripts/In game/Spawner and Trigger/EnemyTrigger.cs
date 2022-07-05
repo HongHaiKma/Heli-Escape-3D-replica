@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Dreamteck.Splines;
 
 public class EnemyTrigger : MonoBehaviour, ITriggerble
 {
@@ -23,11 +24,13 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
             Vector3 oldPos = LevelController.Instance.tf_CamLookPoint.localPosition;
             CamController.Instance.m_CMCam.Follow = null;
             // CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_PivotFollower;
+            // float yAxis =
+            // LevelController.Instance.tf_CamLookPoint.DOMove(tf_LookPoint.position, 1f).OnStart(() =>
             LevelController.Instance.tf_CamLookPoint.DOMove(tf_LookPoint.position, 1f).OnStart(() =>
                 {
-                    Time.timeScale = 0.5f;
+                    // CamController.Instance.tf
+                    // Time.timeScale = 0.5f;
                     m_Anim.SetTrigger("OpenDoor");
-                    Helper.DebugLog("LLLLLLLLLLLLLLLLLL");
                 })
                 .OnComplete(
                 () =>
@@ -43,10 +46,26 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
                     {
                         m_EnemySpawner.SpawnEnemy();
                     }
-                    
-                    LevelController.Instance.tf_CamLookPoint.DOLocalMove(oldPos, 1f, true).SetDelay(1.5f).OnComplete(
+
+                    // LevelController.Instance.tf_CamLookPoint.DOKill();
+                    // Vector3 oldPos = LevelController.Instance.tf_CamLookPoint.localPosition;
+                    // DOTween.KillAll(true);
+                    LevelController.Instance.tf_CamLookPoint.DOLocalMove(oldPos, 1f, true).SetEase(Ease.Linear)
+                    // DOVirtual.DelayedCall(1f, null)
+                    .OnStart(() =>
+                    {
+                        // CamController.Instance.m_CMCam.m_LookAt = null;
+                        LevelController.Instance.tf_PivotFollower.GetComponent<SplineFollower>().follow = false;
+                        // CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
+                        // CamController.Instance.tf_Owner.rotation = Quaternion.LookRotation(LevelController.Instance.tf_CamLookPoint.position - CamController.Instance.tf_Owner.localPosition);
+                    }).OnUpdate(() =>
+                    {
+                        // CamController.Instance.tf_Owner.rotation = Quaternion.LookRotation(LevelController.Instance.tf_CamLookPoint.position - CamController.Instance.tf_Owner.position);
+                    }).SetDelay(2.5f).OnComplete(
                         () =>
                         {
+                            LevelController.Instance.tf_PivotFollower.GetComponent<SplineFollower>().follow = true;
+                            CamController.Instance.m_CMCam.m_LookAt = LevelController.Instance.tf_CamLookPoint;
                             CamController.Instance.m_CMCam.Follow = LevelController.Instance.tf_CamLookPoint;
                             Time.timeScale = 1f;
                         });
