@@ -38,7 +38,6 @@ public class CamController : Singleton<CamController>
     public TouchTrackPad m_TrackPad;
 
 
-    private RaycastHit hitInfo;
 
     [Title("Gun Data")]
     public Gun m_GunIngame;
@@ -79,17 +78,20 @@ public class CamController : Singleton<CamController>
 
             List<RaycastHit> rayHits = Physics.SphereCastAll(ray, 0.25f, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore).ToList();
 
+            // if (m_ShootTime <= 0.0001f)
+            // {
+            //     return;
+            // }
+
+            RaycastHit hitInfoss;
+            List<RaycastHit> hitInfos = new List<RaycastHit>();
+
             if (rayHits.Count > 0)
             {
-                hitInfo = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).FirstOrDefault();
+                hitInfoss = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).FirstOrDefault();
                 // tf_LookAimIK.position = hitInfo.point;
 
-                tf_GunHolder.rotation = Quaternion.LookRotation(hitInfo.point - tf_GunHolder.position);
-            }
-
-            if (m_ShootTime <= 0.1f)
-            {
-                return;
+                tf_GunHolder.rotation = Quaternion.LookRotation(hitInfoss.point - tf_GunHolder.position);
             }
 
 
@@ -102,37 +104,46 @@ public class CamController : Singleton<CamController>
                     (x.transform.GetComponent<Enemy>() != null && x.transform.GetComponent<Enemy>().IsState(DeathState.Instance)));
             }
 
+
+            hitInfos = rayHits.OrderBy(x => (x.point - tf_Owner.position).sqrMagnitude).Take(2).ToList();
+
+
             // if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             // if (Physics.SphereCast(ray, 0.3f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
             // if (Physics.SphereCastAll(ray, 0.5f, out hitInfo, Mathf.Infinity, m_IgnoreLayer, QueryTriggerInteraction.Ignore))
-            if (rayHits.Count > 0)
+            if (hitInfos.Count > 0)
             {
                 // tf_GunHolder.LookAt(hitInfo.point);
                 if (m_ShootTime > 0.1f)
                 {
-                    Collider col = hitInfo.collider;
-                    GameObject go = hitInfo.transform.gameObject;
+                    m_ShootTime = 0f;
 
-                    if (col != null)
+                    foreach (var hitInfo in hitInfos)
                     {
-                        m_ShootTime = 0f;
+                        Collider col = hitInfo.collider;
+                        GameObject go = hitInfo.transform.gameObject;
 
-                        if (col.tag.Equals("Ground"))
+                        if (col != null)
                         {
-                            PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
-                            PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
-                            PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
-                        }
 
-                        if (col.gameObject.GetComponent<IDamageable>() != null)
-                        {
-                            col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
-                            PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
-                        }
 
-                        if (col.gameObject.GetComponent<ITrap>() != null)
-                        {
-                            col.gameObject.GetComponent<ITrap>().OnTrigger();
+                            if (col.tag.Equals("Ground"))
+                            {
+                                PrefabManager.Instance.SpawnVFXPool("BulletHole", hitInfo.point);
+                                PrefabManager.Instance.SpawnVFXPool("BulletImpact", hitInfo.point);
+                                PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
+                            }
+
+                            if (col.gameObject.GetComponent<IDamageable>() != null)
+                            {
+                                col.gameObject.GetComponent<IDamageable>().OnHit(hitInfo.point);
+                                PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
+                            }
+
+                            if (col.gameObject.GetComponent<ITrap>() != null)
+                            {
+                                col.gameObject.GetComponent<ITrap>().OnTrigger();
+                            }
                         }
                     }
                 }
@@ -193,7 +204,20 @@ public class CamController : Singleton<CamController>
     {
         await UniTask.WhenAll(ResetLevel());
         m_CMCamOffset.enabled = true;
-        m_CMCamOffset.m_Offset = new Vector3(-10f, 13f, -8f);
+        // m_CMCamOffset.m_Offset = new Vector3(-10f, 13f, -8f);
+
+        float time1 = 0;
+        Vector3 des = new Vector3(-10f, 13f, -8f);
+        Vector3 origin = m_CMCamOffset.m_Offset;
+
+        while (time1 < 0.3f)
+        {
+            m_CMCamOffset.m_Offset = Vector3.Lerp(origin, des, time1 / duration);
+            // m_CMCamOffset.m_Offset = Vector3.Lerp(startPosition, targetPosition);
+            time1 += Time.deltaTime;
+            await UniTask.Yield();
+        }
+
 
         tf_HeliHolder.parent = null;
         tf_ShooterHolder.parent = null;

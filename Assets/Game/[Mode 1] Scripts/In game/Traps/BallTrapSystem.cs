@@ -8,6 +8,7 @@ public class BallTrapSystem : TrapSystem
     public override void ActivateTrap()
     {
         base.ActivateTrap();
+        rb_Owner.mass = 7.5f;
         rb_Owner.constraints = RigidbodyConstraints.None;
         m_Joint.connectedBody = null;
     }

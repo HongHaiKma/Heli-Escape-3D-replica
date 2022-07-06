@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tf_Owner: {fileID: 2446271729604268989}
-  isActive: 0
+  isActive: 1
   go_Warning: {fileID: 4389362529173665743}
   m_Anim: {fileID: 2446271729768637498}
   tf_FirePivot: {fileID: 1146237384492682060}
@@ -954,9 +954,10 @@ MonoBehaviour:
   rb_Owner: {fileID: 2446271729604268979}
   m_DetectDegree: 60
   m_ReadyToShoot: 0
-  m_ReadyToShootMax: 2.3
+  m_ReadyToShootMax: 3
   m_DeathTime: 0
   m_DeathTimeMax: 2
+  m_CanShot: 0
 --- !u!1 &2446271729625786427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +1010,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0cf2677e8567b3b42b13426b23b318b4, type: 2}
+  - {fileID: 2100000, guid: 751a8fa8ad4a72645bf1782cee2b57c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

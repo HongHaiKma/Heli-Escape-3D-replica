@@ -225,6 +225,7 @@ public class CamController2 : Singleton<CamController2>
 
     public void Shoot(Vector3 _lookAt, Transform _tfEnemy)
     {
+        EventManager1<bool>.CallEvent(GameEvent.MODE_2_SHOOTER_SHOT, true);
         GameObject go = PrefabManager.Instance.SpawnVFXPool("VFX_2", m_GunIngame.tf_FirePoint.position);
         go.transform.LookAt(_lookAt);
         go.transform.parent = m_GunIngame.tf_FirePoint;

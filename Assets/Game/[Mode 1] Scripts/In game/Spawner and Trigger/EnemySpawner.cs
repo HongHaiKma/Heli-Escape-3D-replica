@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
     public List<Enemy> m_Enemies;
     public EnemyTrigger m_EnemyTrigger;
 
+    public Transform tf_OutHouseTrigger;
+
     private async UniTask OnEnable()
     {
         if (isSpawned)
@@ -29,6 +31,8 @@ public class EnemySpawner : MonoBehaviour
                     Enemy hos = PrefabManager.Instance.SpawnEnemyPool(m_EnemyName.ToString(), randomPos.position)
                         .GetComponent<Enemy>();
                     hos.transform.parent = LevelController.Instance.transform;
+                    hos.tf_OutHouseTrigger = tf_OutHouseTrigger;
+                    hos.m_GoHouseTrigger = false;
                     m_Enemies.Add(hos);
                 }
             }
@@ -77,6 +81,9 @@ public class EnemySpawner : MonoBehaviour
             Enemy hos = PrefabManager.Instance.SpawnEnemyPool(m_EnemyName.ToString(), randomPos.position)
                 .GetComponent<Enemy>();
             hos.transform.parent = LevelController.Instance.transform;
+
+            hos.tf_OutHouseTrigger = tf_OutHouseTrigger;
+
             m_Enemies.Add(hos);
             await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
             await UniTask.WaitForEndOfFrame();
@@ -86,11 +93,15 @@ public class EnemySpawner : MonoBehaviour
                 Helper.DebugLog("IsWaiting");
                 hos.m_RVO.enabled = true;
                 hos.m_AlterPath.enabled = true;
+
+                hos.m_GoHouseTrigger = false;
             }
             else
             {
                 hos.m_RVO.enabled = false;
                 hos.m_AlterPath.enabled = false;
+
+                hos.m_GoHouseTrigger = true;
             }
 
 
@@ -98,13 +109,14 @@ public class EnemySpawner : MonoBehaviour
             {
                 hos.m_RVO.enabled = false;
                 hos.m_AlterPath.enabled = false;
+                hos.m_GoHouseTrigger = true;
                 hos.ChangeState(ChaseState.Instance);
             }
             else //! Xử lý trèo lên ở đây
             {
-                Helper.DebugLog("YYYYYYYYYYYYYYYY");
                 hos.m_RVO.enabled = false;
                 hos.m_AlterPath.enabled = false;
+                hos.m_GoHouseTrigger = false;
                 hos.ChangeState(ClimbState.Instance);
             }
         }

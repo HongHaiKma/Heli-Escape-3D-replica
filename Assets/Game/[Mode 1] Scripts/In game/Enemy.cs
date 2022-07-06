@@ -39,6 +39,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     [Header("Fix")]
     public Transform tf_ClimbOverlapPoint;
+    public Transform tf_OutHouseTrigger;
+    public bool m_GoHouseTrigger;
 
     private void OnEnable()
     {
@@ -47,6 +49,8 @@ public class Enemy : MonoBehaviour, IDamageable
         // skin_Owner.material.SetColor("_Color", Helper.ConvertColor(Color.white));
         skin_Owner.material.SetColor("_Color", Color.white);
         // skin_Owner.material.DOColor(new Color(209f, 38f, 49f), "_Color", 0.1f);
+
+        m_GoHouseTrigger = false;
 
         m_AIPath.canMove = true;
         m_AIPath.isStopped = false;
@@ -142,7 +146,13 @@ public class Enemy : MonoBehaviour, IDamageable
     // public virtual async UniTask OnChaseExecute()
     public void OnChaseExecute()
     {
-        m_AIPath.maxSpeed = UnityEngine.Random.Range(2.2f, 2.6f);
+        m_AIPath.maxSpeed = UnityEngine.Random.Range(3f, 3.5f);
+
+        if (m_GoHouseTrigger)
+        {
+            m_AIPath.destination = tf_OutHouseTrigger.position;
+            return;
+        }
 
         m_TimeChangeTarget += Time.deltaTime;
 
@@ -274,8 +284,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public virtual void OnClimbEnter()
     {
-        Helper.DebugLog("OnClimbEnter");
-
         // Collider[] colliders = Physics.OverlapBox(transform.position, Vector3.one);
         // Vector3 look = colliders.OrderBy(x => (x.transform.position - this.transform.position).sqrMagnitude).First().transform.position;
 
@@ -415,6 +423,7 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         if (other.tag.Equals("OutHouseTrigger"))
         {
+            m_GoHouseTrigger = false;
             if (!m_RVO.isActiveAndEnabled)
             {
                 m_RVO.enabled = true;

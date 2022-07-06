@@ -19,6 +19,8 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
     {
         col_Owner.enabled = false;
 
+        m_Anim.SetTrigger("OpenDoor");
+
         if (m_LookCam)
         {
             Vector3 oldPos = LevelController.Instance.tf_CamLookPoint.localPosition;
@@ -30,7 +32,6 @@ public class EnemyTrigger : MonoBehaviour, ITriggerble
                 {
                     // CamController.Instance.tf
                     // Time.timeScale = 0.5f;
-                    m_Anim.SetTrigger("OpenDoor");
                 })
                 .OnComplete(
                 () =>

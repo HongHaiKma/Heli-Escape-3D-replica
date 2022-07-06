@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
@@ -11,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
+using TMPro;
 
 [DefaultExecutionOrder(-91)]
 public class GUIManager : MonoBehaviour
@@ -20,6 +20,7 @@ public class GUIManager : MonoBehaviour
     [Title("Cheat Game")]
     public InputField txt_Level;
     public GameObject go_CheatPanel;
+    public TextMeshProUGUI txt_Levels;
 
     public void OpenCheatGame()
     {
@@ -38,15 +39,15 @@ public class GUIManager : MonoBehaviour
     {
         // Time.timeScale = 1;
         int.TryParse(txt_Level.text, out int level);
-        if (level >= 1 && level <= 3)
+        if (level >= 1 && level <= 11)
         {
             ProfileManager.SetLevel(level);
-            LoadPlayScene();  
+            LoadPlayScene();
         }
     }
 
     #endregion
-    
+
     #region Variables
 
     internal class GUIMap : Dictionary<int, UICanvas>
@@ -107,7 +108,7 @@ public class GUIManager : MonoBehaviour
     }
 
     #endregion
-    
+
 
     private void Awake()
     {
@@ -155,7 +156,7 @@ public class GUIManager : MonoBehaviour
         // StartCoroutine(LoadPlayScene());
         if (m_LoadImmediately == true)
         {
-            GUIManager.Instance.LoadPlayScene();  
+            GUIManager.Instance.LoadPlayScene();
         }
     }
 
@@ -167,12 +168,12 @@ public class GUIManager : MonoBehaviour
     public async UniTask LoadPlayScene()
     {
         // StartCoroutine(LoadPlayScreen());
-        
+
         // EventManager.CallEvent(GameEvent.DespawnAllPool);
         // Time.timeScale = 1;
         go_CheatPanel.SetActive(false);
         g_Loading.SetActive(true);
-        
+
         if (img_LoadingBar != null)
         {
             float _loadProgress = 0;
@@ -183,7 +184,7 @@ public class GUIManager : MonoBehaviour
                 int percent = (int)(_loadProgress * 100f);
                 if (percent > 100) percent = 100;
                 // yield return new WaitForSeconds(Time.deltaTime);
-                int time = (int) (Time.deltaTime * 1000);
+                int time = (int)(Time.deltaTime * 1000);
                 await UniTask.Delay(time);
             }
         }
@@ -202,7 +203,9 @@ public class GUIManager : MonoBehaviour
         // Addressables.LoadSceneAsync("PlayScene", LoadSceneMode.Additive).Completed += LoadPlaySceneCompleted;
 
         string scene = "Level" + ProfileManager.GetLevel();
-        
+
+        txt_Levels.text = "Level " + ProfileManager.GetLevel().ToString();
+
         Addressables.LoadSceneAsync(scene, LoadSceneMode.Single).Completed += LoadPlaySceneCompleted;
     }
 
@@ -212,7 +215,7 @@ public class GUIManager : MonoBehaviour
         {
             // StartCoroutine(GameManager.Instance.IELoadLevel());
             // GameManager.Instance.LoadLevelTask();
-            
+
             // SetupScene();
         }
     }

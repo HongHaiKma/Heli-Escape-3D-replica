@@ -351,6 +351,7 @@ MonoBehaviour:
   m_EnemyName: 0
   m_Enemies: []
   m_EnemyTrigger: {fileID: 5302905995198667330}
+  tf_OutHouseTrigger: {fileID: 7024159832613252980}
 --- !u!1 &6141759746128494459
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +953,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6535353987763784483, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535353987763784483, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.69
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
 --- !u!95 &2640409636237184672 stripped
@@ -962,5 +971,10 @@ Animator:
 --- !u!4 &2736162547788802553 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2175278901088013742, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
+  m_PrefabInstance: {fileID: 4307950284445656151}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7024159832613252980 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6535353987763784483, guid: c05c300fa665eb8419dd51cc7b2c6873, type: 3}
   m_PrefabInstance: {fileID: 4307950284445656151}
   m_PrefabAsset: {fileID: 0}

@@ -50,7 +50,7 @@ public class ProfileManager : MonoBehaviour
         {
             PassLevel();
         }
-        
+
         // if (Input.GetKeyDown(KeyCode.Z))
         // {
         //     SetSelectedCharacter(2);
@@ -174,7 +174,7 @@ public class ProfileManager : MonoBehaviour
     {
         return MyProfile.GetLevel();
     }
-    
+
     public static void SetLevel(int _level)
     {
         MyProfile.SetLevel(_level);
@@ -186,7 +186,7 @@ public class ProfileManager : MonoBehaviour
     }
 
     #endregion
-    
+
     public void TestDisplayGold()
     {
         // string a = 

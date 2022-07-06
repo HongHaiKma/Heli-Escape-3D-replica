@@ -85,5 +85,6 @@ public enum GameEvent
     DespawnAllPool = 2,
     SLOWMOTION = 3,
     SELECT_GUN = 4,
+    MODE_2_SHOOTER_SHOT = 5,
     // LEVEL_LOSE = 0,
 }

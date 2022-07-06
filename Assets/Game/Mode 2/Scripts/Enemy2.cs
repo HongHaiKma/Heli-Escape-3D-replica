@@ -17,21 +17,35 @@ public class Enemy2 : MonoBehaviour, IEnemy2
     public Rigidbody rb_Owner;
     public float m_DetectDegree;
 
-    [Header("Charge Time")] 
+    [Header("Charge Time")]
     public float m_ReadyToShoot;
     public float m_ReadyToShootMax;
     public float m_DeathTime;
     public float m_DeathTimeMax;
+    public bool m_CanShot;
 
     private void OnEnable()
     {
         // isActive = false;
+        m_CanShot = true;
         go_Warning.SetActive(false);
         m_ReadyToShoot = 0f;
         m_DeathTime = 0f;
 
         m_StateMachine = new StateMachine<Enemy2>(this);
         m_StateMachine.Init(IdleState2.Instance);
+
+        EventManager1<bool>.AddListener(GameEvent.MODE_2_SHOOTER_SHOT, OnSetCanShot);
+    }
+
+    private void OnDisable()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.MODE_2_SHOOTER_SHOT, OnSetCanShot);
+    }
+
+    private void RemoveListener()
+    {
+        EventManager1<bool>.RemoveListener(GameEvent.MODE_2_SHOOTER_SHOT, OnSetCanShot);
     }
 
     private void OnValidate()
@@ -50,15 +64,15 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         m_EnemyState = EnemyState2.Idle;
         m_Anim.SetTrigger("Idle");
     }
-    
+
     public virtual void OnIdleExecute()
     {
-        
+
     }
-    
+
     public virtual void OnIdleExit()
     {
-        
+
     }
 
     public virtual void OnAimEnter()
@@ -69,14 +83,14 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         // LookShooter(2f);
         // LookShooter(2f);
     }
-    
+
     public async UniTask LookShooter(float duration)
     {
         float time = 0;
         Vector3 startPosition = tf_Owner.position;
         Vector3 shooter = LevelController2.Instance.m_Shooter.transform.position;
         // Vector3 lookat = new Vector3(0f, shooter.y - tf_Owner.position.y ,0f);
-        Quaternion lookat = new Quaternion(0f, shooter.y - tf_Owner.position.y ,0f, 0f);
+        Quaternion lookat = new Quaternion(0f, shooter.y - tf_Owner.position.y, 0f, 0f);
         // Quaternion look = Quaternion.LookRotation(lookat, Vector3.up)
 
         while (time < duration)
@@ -90,24 +104,37 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         tf_Owner.rotation = lookat;
         // UIIngame2.Instance.go_PopupLose.SetActive(true);
     }
-    
+
+    public void OnSetCanShot(bool _blockShot)
+    {
+        if (IsState(AimState.Instance))
+        {
+            if (_blockShot)
+                m_CanShot = false;
+            else
+                m_CanShot = true;
+        }
+    }
+
     public virtual void OnAimExecute()
     {
         // LookShooter(2f);
         // tf_Owner.LookAt(new Vector3(0f, LevelController2.Instance.tf_Shooter.position.y, 0f));
         m_ReadyToShoot += Time.deltaTime;
-        
+
         Transform tf_Target = LevelController2.Instance.m_Shooter.transform;
-        Quaternion targetRotation = Quaternion.LookRotation(tf_Target.position - tf_Owner.position);
+        // Quaternion targetRotation = Quaternion.LookRotation(tf_Target.position - tf_Owner.position);
         // Quaternion targetLook = new Quaternion(0f, targetRotation.y, 0f, 0f);
-        targetRotation = Quaternion.RotateTowards(tf_Owner.rotation, targetRotation, 360f * Time.fixedDeltaTime);
-        rb_Owner.MoveRotation(targetRotation);  
-        
-        if (m_ReadyToShoot > m_ReadyToShootMax)
+        // transform.rotation = Quaternion.LookRotation(new Vector3(opposite.normalized.x, 0f, opposite.normalized.z), Vector3.up);
+        tf_Owner.rotation = Quaternion.LookRotation(tf_Target.position - tf_Owner.position);
+        // rb_Owner.MoveRotation(targetRotation);  
+
+        if (m_ReadyToShoot > m_ReadyToShootMax && m_CanShot)
         {
             Vector3 shooterPos = LevelController2.Instance.m_Shooter.tf_TargetPoint.position;
             PrefabManager.Instance.SpawnBulletPool("BulletEnemy1", tf_FirePivot.position).GetComponent<Bullet>().Fire(shooterPos
                 , LevelController2.Instance.m_Shooter.tf_TargetPoint);
+            m_CanShot = false;
             ChangeState(WinState2.Instance);
         }
         // else
@@ -119,23 +146,23 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         //     Helper.DebugLog("KKKKKKKKKKKK");
         // }
     }
-    
+
     public virtual void OnAimExit()
     {
-        
+
     }
-    
+
     public virtual void OnDeathEnter()
     {
         m_EnemyState = EnemyState2.Death;
         m_Anim.SetTrigger("Death");
-        
+
         if (go_Warning.activeInHierarchy)
         {
             go_Warning.SetActive(false);
         }
     }
-    
+
     public virtual void OnDeathExecute()
     {
         m_DeathTime += Time.deltaTime;
@@ -144,12 +171,12 @@ public class Enemy2 : MonoBehaviour, IEnemy2
             PrefabManager.Instance.DespawnPool(gameObject);
         }
     }
-    
+
     public virtual void OnDeathExit()
     {
-        
+
     }
-    
+
     public virtual void OnWinEnter()
     {
         m_EnemyState = EnemyState2.Win;
@@ -158,17 +185,17 @@ public class Enemy2 : MonoBehaviour, IEnemy2
             go_Warning.SetActive(false);
         }
     }
-    
+
     public virtual void OnWinExecute()
     {
 
     }
-    
+
     public virtual void OnWinExit()
     {
-        
+
     }
-    
+
     public void ChangeState(IState<Enemy2> state)
     {
         m_StateMachine.ChangeState(state);
@@ -187,9 +214,9 @@ public class Enemy2 : MonoBehaviour, IEnemy2
             {
                 await UniTask.WaitUntil(() => this.isActiveAndEnabled == true);
                 await UniTask.WaitForEndOfFrame();
-                ChangeState(AimState.Instance); 
+                ChangeState(AimState.Instance);
             }
-            
+
             if (!go_Warning.activeInHierarchy)
             {
                 go_Warning.SetActive(true);
@@ -199,7 +226,7 @@ public class Enemy2 : MonoBehaviour, IEnemy2
         {
             if (!IsState(IdleState2.Instance))
             {
-                ChangeState(IdleState2.Instance); 
+                ChangeState(IdleState2.Instance);
             }
 
             if (go_Warning.activeInHierarchy)
@@ -208,7 +235,7 @@ public class Enemy2 : MonoBehaviour, IEnemy2
             }
         }
     }
-    
+
     public void DoRagdoll(Vector3 explosionPos)
     {
         rb_Owner.AddExplosionForce(2000f, explosionPos, 10f, 2f);
@@ -228,7 +255,7 @@ public class Enemy2 : MonoBehaviour, IEnemy2
 
 public enum EnemyState2
 {
-    Idle = 0, 
+    Idle = 0,
     Aim = 1,
     Win = 2,
     Death = 3,

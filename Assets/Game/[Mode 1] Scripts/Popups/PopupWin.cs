@@ -22,10 +22,10 @@ public class PopupWin : UICanvas
         // GameManager.Instance.ResetLevel();
         // // GameManager.Instance.LoadLevel();
         // GameManager.Instance.LoadLevelTask();
-        
-        if (ProfileManager.GetLevel() < 3)
+
+        if (ProfileManager.GetLevel() < 11)
         {
-            ProfileManager.SetLevel(ProfileManager.GetLevel() + 1); 
+            ProfileManager.SetLevel(ProfileManager.GetLevel() + 1);
         }
 
         OnClose();
