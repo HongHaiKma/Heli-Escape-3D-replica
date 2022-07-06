@@ -81,15 +81,30 @@ public class EnemySpawner : MonoBehaviour
             await UniTask.WaitUntil(() => hos.isActiveAndEnabled == true);
             await UniTask.WaitForEndOfFrame();
 
-            hos.m_RVO.enabled = false;
-            hos.m_AlterPath.enabled = false;
+            if (isWaiting)
+            {
+                Helper.DebugLog("IsWaiting");
+                hos.m_RVO.enabled = true;
+                hos.m_AlterPath.enabled = true;
+            }
+            else
+            {
+                hos.m_RVO.enabled = false;
+                hos.m_AlterPath.enabled = false;
+            }
+
 
             if (!isGoup)
             {
+                hos.m_RVO.enabled = false;
+                hos.m_AlterPath.enabled = false;
                 hos.ChangeState(ChaseState.Instance);
             }
             else //! Xử lý trèo lên ở đây
             {
+                Helper.DebugLog("YYYYYYYYYYYYYYYY");
+                hos.m_RVO.enabled = false;
+                hos.m_AlterPath.enabled = false;
                 hos.ChangeState(ClimbState.Instance);
             }
         }

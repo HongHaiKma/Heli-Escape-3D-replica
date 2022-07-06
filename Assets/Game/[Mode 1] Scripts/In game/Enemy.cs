@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using Pathfinding;
 using Cysharp.Threading.Tasks;
@@ -35,6 +36,9 @@ public class Enemy : MonoBehaviour, IDamageable
     public float m_TimeCatch;
     public float m_TimeCatchMax;
     public float f_TimeDeath;
+
+    [Header("Fix")]
+    public Transform tf_ClimbOverlapPoint;
 
     private void OnEnable()
     {
@@ -270,6 +274,22 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public virtual void OnClimbEnter()
     {
+        Helper.DebugLog("OnClimbEnter");
+
+        // Collider[] colliders = Physics.OverlapBox(transform.position, Vector3.one);
+        // Vector3 look = colliders.OrderBy(x => (x.transform.position - this.transform.position).sqrMagnitude).First().transform.position;
+
+        // RaycastHit hit;
+        // Vector3 opposite = Vector3.zero;
+        // // hitt = Physics.Linecast(transform.position, tf_Wall.position);
+        // if (Physics.Linecast(transform.position, look, out hit))
+        // {
+        //     Helper.DebugLog("Position: " + hit.point);
+        //     opposite = -hit.normal;
+        // }
+
+        // transform.rotation = Quaternion.LookRotation(new Vector3(opposite.normalized.x, 0f, opposite.normalized.z), Vector3.up);
+
         m_EnemyState = EnemyState.Climb;
         rb_Owner.useGravity = false;
         rb_Owner.isKinematic = true;
@@ -320,7 +340,23 @@ public class Enemy : MonoBehaviour, IDamageable
         if (!isClimbing && !IsState(DeathState.Instance))
         // if (!isClimbing)
         {
+            // Helper.DebugLog("UUUUUUUUUUUUUUUU");
             isClimbing = true;
+            Collider[] colliders = Physics.OverlapBox(transform.position, Vector3.one, Quaternion.identity, 1 << 7);
+            Vector3 look = colliders.OrderBy(x => (x.transform.position - this.transform.position).sqrMagnitude).First().transform.position;
+
+            RaycastHit hit;
+            Vector3 opposite = Vector3.zero;
+
+            if (Physics.Linecast(transform.position, look, out hit, ~(1 >> LayerMask.NameToLayer("Ground"))))
+            {
+                if (Physics.Linecast(transform.position, hit.transform.position, out hit, ~(1 >> LayerMask.NameToLayer("Ground"))))
+                {
+                    opposite = hit.normal;
+                }
+            }
+
+            transform.rotation = Quaternion.LookRotation(new Vector3(opposite.normalized.x, 0f, opposite.normalized.z), Vector3.up);
             ChangeState(ClimbState.Instance);
         }
     }
@@ -330,6 +366,8 @@ public class Enemy : MonoBehaviour, IDamageable
         // Helper.DebugLog("Endddddddddddddddddddddddddddddddd");
         isClimbing = false;
         go_RaySensor.SetActive(false);
+        m_RVO.enabled = true;
+        m_AlterPath.enabled = true;
 
         GraphNode nearestNode = AstarPath.active.GetNearest(tf_Owner.position, NNConstraint.Default).node;
         if (nearestNode != null)
@@ -396,6 +434,17 @@ public class Enemy : MonoBehaviour, IDamageable
             col_Owner.enabled = false;
         }
     }
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(tf_ClimbOverlapPoint.position, Vector3.one);
+
+        // Gizmos.DrawLine();
+    }
+#endif
 }
 
 public enum EnemyState

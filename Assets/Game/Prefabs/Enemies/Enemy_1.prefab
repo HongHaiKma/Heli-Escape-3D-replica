@@ -466,6 +466,7 @@ Transform:
   m_Children:
   - {fileID: 6556470870211598713}
   - {fileID: 746093786367445257}
+  - {fileID: 131216829090694311}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -641,6 +642,7 @@ MonoBehaviour:
   m_TimeCatch: 0
   m_TimeCatchMax: 5
   f_TimeDeath: 0
+  tf_ClimbOverlapPoint: {fileID: 131216829090694311}
 --- !u!114 &2298879133462833217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1750,6 +1752,37 @@ Transform:
   - {fileID: 7750983160396207726}
   m_Father: {fileID: 985588252441583288}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8602053183878681712
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 131216829090694311}
+  m_Layer: 10
+  m_Name: Climb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &131216829090694311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8602053183878681712}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2453109988599596470}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9084139298980835487
 GameObject:
