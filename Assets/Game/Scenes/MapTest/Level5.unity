@@ -290,6 +290,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7024159832613252980, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7024159832613252980, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.98
+      objectReference: {fileID: 0}
     - target: {fileID: 8184533272750415794, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1027,6 +1035,14 @@ PrefabInstance:
     - target: {fileID: 3753873262432290582, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7024159832613252980, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7024159832613252980, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.84
       objectReference: {fileID: 0}
     - target: {fileID: 8184533272750415794, guid: 3466c272f96eb994c9b1b6e76402edfb, type: 3}
       propertyPath: m_RootOrder
